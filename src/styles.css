@@ -4,3 +4,8 @@ body, html {
   background-color: #e1e4f2;
   height: 100%;  
 }
+
+
+app-home {
+  height: 100% !important;
+}

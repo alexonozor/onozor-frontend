@@ -1,79 +1,44 @@
+
 <nz-layout>
     <nz-sider>
-      <div class="logo">
-      </div>
-      <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
-        <li nz-submenu>
-          <span title>
-            <i class="anticon anticon-user"></i>
-            <span class="nav-text">User</span>
-          </span>
-          <ul>
-            <li nz-menu-item>Tom</li>
-            <li nz-menu-item>Bill</li>
-            <li nz-menu-item>Alex</li>
-          </ul>
-        </li>
-        <li nz-submenu>
-          <span title>
-            <i class="anticon anticon-team"></i>
-            <span class="nav-text">Team</span>
-          </span>
-          <ul>
-            <li nz-menu-item>Team 1</li>
-            <li nz-menu-item>Team 2</li>
-          </ul>
-        </li>
-        <li nz-menu-item>
-          <span>
-            <i class="anticon anticon-file"></i>
-            <span class="nav-text">File</span>
-          </span>
-        </li>
-      </ul>
+      <span appSidebar></span>
     </nz-sider>
-    <nz-layout>
-      <nz-header style="background: #fff; padding:0;">
-        <i class="anticon trigger" [class.anticon-menu-fold]="!isCollapsed" [class.anticon-menu-unfold]="isCollapsed" (click)="isCollapsed=!isCollapsed"></i>
-      </nz-header>
   
-      <nz-content style="margin:25px 55px;">
-        <div nz-row nzGutter="48">
-          <div nz-col nz-col nzSpan="15">
-            <nz-card style="margin-bottom: 20px" [nzBordered]="true" [nzExtra]="extraTemplate">
-              <div nz-row class="card-user-info">
-                <div nz-col nzSpan="1">
-                  <nz-avatar nzIcon="anticon anticon-user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-                </div>
-                <div nz-col nzXl="5">
-                  <a>
-                    <p class="card-user-name">Alex Onozor</p>
-                  </a>
-                  <span>@onozor</span>
-                </div>
-              </div>
-  
+  <nz-content style="margin:25px 55px;">
+    <div nz-row nzGutter="48">
+      <div nz-col nz-col nzSpan="12">
+        <nz-card *ngFor="let feed of feeds" style="margin-bottom: 20px" [nzLoading]="loading" [nzBordered]="true" [nzExtra]="extraTemplate">
+          <div nz-row class="card-user-info">
+            <div nz-col nzSpan="2">
+              <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="feed?.author?.avatar?.thumb.url"></nz-avatar>
+            </div>
+            <div nz-col nzXl="5">
               <a>
-                <h2>
-                  <b>Is it healthy for a programmer to do 90% maintenance and 10% development work? Is this good for career growth?</b>
-                </h2>
+                <p class="card-user-name">{{feed?.author?.full_name}}</p>
               </a>
-              <p>I have kind of had a love and hate relationship with Javascript. But nevertheless javascript was always intriguing.
-                I didn’t spend enough time on Javascript and have been trying to make up for it of late. Having worked on Java
-                and PHP for the last 10...</p>
-              <div nz-row nzGutter="48">
-                <div nz-col nzSpan="12">
-                  <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
-                    <i class="anticon anticon-like"></i> Like</button>
-                  <button nz-button class="remove-border" nzType="default" [nzSize]="large">
-                    <i class="anticon anticon-message"></i> Answer</button>
-                  <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
+              <span>@{{feed?.author?.slug}}</span>
+            </div>
+          </div>
+
+          <a>
+            <h2>
+              <b>{{feed?.name}}</b>
+            </h2>
+          </a>
+          <p>{{feed?.body}}</p>
+          <div nz-row nzGutter="48">
+            <div nz-col nzSpan="12">
+              <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
+                <i class="anticon anticon-like"></i> Like</button>
+              <button nz-button class="remove-border" nzType="default" [nzSize]="large">
+                <i class="anticon anticon-message"></i> Answer</button>
+              <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
                     <i class="anticon anticon-plus-circle-o"></i> Follow</button> -->
-                </div>
-  
-  
-                <div nz-col nzSpan="12" style="text-align: right;">
-                    <!-- <nz-dropdown>
+            </div>
+
+
+            <div nz-col nzSpan="12" style="text-align: right;">
+              <!-- <nz-dropdown>
                         <a href="#"  class="remove-border" nz-button nz-dropdown><i class="anticon anticon-down"></i>More</a>
                         <ul nz-menu>
                           <li nz-menu-item>
@@ -87,62 +52,66 @@
                           </li>
                         </ul>
                       </nz-dropdown> -->
-                    <a href="#"  class="remove-border" nz-button><i class="anticon anticon-book"></i> Save</a>
-                    <a href="#"  class="remove-border" nz-button><i class="anticon anticon-share-alt"></i> Share</a>
-                </div>
-              </div>
-            </nz-card>
-  
-  
-  
-            <nz-card style="margin-bottom: 20px" [nzLoading]="true" [nzBordered]="true" [nzExtra]="extraTemplate">
-              <div nz-row class="card-user-info">
-                <div nz-col nzXl="2">
-                  <nz-avatar nzIcon="anticon anticon-user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-                </div>
-                <div nz-col nzXl="4">
-                  <a>
-                    <p class="card-user-name">Alex Onozor</p>
-                  </a>
-                  <span>@onozor</span>
-                </div>
-              </div>
-  
+              <a href="#" class="remove-border" nz-button>
+                <i class="anticon anticon-book"></i> Save</a>
+              <a href="#" class="remove-border" nz-button>
+                <i class="anticon anticon-share-alt"></i> Share</a>
+            </div>
+          </div>
+        </nz-card>
+
+
+
+        <!-- <nz-card style="margin-bottom: 20px" [nzLoading]="true" [nzBordered]="true" [nzExtra]="extraTemplate">
+          <div nz-row class="card-user-info">
+            <div nz-col nzXl="2">
+              <nz-avatar nzIcon="anticon anticon-user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+            </div>
+            <div nz-col nzXl="4">
               <a>
-                <h2>
-                  <b>Is it healthy for a programmer to do 90% maintenance and 10% development work? Is this good for career growth?</b>
-                </h2>
+                <p class="card-user-name">Alex Onozor</p>
               </a>
-              <p>I have kind of had a love and hate relationship with Javascript. But nevertheless javascript was always intriguing.
-                I didn’t spend enough time on Javascript and have been trying to make up for it of late. Having worked on Java
-                and PHP for the last 10...</p>
-              <div nz-row class="card-action">
-                <div nz-col nzSpan="12">
-                  <button nz-button nzType="primary" [nzSize]="large">
-                    <i class="anticon anticon-like"></i> Like</button>
-                  <button nz-button nzType="default" [nzSize]="large">
-                    <i class="anticon anticon-message"></i> Answer</button>
-                  <button nz-button nzType="default" [nzSize]="large">
-                    <i class="anticon anticon-plus-circle-o"></i> Follow</button>
-                </div>
-                <div nz-col nzSpan="12" nzOffset="12">
-                  <a href="#" nz-button><i class="anticon anticon-ellipsis"></i></a>
-                  <a href="#" nz-button ><i class="anticon anticon-ellipsis"></i></a>
-                </div>
-              </div>
-            </nz-card>
+              <span>@onozor</span>
+            </div>
           </div>
-          <div nz-col nz-col nzSpan="9">
-            <nz-card style="width:300px;">
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
-            </nz-card>
+
+          <a>
+            <h2>
+              <b>Is it healthy for a programmer to do 90% maintenance and 10% development work? Is this good for career growth?</b>
+            </h2>
+          </a>
+          <p>I have kind of had a love and hate relationship with Javascript. But nevertheless javascript was always intriguing.
+            I didn’t spend enough time on Javascript and have been trying to make up for it of late. Having worked on Java
+            and PHP for the last 10...</p>
+          <div nz-row class="card-action">
+            <div nz-col nzSpan="12">
+              <button nz-button nzType="primary" [nzSize]="large">
+                <i class="anticon anticon-like"></i> Like</button>
+              <button nz-button nzType="default" [nzSize]="large">
+                <i class="anticon anticon-message"></i> Answer</button>
+              <button nz-button nzType="default" [nzSize]="large">
+                <i class="anticon anticon-plus-circle-o"></i> Follow</button>
+            </div>
+            <div nz-col nzSpan="12" nzOffset="12">
+              <a href="#" nz-button>
+                <i class="anticon anticon-ellipsis"></i>
+              </a>
+              <a href="#" nz-button>
+                <i class="anticon anticon-ellipsis"></i>
+              </a>
+            </div>
           </div>
-  
-        </div>
-  
-      </nz-content>
-    </nz-layout>
-  </nz-layout>
- 
+        </nz-card> -->
+      </div>
+      <div nz-col nz-col nzSpan="9">
+        <nz-card style="width:300px;">
+          <p>Card content</p>
+          <p>Card content</p>
+          <p>Card content</p>
+        </nz-card>
+      </div>
+
+    </div>
+
+  </nz-content>
+</nz-layout>

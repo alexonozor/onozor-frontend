@@ -1,3 +1,12 @@
-<p>
-  sidebar works!
-</p>
+
+  <div class="logo">
+  </div>
+  <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+  
+    <li nz-menu-item *ngFor="let category of categories">
+      <span>
+        <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="category?.image"></nz-avatar>
+        <span class="nav-text">{{category?.name}}</span>
+      </span>
+    </li>
+  </ul>

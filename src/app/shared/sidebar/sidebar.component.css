@@ -1,0 +1,59 @@
+:host > ::ng-deep .ant-layout {
+    margin-bottom: 48px;
+    height: 100%;
+    
+  }
+
+  .ant-layout {
+    background-color: #e1e4f2;
+}
+
+  :host ::ng-deep .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color .3s;
+  }
+
+  :host ::ng-deep .trigger:hover {
+    color: #1890ff;
+  }
+
+  :host ::ng-deep .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, .2);
+    margin: 16px;
+  }
+
+  .ant-layout-sider {
+    transition: all .2s;
+    position: relative;
+    background: #ffffff;
+    min-width: 0;
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+}
+
+
+.card-user-name {
+  margin-bottom: 0px;
+  line-height: 1;
+  color: black;
+  font-weight: bolder;
+}
+
+.card-user-info {
+  margin-bottom: 15px;
+}
+
+
+[nz-button] {
+  margin-right: 15px;
+  font-weight: bolder;
+}
+
+.remove-border {
+  border: none;
+}
