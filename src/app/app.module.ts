@@ -11,6 +11,7 @@ import en from '@angular/common/locales/en';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
+import { Angular2TokenService, A2tUiModule } from 'angular2-token';
 
 registerLocaleData(en);
 
@@ -27,9 +28,10 @@ registerLocaleData(en);
     HttpClientModule,
     NgZorroAntdModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    A2tUiModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, Angular2TokenService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
