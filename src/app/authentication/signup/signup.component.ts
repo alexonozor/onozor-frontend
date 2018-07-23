@@ -27,15 +27,14 @@ export class SignupComponent implements OnInit {
     public _tokenService: Angular2TokenService,
     private message: NzMessageService
   ) {
-  }
-
-  ngOnInit(): void {
     this.signupForm = this.fb.group({
       email: [null, [Validators.email]],
       password: [null, [Validators.required]],
       username:  [null, [Validators.required]],
     });
   }
+
+  ngOnInit(): void {}
 
   signup() {
     this.isSubmited = true;
