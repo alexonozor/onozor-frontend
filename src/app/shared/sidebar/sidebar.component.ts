@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FeedsService } from '../../feeds/feeds.service';
 
 @Component({
-  selector: '[appSidebar]',
+  selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })

@@ -1,9 +1,8 @@
-
 <nz-layout>
-    <nz-sider>
-      <span appSidebar></span>
-    </nz-sider>
-  
+  <nz-sider>
+    <app-sidebar></app-sidebar>
+  </nz-sider>
+
   <nz-content style="margin:25px 55px;">
     <div nz-row nzGutter="48">
       <div nz-col nz-col nzSpan="12">
@@ -20,7 +19,7 @@
             </div>
           </div>
 
-          <a>
+          <a [routerLink]="['posts', feed.slug ]">
             <h2>
               <b>{{feed?.name}}</b>
             </h2>
@@ -59,49 +58,6 @@
             </div>
           </div>
         </nz-card>
-
-
-
-        <!-- <nz-card style="margin-bottom: 20px" [nzLoading]="true" [nzBordered]="true" [nzExtra]="extraTemplate">
-          <div nz-row class="card-user-info">
-            <div nz-col nzXl="2">
-              <nz-avatar nzIcon="anticon anticon-user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-            </div>
-            <div nz-col nzXl="4">
-              <a>
-                <p class="card-user-name">Alex Onozor</p>
-              </a>
-              <span>@onozor</span>
-            </div>
-          </div>
-
-          <a>
-            <h2>
-              <b>Is it healthy for a programmer to do 90% maintenance and 10% development work? Is this good for career growth?</b>
-            </h2>
-          </a>
-          <p>I have kind of had a love and hate relationship with Javascript. But nevertheless javascript was always intriguing.
-            I didn’t spend enough time on Javascript and have been trying to make up for it of late. Having worked on Java
-            and PHP for the last 10...</p>
-          <div nz-row class="card-action">
-            <div nz-col nzSpan="12">
-              <button nz-button nzType="primary" [nzSize]="large">
-                <i class="anticon anticon-like"></i> Like</button>
-              <button nz-button nzType="default" [nzSize]="large">
-                <i class="anticon anticon-message"></i> Answer</button>
-              <button nz-button nzType="default" [nzSize]="large">
-                <i class="anticon anticon-plus-circle-o"></i> Follow</button>
-            </div>
-            <div nz-col nzSpan="12" nzOffset="12">
-              <a href="#" nz-button>
-                <i class="anticon anticon-ellipsis"></i>
-              </a>
-              <a href="#" nz-button>
-                <i class="anticon anticon-ellipsis"></i>
-              </a>
-            </div>
-          </div>
-        </nz-card> -->
       </div>
       <div nz-col nz-col nzSpan="9">
         <nz-card style="width:300px;">

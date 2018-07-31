@@ -1,6 +1,6 @@
 
-
-<form nz-form [formGroup]="signupForm" class="login-form" (ngSubmit)="signup()">
+<div id="authenticate">
+  <form nz-form [formGroup]="signupForm" class="login-form" (ngSubmit)="signup()">
     <nz-alert
     *ngIf="isThereError"
     nzType="warning"
@@ -47,3 +47,4 @@
       </nz-form-control>
     </nz-form-item>
   </form>
+</div>

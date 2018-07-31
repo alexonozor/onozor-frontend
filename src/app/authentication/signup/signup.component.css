@@ -13,3 +13,10 @@
   nz-alert {
     margin-bottom: 16px;
   }
+
+  #authenticate {
+    margin-right: auto;
+    margin-left: auto;
+    width: 300px;
+    margin-top: 300px;
+  }

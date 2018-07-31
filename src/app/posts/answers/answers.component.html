@@ -1,0 +1,60 @@
+<nz-divider nzText="Answers"></nz-divider>
+<nz-card style="margin-bottom:25px;">
+  <div nz-row class="card-user-info">
+    <div nz-col nzSpan="2">
+      <nz-avatar nzIcon="anticon anticon-user" nzSrc="https://cdn.hashnode.com/res/hashnode/image/upload/w_70,h_70,c_thumb/v1532830409603/ByG0zjq4m.jpeg"></nz-avatar>
+    </div>
+    <div nz-col nzXl="5">
+      <a>
+        <p class="card-user-name">Malik Jaquan</p>
+      </a>
+      <span>@Malik</span>
+    </div>
+  </div>
+  <span class="answer-body-text">
+    The decision is completely subjective and entirely depends on a number of factors including what you want, in terms of career
+    progression, skills that you want to learn, impact you want to have, the jobs you're actually applying for enterprise
+    1 =/= enterprise 2 and startup 1 =/= startup 2 and finally your attitude most importantly.
+  </span>
+  <div nz-row nzGutter="48" class="post-action-bar">
+    <div nz-col nzSpan="12">
+      <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
+        <i class="anticon anticon-like"></i> Like</button>
+      <button nz-button class="remove-border" nzType="default" [nzSize]="large">
+        <i class="anticon anticon-message"></i> reply</button>
+      <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
+                    <i class="anticon anticon-plus-circle-o"></i> Follow </button> -->
+    </div>
+
+
+    <div nz-col nzSpan="12" style="text-align: right;">
+      <nz-dropdown>
+        <a href="#" class="remove-border" nz-button nz-dropdown>
+          <i class="anticon anticon-down"></i>More</a>
+        <ul nz-menu>
+          <li nz-menu-item>
+            <a>
+              <i class="anticon anticon-message"></i> Invite to answer</a>
+          </li>
+          <li nz-menu-item>
+            <a>
+              <i class="anticon anticon-dashboard"></i> Post Activities</a>
+          </li>
+          <li nz-menu-item>
+            <a>
+              <i class="anticon anticon-exclamation-circle-o"></i> Report</a>
+          </li>
+        </ul>
+      </nz-dropdown>
+      <a href="#" class="remove-border" nz-button>
+        <i class="anticon anticon-book"></i> Save</a>
+      <a href="#" class="remove-border" nz-button>
+        <i class="anticon anticon-share-alt"></i> Share</a>
+    </div>
+  </div>
+
+  <app-comments></app-comments>
+  <!-- comment or replies -->
+  <app-comment-form></app-comment-form>
+
+</nz-card>

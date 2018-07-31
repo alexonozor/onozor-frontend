@@ -1,0 +1,89 @@
+<nz-layout>
+  <nz-sider>
+    <app-sidebar></app-sidebar>
+  </nz-sider>
+
+  <nz-content style="margin:25px 55px;">
+    <div nz-row nzGutter="48">
+      <div nz-col nz-col nzSpan="12">
+        <nz-card style="margin-bottom: 20px">
+          <div nz-row class="card-user-info">
+            <div nz-col nzSpan="2">
+              <nz-avatar nzIcon="anticon anticon-user" nzSrc="https://cdn.hashnode.com/res/hashnode/image/upload/w_70,h_70,c_thumb/v1532830409603/ByG0zjq4m.jpeg"></nz-avatar>
+            </div>
+            <div nz-col nzXl="5">
+              <a>
+                <p class="card-user-name">Malik Jaquan</p>
+              </a>
+              <span>@Malik</span>
+            </div>
+          </div>
+
+          <h2 class="post-title">Startup or Enterprise: Which one is better from the perspective of the first job?</h2>
+
+          <span class="post-body">
+            I just finished my engineering having expertise in front-end development and have a job offer at an enterprise company. I
+            have heard a lot of friends discuss joining a startup for the first job is good. Others say the opposite. What
+            do developers like you think?
+          </span>
+          <div nz-row nzGutter="48" class="post-action-bar">
+            <div nz-col nzSpan="12">
+              <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
+                <i class="anticon anticon-like"></i> Like</button>
+              <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()">
+                <i class="anticon anticon-message"></i> Ask details (1)</button>
+              <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
+                  <i class="anticon anticon-plus-circle-o"></i> Follow </button> -->
+            </div>
+
+
+            <div nz-col nzSpan="12" style="text-align: right;">
+              <nz-dropdown>
+                <a href="#" class="remove-border" nz-button nz-dropdown>
+                  <i class="anticon anticon-down"></i>More</a>
+                <ul nz-menu>
+                  <li nz-menu-item>
+                    <a>
+                      <i class="anticon anticon-message"></i> Invite to answer</a>
+                  </li>
+                  <li nz-menu-item>
+                    <a>
+                      <i class="anticon anticon-dashboard"></i>Post Activities</a>
+                  </li>
+                  <li nz-menu-item>
+                    <a>
+                      <i class="anticon anticon-exclamation-circle-o"></i> Report</a>
+                  </li>
+                </ul>
+              </nz-dropdown>
+              <a href="#" class="remove-border" nz-button>
+                <i class="anticon anticon-book"></i> Save</a>
+              <a href="#" class="remove-border" nz-button>
+                <i class="anticon anticon-share-alt"></i> Share</a>
+            </div>
+          </div>
+
+
+          <div class="comment" *ngIf="showComment">
+            <app-comments></app-comments>
+            <app-comment-form></app-comment-form>
+          </div>
+
+        </nz-card>
+
+        <app-answer-form></app-answer-form>
+        <app-answers></app-answers>
+
+      </div>
+      <div nz-col nz-col nzSpan="9">
+        <nz-card style="width:300px;">
+          <p>Card content</p>
+          <p>Card content</p>
+          <p>Card content</p>
+        </nz-card>
+      </div>
+
+    </div>
+
+  </nz-content>
+</nz-layout>
