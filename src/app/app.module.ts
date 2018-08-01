@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { Angular2TokenService, A2tUiModule } from 'angular2-token';
 import { PostModule } from './posts/post/post.module';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
 registerLocaleData(en);
 
@@ -32,6 +33,20 @@ registerLocaleData(en);
     A2tUiModule,
     PostModule,
     SharedModule,
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          gfm: true,
+          tables: true,
+          breaks: true,
+          pedantic: false,
+          sanitize: true,
+          smartLists: true,
+          smartypants: true,
+        },
+      },
+    }),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, Angular2TokenService],
   bootstrap: [AppComponent]

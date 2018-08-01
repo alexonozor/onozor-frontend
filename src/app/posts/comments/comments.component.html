@@ -1,22 +1,26 @@
-
+<div id="comments" *ngFor="let comment of comments">
   <nz-divider></nz-divider>
   <div nz-row class="card-user-info">
     <div nz-col nzSpan="1"></div>
     <div nz-col nzSpan="2">
-      <nz-avatar nzIcon="anticon anticon-user" nzSrc="https://cdn.hashnode.com/res/hashnode/image/upload/w_70,h_70,c_thumb/v1532830409603/ByG0zjq4m.jpeg"></nz-avatar>
+      <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="comment?.author?.avatar?.thumb?.url"></nz-avatar>
     </div>
     <div nz-col nzXl="8">
       <a>
-        <p class="card-user-name">Malik Jaquan</p>
+        <p class="card-user-name">{{comment?.author?.full_name}}</p>
       </a>
-      <span>@Malik</span>
+      <span>{{comment?.author?.slug}}</span>
     </div>
+    <div nz-col nzXl="13">
+      
+        <small class="question-date">{{comment?.created_at | amTimeAgo}}</small>
+      </div>
   </div>
-  
+
   <div nz-row class="card-user-info">
     <div nz-col nzSpan="3"></div>
     <div nz-col nzXl="19">
-      <span> It's good you join a startup as this will unlock and teach you so many things.</span>
+      <span>{{comment?.body}}</span>
       <div nz-row nzGutter="48" class="post-action-bar">
         <div nz-col nzSpan="20">
           <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
@@ -27,4 +31,4 @@
       </div>
     </div>
   </div>
-  <nz-divider></nz-divider>
+</div>

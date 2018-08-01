@@ -9,29 +9,29 @@
         <nz-card style="margin-bottom: 20px">
           <div nz-row class="card-user-info">
             <div nz-col nzSpan="2">
-              <nz-avatar nzIcon="anticon anticon-user" nzSrc="https://cdn.hashnode.com/res/hashnode/image/upload/w_70,h_70,c_thumb/v1532830409603/ByG0zjq4m.jpeg"></nz-avatar>
+              <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="post?.question?.author?.avatar?.thumb?.url"></nz-avatar>
             </div>
             <div nz-col nzXl="5">
               <a>
-                <p class="card-user-name">Malik Jaquan</p>
+                <p class="card-user-name">{{post?.question?.author?.full_name}}</p>
               </a>
-              <span>@Malik</span>
+              <span>@{{post?.question?.author?.slug}}</span>
+            </div>
+            <div nz-col nzXl="17">
+              <small class="question-date">{{post?.question?.created_at | amTimeAgo}}</small>
             </div>
           </div>
 
-          <h2 class="post-title">Startup or Enterprise: Which one is better from the perspective of the first job?</h2>
-
-          <span class="post-body">
-            I just finished my engineering having expertise in front-end development and have a job offer at an enterprise company. I
-            have heard a lot of friends discuss joining a startup for the first job is good. Others say the opposite. What
-            do developers like you think?
-          </span>
+          <h2 class="post-title">{{post?.question?.name}}</h2>
+          <!-- <div class="post-body" markdown [data]="post?.question?.body"></div> -->
+          <div class="post-body" [innerHTML]="post?.question?.body  | markdown"></div>
+          
           <div nz-row nzGutter="48" class="post-action-bar">
             <div nz-col nzSpan="12">
               <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
                 <i class="anticon anticon-like"></i> Like</button>
               <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()">
-                <i class="anticon anticon-message"></i> Ask details (1)</button>
+                <i class="anticon anticon-message"></i> Ask details ({{post?.question?.comments_count}})</button>
               <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
                   <i class="anticon anticon-plus-circle-o"></i> Follow </button> -->
             </div>
@@ -64,15 +64,16 @@
           </div>
 
 
-          <div class="comment" *ngIf="showComment">
-            <app-comments></app-comments>
+          <div class="comment" [hidden]="!showComment">
+            <app-comments [slug]="slug" commentableType="question"></app-comments>
             <app-comment-form></app-comment-form>
           </div>
 
         </nz-card>
 
         <app-answer-form></app-answer-form>
-        <app-answers></app-answers>
+
+        <app-answers [slug]="slug"></app-answers>
 
       </div>
       <div nz-col nz-col nzSpan="9">

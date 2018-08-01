@@ -9,6 +9,8 @@ import { SharedModule } from '../../shared/shared.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { MomentModule } from 'ngx-moment';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     FormsModule,
     ReactiveFormsModule,
     NgZorroAntdModule,
-    SharedModule
+    SharedModule,
+    MomentModule,
+    MarkdownModule.forChild()
   ],
   declarations: [
     PostsComponent,

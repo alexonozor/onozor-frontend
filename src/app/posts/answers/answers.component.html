@@ -1,21 +1,21 @@
 <nz-divider nzText="Answers"></nz-divider>
-<nz-card style="margin-bottom:25px;">
+<nz-card style="margin-bottom:25px;" *ngFor="let answer of answers">
   <div nz-row class="card-user-info">
     <div nz-col nzSpan="2">
-      <nz-avatar nzIcon="anticon anticon-user" nzSrc="https://cdn.hashnode.com/res/hashnode/image/upload/w_70,h_70,c_thumb/v1532830409603/ByG0zjq4m.jpeg"></nz-avatar>
+      <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="answer?.author?.avatar?.thumb?.url"></nz-avatar>
     </div>
     <div nz-col nzXl="5">
       <a>
-        <p class="card-user-name">Malik Jaquan</p>
+        <p class="card-user-name">{{answer?.author?.full_name}}</p>
       </a>
-      <span>@Malik</span>
+      <span>@{{answer?.author?.slug}}</span>
     </div>
+    <div nz-col nzXl="17">
+        <small class="question-date">{{answer?.created_at | amTimeAgo}}</small>
+      </div>
   </div>
-  <span class="answer-body-text">
-    The decision is completely subjective and entirely depends on a number of factors including what you want, in terms of career
-    progression, skills that you want to learn, impact you want to have, the jobs you're actually applying for enterprise
-    1 =/= enterprise 2 and startup 1 =/= startup 2 and finally your attitude most importantly.
-  </span>
+
+  <div class="answer-body-text" markdown [data]="answer?.body | language: 'any'"></div>
   <div nz-row nzGutter="48" class="post-action-bar">
     <div nz-col nzSpan="12">
       <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
@@ -53,8 +53,8 @@
     </div>
   </div>
 
-  <app-comments></app-comments>
+  <app-comments  [slug]="answer.comments" commentableType="answer"></app-comments>
   <!-- comment or replies -->
-  <app-comment-form></app-comment-form>
+  <app-comment-form ></app-comment-form>
 
 </nz-card>

@@ -51,3 +51,7 @@
    .comment-answer-form {
      margin-top: 30px;
    }
+
+   .question-date {
+    float: right;
+  }

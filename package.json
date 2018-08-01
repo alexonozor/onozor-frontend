@@ -22,7 +22,10 @@
     "@angular/router": "^6.0.0",
     "angular2-token": "^0.2.0",
     "core-js": "^2.5.4",
+    "moment": "^2.22.2",
     "ng-zorro-antd": "^1.1.1",
+    "ngx-markdown": "^6.1.0",
+    "ngx-moment": "^3.1.0",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
