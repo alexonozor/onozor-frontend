@@ -1,19 +1,19 @@
-<div id="comments" *ngFor="let comment of comments">
+<div  *ngFor="let comment of comments" [attr.id]="'comment-' + comment?.id" >
   <nz-divider></nz-divider>
   <div nz-row class="card-user-info">
     <div nz-col nzSpan="1"></div>
     <div nz-col nzSpan="2">
-      <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="comment?.author?.avatar?.thumb?.url"></nz-avatar>
+      <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="comment?.author?.user?.thumb?.url"></nz-avatar>
     </div>
     <div nz-col nzXl="8">
       <a>
-        <p class="card-user-name">{{comment?.author?.full_name}}</p>
+        <p class="card-user-name">{{comment?.user?.full_name}}</p>
       </a>
-      <span>{{comment?.author?.slug}}</span>
+      <span><small>Replied at {{comment?.created_at | amTimeAgo}}</small></span>
     </div>
     <div nz-col nzXl="13">
       
-        <small class="question-date">{{comment?.created_at | amTimeAgo}}</small>
+        <!-- <small class="question-date">{{comment?.created_at | amTimeAgo}}</small> -->
       </div>
   </div>
 

@@ -1,5 +1,5 @@
 <nz-divider nzText="Answers"></nz-divider>
-<nz-card style="margin-bottom:25px;" *ngFor="let answer of answers">
+<nz-card style="margin-bottom:25px;" *ngFor="let answer of answers" [attr.id]="'answer-' + answer?.id" [nzLoading]="loading">
   <div nz-row class="card-user-info">
     <div nz-col nzSpan="2">
       <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="answer?.author?.avatar?.thumb?.url"></nz-avatar>
@@ -15,7 +15,7 @@
       </div>
   </div>
 
-  <div class="answer-body-text" markdown [data]="answer?.body | language: 'any'"></div>
+  <div class="answer-body-text" markdown [data]="answer?.body"></div>
   <div nz-row nzGutter="48" class="post-action-bar">
     <div nz-col nzSpan="12">
       <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
@@ -53,8 +53,8 @@
     </div>
   </div>
 
-  <app-comments  [slug]="answer.comments" commentableType="answer"></app-comments>
+  <app-comments  [slug]="answer?.id" [answerComments]="answer?.comments" commentableType="Answer"></app-comments>
   <!-- comment or replies -->
-  <app-comment-form ></app-comment-form>
+  <app-comment-form *ngIf="answer?.id" [questionId]="answer?.id" commentableType="Answer"></app-comment-form>
 
 </nz-card>

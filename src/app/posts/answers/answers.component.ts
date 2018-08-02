@@ -9,12 +9,13 @@ import { PostsService } from '../posts.service';
 export class AnswersComponent implements OnInit {
   @Input() slug: string;
   public loading: Boolean = true;
-  public answers: Array<any> = [];
+  public answers: Array<any> = ['loading', 'loading', 'loading'];
 
   constructor(public _postService: PostsService) { }
 
   ngOnInit() {
     this.getAnswers(this.slug);
+    this.listenToNewAnswerChanges();
   }
 
   getAnswers(slug) {
@@ -23,6 +24,12 @@ export class AnswersComponent implements OnInit {
       this.answers = res.answers;
     }, err => {
 
+    });
+  }
+
+  listenToNewAnswerChanges() {
+    this._postService.currenetAddedAnswer.subscribe(answer => {
+      this.answers.unshift(answer);
     });
   }
 

@@ -6,7 +6,7 @@
   <nz-content style="margin:25px 55px;">
     <div nz-row nzGutter="48">
       <div nz-col nz-col nzSpan="12">
-        <nz-card style="margin-bottom: 20px">
+        <nz-card style="margin-bottom: 20px" [nzLoading]="loading">
           <div nz-row class="card-user-info">
             <div nz-col nzSpan="2">
               <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="post?.question?.author?.avatar?.thumb?.url"></nz-avatar>
@@ -65,14 +65,13 @@
 
 
           <div class="comment" [hidden]="!showComment">
-            <app-comments [slug]="slug" commentableType="question"></app-comments>
-            <app-comment-form></app-comment-form>
+            <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
+            <app-comment-form *ngIf="post?.question?.id" [questionId]="post?.question?.id" commentableType="Question"></app-comment-form>
           </div>
 
         </nz-card>
-
-        <app-answer-form></app-answer-form>
-
+        <app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>
+        
         <app-answers [slug]="slug"></app-answers>
 
       </div>

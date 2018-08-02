@@ -13,7 +13,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   slug: String;
   public post: Object = {};
   public loading: Boolean = true;
-
+  public newAnswerReciver: Object = {};
   constructor(
     private route: ActivatedRoute,
     private _postService: PostsService
@@ -41,6 +41,10 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  updateAnswers(event) {
+    this.newAnswerReciver = event;
   }
 
 }
