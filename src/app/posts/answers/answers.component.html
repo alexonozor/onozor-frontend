@@ -1,4 +1,4 @@
-<nz-divider nzText="Answers"></nz-divider>
+<nz-divider nzText="Answers" *ngIf="answers.length > 0"></nz-divider>
 <nz-card style="margin-bottom:25px;" *ngFor="let answer of answers" [attr.id]="'answer-' + answer?.id" [nzLoading]="loading">
   <div nz-row class="card-user-info">
     <div nz-col nzSpan="2">
@@ -11,8 +11,8 @@
       <span>@{{answer?.author?.slug}}</span>
     </div>
     <div nz-col nzXl="17">
-        <small class="question-date">{{answer?.created_at | amTimeAgo}}</small>
-      </div>
+      <small class="question-date">{{answer?.created_at | amTimeAgo}}</small>
+    </div>
   </div>
 
   <div class="answer-body-text" markdown [data]="answer?.body"></div>
@@ -21,7 +21,7 @@
       <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
         <i class="anticon anticon-like"></i> Like</button>
       <button nz-button class="remove-border" nzType="default" [nzSize]="large">
-        <i class="anticon anticon-message"></i> reply</button>
+        <i class="anticon anticon-message"></i> reply ({{answer?.comments?.length}})</button>
       <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
                     <i class="anticon anticon-plus-circle-o"></i> Follow </button> -->
     </div>
@@ -32,6 +32,12 @@
         <a href="#" class="remove-border" nz-button nz-dropdown>
           <i class="anticon anticon-down"></i>More</a>
         <ul nz-menu>
+          <li nz-menu-item >
+            <a><i class="anticon anticon-edit"></i> Edit</a>
+          </li>
+          <li nz-menu-item (click)="deleteAnswer(answer?.id)">
+            <a><i class="anticon anticon-delete"></i> Delete</a>
+          </li>
           <li nz-menu-item>
             <a>
               <i class="anticon anticon-message"></i> Invite to answer</a>
@@ -53,7 +59,7 @@
     </div>
   </div>
 
-  <app-comments  [slug]="answer?.id" [answerComments]="answer?.comments" commentableType="Answer"></app-comments>
+  <app-comments [slug]="answer?.id" [answerComments]="answer?.comments" commentableType="Answer"></app-comments>
   <!-- comment or replies -->
   <app-comment-form *ngIf="answer?.id" [questionId]="answer?.id" commentableType="Answer"></app-comment-form>
 

@@ -75,4 +75,16 @@ export class PostsService {
     this.commentSource.next(comments);
   }
 
+  deleteComment(questiond_id: string, id: string) {
+    return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/comments/${id}`)
+      .pipe(map((res: Response) => res.json())
+    );
+  }
+
+  deleteAnswer(questiond_id: string, id: string) {
+    return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/answers/${id}`)
+      .pipe(map((res: Response) => res.json())
+    );
+  }
+
 }

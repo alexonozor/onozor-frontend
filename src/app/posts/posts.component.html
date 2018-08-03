@@ -25,7 +25,7 @@
           <h2 class="post-title">{{post?.question?.name}}</h2>
           <!-- <div class="post-body" markdown [data]="post?.question?.body"></div> -->
           <div class="post-body" [innerHTML]="post?.question?.body  | markdown"></div>
-          
+
           <div nz-row nzGutter="48" class="post-action-bar">
             <div nz-col nzSpan="12">
               <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
@@ -68,10 +68,9 @@
             <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
             <app-comment-form *ngIf="post?.question?.id" [questionId]="post?.question?.id" commentableType="Question"></app-comment-form>
           </div>
-
         </nz-card>
+
         <app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>
-        
         <app-answers [slug]="slug"></app-answers>
 
       </div>

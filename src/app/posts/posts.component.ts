@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from './posts.service';
+import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-posts',
@@ -14,9 +16,13 @@ export class PostsComponent implements OnInit, OnDestroy {
   public post: Object = {};
   public loading: Boolean = true;
   public newAnswerReciver: Object = {};
+
   constructor(
     private route: ActivatedRoute,
-    private _postService: PostsService
+    public router: Router,
+    public location: Location,
+    private _postService: PostsService,
+    public notification: NzNotificationService
   ) { }
 
   ngOnInit() {
@@ -31,7 +37,9 @@ export class PostsComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.post = res;
     }, err => {
-
+      this.location.back();
+      this.notification.create('error', 'Error Feching Data',
+      'We have detect some internal server error while try to render your requested data. This is embarassing and we are sorry.');
     });
   }
 

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     public router: Router,
     public _tokenService: Angular2TokenService,
-    private message: NzMessageService
+    private message: NzMessageService,
   ) {
   }
 

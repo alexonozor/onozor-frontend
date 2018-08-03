@@ -3,7 +3,7 @@
   <div nz-row class="card-user-info">
     <div nz-col nzSpan="1"></div>
     <div nz-col nzSpan="2">
-      <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="comment?.author?.user?.thumb?.url"></nz-avatar>
+      <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="comment?.user?.avatar?.thumb?.url"></nz-avatar>
     </div>
     <div nz-col nzXl="8">
       <a>
@@ -26,7 +26,7 @@
           <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
             <i class="anticon anticon-like"></i> Like</button>
           <button nz-button class="remove-border" nzType="default" [nzSize]="large"> Edit</button>
-          <button nz-button class="remove-border" nzType="default" [nzSize]="large">Delete</button>
+          <button nz-button class="remove-border" (click)="deleteComment(comment.id)" nzType="default" [nzSize]="large">Delete</button>
         </div>
       </div>
     </div>
