@@ -13,39 +13,62 @@ import { NzMessageService } from 'ng-zorro-antd';
   templateUrl: './comment-form.component.html',
   styleUrls: ['./comment-form.component.css']
 })
+
 export class CommentFormComponent implements OnInit {
   commentForm: FormGroup;
   isSubmited: Boolean = false;
   formErrors: Array<any>;
   isThereError: Boolean = false;
   loading: Boolean = true;
-  @Input() commentableType: string;
-  @Input() questionId: string;
   currentUser: Number = 1;
+
+  @Input() commentableType: string;
+  @Input() slug: string;
+  @Input() commentId: string;
+  @Input() editing: Boolean;
+  @Input() commentBody: string;
 
   constructor(
     private fb: FormBuilder,
     private message: NzMessageService,
-    public _postService: PostsService
+    public  _postService: PostsService
   ) { }
 
   ngOnInit() {
+    this.prepareCommentForm();
+  }
+
+  /**
+   * Prepare Comment form
+   */
+  prepareCommentForm() {
     this.commentForm = this.fb.group({
-      body: [null, [Validators.required]],
-      user_id: [this.currentUser, [Validators.required]],
+      body:             [null, [Validators.required]],
+      user_id:          [this.currentUser, [Validators.required]],
       commentable_type: [this.commentableType, [Validators.required]],
-      commentable_id: [this.questionId, [Validators.required]],
+      commentable_id:   [this.slug, [Validators.required]],
     });
   }
 
+  /**
+   * check if it's a new comment or it's updating/editing before submitting.
+  */
   submitForm() {
+    this.saveComment();
+  }
+
+
+  /**
+   * save comment with comment value;
+   */
+  saveComment() {
     this.isSubmited = true;
-    this._postService.saveComment(this.commentForm.value, this.questionId).subscribe(res => {
+    this._postService.saveComment(this.commentForm.value, this.slug).subscribe(res => {
       this.isSubmited = false;
       if (res.status === 500) {
         this.message.error('You can\'t submit an empty comment', { nzDuration: 3000 });
       } else {
-        this.commentForm.patchValue({body: ''});
+        this.commentForm.patchValue({ body: '' });
         this._postService.updateRecentComments(res.data);
       }
     }, error => {

@@ -21,7 +21,7 @@
       <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
         <i class="anticon anticon-like"></i> Like</button>
       <button nz-button class="remove-border" nzType="default" [nzSize]="large">
-        <i class="anticon anticon-message"></i> reply ({{answer?.comments?.length}})</button>
+        <i class="anticon anticon-message"></i> reply ({{answer?.comments_count}})</button>
       <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
                     <i class="anticon anticon-plus-circle-o"></i> Follow </button> -->
     </div>
@@ -59,8 +59,8 @@
     </div>
   </div>
 
-  <app-comments [slug]="answer?.id" [answerComments]="answer?.comments" commentableType="Answer"></app-comments>
+  <app-comments *ngIf="answer?.id" [slug]="answer?.id"  commentableType="Answer"></app-comments>
   <!-- comment or replies -->
-  <app-comment-form *ngIf="answer?.id" [questionId]="answer?.id" commentableType="Answer"></app-comment-form>
+  <app-comment-form *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comment-form>
 
 </nz-card>

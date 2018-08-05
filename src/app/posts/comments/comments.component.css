@@ -27,6 +27,11 @@
     float: right;
   }
 
+  .answer-form-action-button {
+    float: right;
+    margin: 10px 0px !important;
+  }
+
   
 
  

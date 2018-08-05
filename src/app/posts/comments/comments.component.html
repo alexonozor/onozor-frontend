@@ -17,15 +17,24 @@
       </div>
   </div>
 
-  <div nz-row class="card-user-info">
+  <div nz-row class="card-user-info" >
     <div nz-col nzSpan="3"></div>
-    <div nz-col nzXl="19">
-      <span>{{comment?.body}}</span>
+    <div nz-col nzXl="19" style="display: none" [attr.id]="'comment-form-' + comment?.id">
+      <!-- <app-comment-form *ngIf="comment?.id" [commentBody]="comment?.body" [slug]="comment?.commentable_id" [commentId]="comment?.id" [editing]="true"  [commentableType]="comment?.commentable_type"></app-comment-form> -->
+      <div class="comment-answer-form" *ngIf="comment?.id">
+          <form nz-form [formGroup]="commentUpdateForm" class="login-form" (ngSubmit)="updateCommentForm(comment)">
+            <textarea row="3" formControlName="body" [value]="comment?.body" placeholder="Update Comment" nz-input></textarea>
+            <button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Reply</button>
+          </form>
+        </div>
+    </div>
+    <div [attr.id]="'comment-body-' + comment?.id" nz-col nzXl="19" *ngIf="!editing">
+      <span [attr.id]="'comment-form-body' + comment?.id">{{comment?.body}}</span>
       <div nz-row nzGutter="48" class="post-action-bar">
         <div nz-col nzSpan="20">
           <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
-            <i class="anticon anticon-like"></i> Like</button>
-          <button nz-button class="remove-border" nzType="default" [nzSize]="large"> Edit</button>
+          <i class="anticon anticon-like"></i> Like</button>
+          <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="editComment(editing, comment?.id, i, this)"> Edit</button>
           <button nz-button class="remove-border" (click)="deleteComment(comment.id)" nzType="default" [nzSize]="large">Delete</button>
         </div>
       </div>

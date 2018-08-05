@@ -43,14 +43,20 @@ export class PostsService {
     );
   }
 
-  getComment(slug: string): Observable<any> {
+  getQuestionComments(slug: string): Observable<any> {
     return this.http.get(`${this.host}/${this.version}/questions/${slug}/comments`)
       .pipe(map((res: Response) => res.json())
     );
   }
 
+  getAnswerComments(slug: string): Observable<any> {
+    return this.http.get(`${this.host}/${this.version}/answer/${slug}/comments`)
+      .pipe(map((res: Response) => res.json())
+    );
+  }
+
   getAnswers(slug: string): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/questions/${slug}/answers`)
+    return this.http.get(`${this.host}/${this.version}/question/${slug}/answers`)
       .pipe(map((res: Response) => res.json())
     );
   }
@@ -63,6 +69,12 @@ export class PostsService {
 
   saveComment(formParams: Object, id: String): Observable<any> {
     return this.http.post(`${this.host}/${this.version}/questions/${id}/comments`, formParams)
+      .pipe(map((res: Response) => res.json())
+    );
+  }
+
+  updateComment(formParams: Object,  id: String): Observable<any> {
+    return this.http.put(`${this.host}/${this.version}/comment/${id}`, formParams)
       .pipe(map((res: Response) => res.json())
     );
   }

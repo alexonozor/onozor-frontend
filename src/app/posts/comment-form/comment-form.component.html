@@ -1,4 +1,4 @@
-<div class="comment-answer-form">
+<div class="comment-answer-form" [attr.id]="'comment-form-' + commentId">
   <form nz-form [formGroup]="commentForm" class="login-form" (ngSubmit)="submitForm()">
     <textarea row="3" formControlName="body" placeholder="Write your comment" nz-input></textarea>
     <button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Reply</button>
