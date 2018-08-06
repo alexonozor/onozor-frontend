@@ -28,6 +28,8 @@ export class CommentsComponent implements OnInit {
   isThereError: Boolean = false;
   loading: Boolean = true;
   commentId: string;
+  pageMeta: Object = {};
+  loadingComments: Boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -74,9 +76,12 @@ export class CommentsComponent implements OnInit {
     });
   }
 
-  getComments(slug, commentableType) {
+  getComments(slug, commentableType, page?) {
+    this.loadingComments = true;
     if (commentableType === 'Question') {
-      this._postService.getQuestionComments(slug).subscribe(res => {
+      this._postService.getQuestionComments(slug, page).subscribe(res => {
+        this.pageMeta = res.meta;
+        this.loadingComments = false;
         res.comments.map(item => {
          this.comments.push(item);
         });
@@ -85,15 +90,22 @@ export class CommentsComponent implements OnInit {
           'We have detect some internal server error while try to render your requested data. This is embarassing and we are sorry.');
       });
     } else {
-      this._postService.getAnswerComments(slug).subscribe(res => {
+      this._postService.getAnswerComments(slug, page).subscribe(res => {
+        this.pageMeta = res.meta;
+        this.loadingComments = false;
         res.comments.map(item => {
          this.comments.push(item);
         });
       }, err => {
+        this.loadingComments = false;
         this.notification.create('error', 'Error Feching Data',
           'We have detect some internal server error while try to render your requested data. This is embarassing and we are sorry.');
       });
     }
+  }
+
+  loadMoreComments(page) {
+    this.getComments(this.slug, this.commentableType, page);
   }
 
   listenToCommentsChanges() {
@@ -127,9 +139,5 @@ export class CommentsComponent implements OnInit {
   editComment(editing, commentId) {
     document.getElementById(`comment-body-${commentId}`).style.display = 'none';
     document.getElementById(`comment-form-${commentId}`).style.display = 'block';
-    // console.log(this.comments[index].id);
-    // if (this.comments[index].id === commentId) {
-    //   this.editing = !editing;
-    // }
   }
 }

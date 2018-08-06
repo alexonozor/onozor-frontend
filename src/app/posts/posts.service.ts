@@ -43,14 +43,14 @@ export class PostsService {
     );
   }
 
-  getQuestionComments(slug: string): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/questions/${slug}/comments`)
+  getQuestionComments(slug: string, page = 1): Observable<any> {
+    return this.http.get(`${this.host}/${this.version}/question/${slug}/comments?page=${page}`)
       .pipe(map((res: Response) => res.json())
     );
   }
 
-  getAnswerComments(slug: string): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/answer/${slug}/comments`)
+  getAnswerComments(slug: string, page = 1): Observable<any> {
+    return this.http.get(`${this.host}/${this.version}/answer/${slug}/comments?page=${page}`)
       .pipe(map((res: Response) => res.json())
     );
   }
@@ -75,6 +75,12 @@ export class PostsService {
 
   updateComment(formParams: Object,  id: String): Observable<any> {
     return this.http.put(`${this.host}/${this.version}/comment/${id}`, formParams)
+      .pipe(map((res: Response) => res.json())
+    );
+  }
+
+  updateAnswer(formParams: Object,  id: String): Observable<any> {
+    return this.http.put(`${this.host}/${this.version}/answer/${id}`, formParams)
       .pipe(map((res: Response) => res.json())
     );
   }

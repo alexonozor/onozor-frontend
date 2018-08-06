@@ -30,6 +30,10 @@ export class AnswerFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.prepareForm();
+  }
+
+  prepareForm() {
     this.answerForm = this.fb.group({
       body: [null, [Validators.required]],
       user_id: ['', [Validators.required]],

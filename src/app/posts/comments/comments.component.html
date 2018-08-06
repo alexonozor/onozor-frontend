@@ -12,15 +12,14 @@
       <span><small>Replied at {{comment?.created_at | amTimeAgo}}</small></span>
     </div>
     <div nz-col nzXl="13">
-      
         <!-- <small class="question-date">{{comment?.created_at | amTimeAgo}}</small> -->
       </div>
   </div>
 
+  
   <div nz-row class="card-user-info" >
     <div nz-col nzSpan="3"></div>
     <div nz-col nzXl="19" style="display: none" [attr.id]="'comment-form-' + comment?.id">
-      <!-- <app-comment-form *ngIf="comment?.id" [commentBody]="comment?.body" [slug]="comment?.commentable_id" [commentId]="comment?.id" [editing]="true"  [commentableType]="comment?.commentable_type"></app-comment-form> -->
       <div class="comment-answer-form" *ngIf="comment?.id">
           <form nz-form [formGroup]="commentUpdateForm" class="login-form" (ngSubmit)="updateCommentForm(comment)">
             <textarea row="3" formControlName="body" [value]="comment?.body" placeholder="Update Comment" nz-input></textarea>
@@ -41,3 +40,9 @@
     </div>
   </div>
 </div>
+<small *ngIf="pageMeta.next_page && !loadingComments"><nz-divider (click)="loadMoreComments(pageMeta.next_page)" nzText="show more comments"></nz-divider></small>
+<span *ngIf="pageMeta.next_page && loadingComments" style="text-align: center">
+    <ng-template #indicatorTemplate><i class="anticon anticon-spin anticon-loading" style="font-size: 24px;"></i>
+    </ng-template>
+    <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>
+  </span>
