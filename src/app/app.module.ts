@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule, ElementRef } from '@angular/core';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -11,9 +12,11 @@ import en from '@angular/common/locales/en';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
-import { Angular2TokenService, A2tUiModule } from 'angular2-token';
 import { PostModule } from './posts/post/post.module';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { TokenInterceptor } from './authentication/auth.interceptor';
+
 
 registerLocaleData(en);
 
@@ -30,9 +33,9 @@ registerLocaleData(en);
     HttpClientModule,
     NgZorroAntdModule,
     AppRoutingModule,
-    A2tUiModule,
     PostModule,
     SharedModule,
+    InfiniteScrollModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,
@@ -48,7 +51,14 @@ registerLocaleData(en);
       },
     }),
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }, Angular2TokenService],
+  exports: [
+    InfiniteScrollModule
+  ],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

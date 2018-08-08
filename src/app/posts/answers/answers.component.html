@@ -1,6 +1,6 @@
-<nz-divider nzText="Answers" *ngIf="answers.length > 0"></nz-divider>
-<div *ngFor="let answer of answers">
-  <nz-card style="margin-bottom:25px;" [attr.id]="'answer-' + answer?.id" [nzLoading]="loading">
+<nz-divider nzText="Answers" *ngIf="allanswers.length > 0"></nz-divider>
+<div *ngFor="let answer of allanswers" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll(pageMeta.next_page)">
+  <nz-card style="margin-bottom:25px;" [attr.id]="'answer-' + answer?.id" >
     <div nz-row class="card-user-info">
       <div nz-col nzSpan="2">
         <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="answer?.author?.avatar?.thumb?.url"></nz-avatar>
@@ -80,8 +80,15 @@
       </div>
     </div>
     <form nz-form [formGroup]="updateForm" (ngSubmit)="submitForm(answer)">
-      <textarea [nzAutosize]="{ minRows: 8, maxRows: 10 }" formControlName="body" [value]="answer?.body" placeholder="Update your answer" nz-input></textarea>
+      <textarea [nzAutosize]="{ minRows: 8, maxRows: 10 }" formControlName="body" [value]="answer?.body" placeholder="Update your answer"
+        nz-input></textarea>
       <button nz-button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Update</button>
     </form>
   </nz-card>
 </div>
+
+<span *ngIf="pageMeta.next_page && loadingAnswer" style="text-align: center">
+    <ng-template #indicatorTemplate><i class="anticon anticon-spin anticon-loading" style="font-size: 50px;"></i>
+    </ng-template>
+    <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>
+</span>

@@ -4,6 +4,9 @@ import { PostsService } from './posts.service';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { Location } from '@angular/common';
 
+
+
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -16,13 +19,15 @@ export class PostsComponent implements OnInit, OnDestroy {
   public post: Object = {};
   public loading: Boolean = true;
   public newAnswerReciver: Object = {};
+  isCurrentUser: Boolean = false;
+  currentUser: any;
 
   constructor(
     private route: ActivatedRoute,
     public router: Router,
     public location: Location,
     private _postService: PostsService,
-    public notification: NzNotificationService
+    public notification: NzNotificationService,
   ) { }
 
   ngOnInit() {
@@ -31,6 +36,8 @@ export class PostsComponent implements OnInit, OnDestroy {
       this.getPost(this.slug);
     });
   }
+
+
 
   getPost(slug) {
     this._postService.getPost(slug).subscribe(res => {
@@ -54,5 +61,4 @@ export class PostsComponent implements OnInit, OnDestroy {
   updateAnswers(event) {
     this.newAnswerReciver = event;
   }
-
 }

@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthRoutes } from './auth-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { LoginLinkComponent } from './login-link.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
   ],
   declarations: [
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    LoginLinkComponent
   ]
 })
 export class AuthModule { }

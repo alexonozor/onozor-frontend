@@ -7,6 +7,7 @@ import {
   Validators
 } from '@angular/forms';
 import { NzMessageService, NzNotificationService, NzModalService } from 'ng-zorro-antd';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-answers',
@@ -16,12 +17,14 @@ import { NzMessageService, NzNotificationService, NzModalService } from 'ng-zorr
 export class AnswersComponent implements OnInit {
   @Input() slug: string;
   public loading: Boolean = true;
-  public answers: Array<any> = ['loading', 'loading', 'loading'];
+  public loadingAnswer: Boolean = true;
+  public allanswers: Array<any> = [];
 
   updateForm: FormGroup;
   isSubmited: Boolean = false;
   formErrors: Array<any>;
   isThereError: Boolean = false;
+  pageMeta: any;
 
   constructor(
     private fb: FormBuilder,
@@ -37,18 +40,23 @@ export class AnswersComponent implements OnInit {
     this.prepareForm();
   }
 
-  getAnswers(slug) {
-    this._postService.getAnswers(slug).subscribe(res => {
+  getAnswers(slug, page?) {
+    this.loading = true;
+    this._postService.getAnswers(slug, page).subscribe(res => {
       this.loading = false;
-      this.answers = res.answers;
+      this.pageMeta = res.meta;
+      res.answers.map(item => {
+        this.allanswers.push(item);
+      });
     }, err => {
-
     });
   }
 
   listenToNewAnswerChanges() {
     this._postService.currenetAddedAnswer.subscribe(answer => {
-      this.answers.unshift(answer);
+      if (this.allanswers.length > 0) {
+        this.allanswers.unshift(answer);
+      }
     });
   }
 
@@ -66,12 +74,12 @@ export class AnswersComponent implements OnInit {
       nzContent: 'Are you sure you want to delete this question?',
       nzOkText: 'Yes',
       nzCancelText: 'Cancel',
-      nzOnOk:  function handelCancle() {
+      nzOnOk: function handelCancle() {
         const deletedElement = document.getElementById(`answer-${id}`);
         deletedElement.style.display = 'none';
-        self._postService.deleteAnswer(self.slug, id).subscribe(res => {}, err => {
-        self.message.error('Unable to delete this message, server or internet error', { nzDuration: 5000 });
-      });
+        self._postService.deleteAnswer(self.slug, id).subscribe(res => { }, err => {
+          self.message.error('Unable to delete this message, server or internet error', { nzDuration: 5000 });
+        });
       }
     });
   }
@@ -97,5 +105,23 @@ export class AnswersComponent implements OnInit {
       this.message.error('Network or server error', { nzDuration: 3000 });
     });
   }
+
+  onScroll(page) {
+    if (page && this.pageMeta.total_page !== page) {
+      if (this.loading) { return; }
+      this.loading = true;
+      this.loadingAnswer = true;
+      this._postService.getAnswers(this.slug, page).subscribe(res => {
+        this.loading = false;
+        this.loadingAnswer = false;
+        this.pageMeta = res.meta;
+        res.answers.map(item => {
+          this.allanswers.push(item);
+        });
+      }, err => {
+      });
+    }
+  }
+
 
 }

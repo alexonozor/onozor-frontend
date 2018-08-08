@@ -8,7 +8,7 @@ import {
 import { Angular2TokenService } from 'angular2-token';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -26,37 +26,32 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public router: Router,
-    public _tokenService: Angular2TokenService,
     private message: NzMessageService,
+    private _authService: AuthService
   ) {
   }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: [null, [Validators.required]],
-      password: [null, [Validators.required]],
-      remember: [true]
+      email: [null, [Validators.required, Validators.email]],
     });
   }
 
   login() {
     this.isSubmited = true;
-    this._tokenService.signIn(this.loginForm.value)
-      .subscribe(
-        res => {
-          if (localStorage.getItem('redirectTo')) {
-            this.router.navigateByUrl(localStorage.getItem('redirectTo'));
+    this._authService.login(this.loginForm.value)
+      .subscribe(res => {
+          if (res.success) {
+            this.message.success(res.message);
+            this.isSubmited = false;
+            this.loginForm.reset({email: null});
           } else {
             this.router.navigate(['/']);
           }
-        },
-        err => {
+        }, err => {
+          console.log(err);
           this.isSubmited = false;
-          const error = err.json();
           this.isThereError = true;
-          if (error) {
-            this.message.error(error.errors[0], { nzDuration: 5000 });
-          }
         }
       );
   }

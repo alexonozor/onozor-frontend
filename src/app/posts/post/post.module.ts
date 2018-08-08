@@ -6,11 +6,12 @@ import { AnswerFormComponent } from '../answer-form/answer-form.component';
 import { CommentsComponent } from '../comments/comments.component';
 import { CommentFormComponent } from '../comment-form/comment-form.component';
 import { SharedModule } from '../../shared/shared.module';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { MomentModule } from 'ngx-moment';
 import { MarkdownModule } from 'ngx-markdown';
+
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { MarkdownModule } from 'ngx-markdown';
     NgZorroAntdModule,
     SharedModule,
     MomentModule,
+    InfiniteScrollModule,
     MarkdownModule.forChild()
   ],
   declarations: [
@@ -28,7 +30,7 @@ import { MarkdownModule } from 'ngx-markdown';
     AnswersComponent,
     AnswerFormComponent,
     CommentsComponent,
-    CommentFormComponent,
+    CommentFormComponent
   ]
 })
 export class PostModule { }

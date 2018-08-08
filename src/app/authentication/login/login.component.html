@@ -4,28 +4,16 @@
         <nz-form-item>
           <nz-form-control>
             <nz-input-group nzPrefixIcon="anticon anticon-user">
-              <input type="text" nz-input formControlName="email" placeholder="Username">
+              <input type="text" nz-input formControlName="email" placeholder="Email">
             </nz-input-group>
-            <nz-form-explain *ngIf="loginForm.get('email').dirty && loginForm.get('email').errors">Please input your username!</nz-form-explain>
+            <nz-form-explain *ngIf="loginForm.get('email').dirty && loginForm.get('email').errors">Please input your email!</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-control>
-            <nz-input-group nzPrefixIcon="anticon anticon-lock">
-              <input type="password" nz-input formControlName="password" placeholder="Password">
-            </nz-input-group>
-            <nz-form-explain *ngIf="loginForm.get('password').dirty && loginForm.get('password').errors">Please input your Password!</nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-control>
-            <label nz-checkbox formControlName="remember">
-              <span>Remember me</span>
-            </label>
-            <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
+           
             <button nz-button class="login-form-button" [nzLoading]="isSubmited" [nzType]="'primary'">Log in</button>
-            Or
-            <a [routerLink]="['/authenticate/signup']">register now!</a>
+          
           </nz-form-control>
         </nz-form-item>
       </form>
