@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { PostsService } from '../posts.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { AuthService } from '../../authentication/auth.service';
+
 
 @Component({
   selector: 'app-answer-form',
@@ -19,11 +21,13 @@ export class AnswerFormComponent implements OnInit {
   formErrors: Array<any>;
   isThereError: Boolean = false;
   loading: Boolean = true;
+  currentUser: any;
 
   @Input() questionId: string;
 
 
   constructor(
+    public auth: AuthService,
     private fb: FormBuilder,
     private message: NzMessageService,
     public _postService: PostsService
@@ -31,6 +35,7 @@ export class AnswerFormComponent implements OnInit {
 
   ngOnInit() {
     this.prepareForm();
+    this.currentUser = this.auth.getCurrentUser();
   }
 
   prepareForm() {

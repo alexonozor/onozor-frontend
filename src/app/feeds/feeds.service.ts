@@ -16,8 +16,8 @@ export class FeedsService {
     public http: HttpClient
   ) { }
 
-  getFeeds(): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/questions`)
+  getFeeds(pageNumber = 1, perPage = 5): Observable<any> {
+    return this.http.get(`${this.host}/${this.version}/questions?page=${pageNumber}&per_page=${perPage}`)
       .pipe(map((res: Response) => res)
     );
   }

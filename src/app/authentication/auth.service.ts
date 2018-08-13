@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map, catchError } from 'rxjs/operators';
 import { Response } from '@angular/http';
+import CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,35 @@ export class AuthService {
 
   public getToken(): string {
     return localStorage.getItem('accessToken');
+  }
+
+  encrypt(data: any, key: string, referenceKey: string ) {
+    try {
+      const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+      localStorage.setItem(referenceKey, ciphertext);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  decrypt(data) {
+    // avoid UTF-8 Decode Error
+    try {
+      const bytes = CryptoJS.AES.decrypt(data, environment.encriptionKey);
+      if (bytes.toString()) {
+        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      }
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  getCurrentUser() {
+    const encrypt = localStorage.getItem('currentUser');
+    const currentUser =  this.decrypt(encrypt);
+    console.log(currentUser);
+    return currentUser;
   }
 
 

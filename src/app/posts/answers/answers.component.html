@@ -87,7 +87,7 @@
   </nz-card>
 </div>
 
-<span *ngIf="pageMeta.next_page && loadingAnswer" style="text-align: center">
+<span *ngIf="pageMeta?.next_page && loadingAnswer" style="text-align: center">
     <ng-template #indicatorTemplate><i class="anticon anticon-spin anticon-loading" style="font-size: 50px;"></i>
     </ng-template>
     <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>

@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './answers.component.html',
   styleUrls: ['./answers.component.css']
 })
+
 export class AnswersComponent implements OnInit {
   @Input() slug: string;
   public loading: Boolean = true;

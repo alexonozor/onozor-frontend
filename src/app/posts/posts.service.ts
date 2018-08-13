@@ -86,6 +86,12 @@ export class PostsService {
     );
   }
 
+  savePost(postId: string): Observable<any> {
+    return this.http.get(`${this.host}/${this.version}/favourites/${postId}/toggle`)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
   updateRecentAnswer(answer: Answer) {
     this.dataSource.next(answer);
   }

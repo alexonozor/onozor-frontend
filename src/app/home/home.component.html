@@ -6,7 +6,8 @@
   <nz-content style="margin:25px 55px;">
     <div nz-row nzGutter="48">
       <div nz-col nz-col nzSpan="12">
-        <nz-card *ngFor="let feed of feeds" style="margin-bottom: 20px" [nzLoading]="loading" [nzBordered]="true" [nzExtra]="extraTemplate">
+        <nz-card *ngFor="let feed of feeds" style="margin-bottom: 20px" [nzLoading]="loading" [nzBordered]="true" [nzExtra]="extraTemplate" 
+        infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta.next_page)" >
           <div nz-row class="card-user-info">
             <div nz-col nzSpan="2">
               <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="feed?.author?.avatar?.thumb.url"></nz-avatar>
@@ -58,6 +59,12 @@
             </div>
           </div>
         </nz-card>
+        
+        <span *ngIf="meta?.next_page && loadingAnswer" style="text-align: center">
+          <ng-template #indicatorTemplate><i class="anticon anticon-spin anticon-loading" style="font-size: 50px;"></i>
+          </ng-template>
+          <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>
+      </span>
       </div>
       <div nz-col nz-col nzSpan="9">
         <nz-card style="width:300px;">
