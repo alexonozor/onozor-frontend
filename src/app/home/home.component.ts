@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedsService } from '../feeds/feeds.service';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-home',
@@ -11,7 +14,12 @@ export class HomeComponent implements OnInit {
   loading: Boolean = true;
   meta:  any;
   loadingAnswer: Boolean = true;
-  constructor(public feedsService: FeedsService) { }
+  sharePost: Boolean = false;
+  postUrL: String;
+
+  constructor(public feedsService: FeedsService,  public router: Router) {
+    this.postUrL = this.router.url;
+  }
 
   ngOnInit() {
     this.feedsService.getFeeds().subscribe(res => {
@@ -37,6 +45,10 @@ export class HomeComponent implements OnInit {
       }, err => {
       });
     }
+  }
+
+  toggleShare() {
+   this.sharePost = !this.sharePost;
   }
 
 }

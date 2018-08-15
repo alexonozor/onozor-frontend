@@ -6,14 +6,15 @@ import { Location } from '@angular/common';
 import { AuthService } from '../authentication/auth.service';
 
 
-
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
+
 export class PostsComponent implements OnInit, OnDestroy {
   showComment: Boolean = false;
+  sharePost: Boolean = false;
   private sub: any;
   slug: String;
   public post: Object = {};
@@ -22,6 +23,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   isCurrentUser: Boolean = false;
   currentUser: any;
   public favourite: Boolean = true;
+  postUrL: String;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +32,9 @@ export class PostsComponent implements OnInit, OnDestroy {
     private _postService: PostsService,
     public notification: NzNotificationService,
     public auth: AuthService
-  ) { }
+  ) {
+    this.postUrL = this.router.url;
+  }
 
   ngOnInit() {
     this.auth.getCurrentUser();
@@ -75,8 +79,20 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   toggleComment() {
-    this.showComment = !this.showComment;
+    if (this.sharePost) {
+      this.sharePost = !this.sharePost;
+   }
+   this.showComment = !this.showComment;
   }
+
+  toggleShare() {
+    if (this.showComment) {
+      this.showComment = !this.showComment;
+   }
+   this.sharePost = !this.sharePost;
+  }
+
+
 
   ngOnDestroy() {
     this.sub.unsubscribe();

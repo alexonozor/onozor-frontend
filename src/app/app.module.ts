@@ -20,6 +20,7 @@ import { TokenInterceptor } from './authentication/auth.interceptor';
 
 registerLocaleData(en);
 
+
 @NgModule({
   declarations: [
     AppComponent,

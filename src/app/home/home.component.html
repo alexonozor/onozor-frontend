@@ -39,24 +39,25 @@
 
             <div nz-col nzSpan="12" style="text-align: right;">
               <!-- <nz-dropdown>
-                        <a href="#"  class="remove-border" nz-button nz-dropdown><i class="anticon anticon-down"></i>More</a>
-                        <ul nz-menu>
-                          <li nz-menu-item>
-                            <a><i class="anticon anticon-message"></i> Invite to answer</a>
-                          </li>
-                          <li nz-menu-item>
-                            <a><i class="anticon anticon-dashboard"></i> Post Activities</a>
-                          </li>
-                          <li nz-menu-item>
-                            <a><i class="anticon anticon-exclamation-circle-o"></i> Report</a>
-                          </li>
-                        </ul>
-                      </nz-dropdown> -->
+                    <a href="#"  class="remove-border" nz-button nz-dropdown><i class="anticon anticon-down"></i>More</a>
+                    <ul nz-menu>
+                      <li nz-menu-item>
+                        <a><i class="anticon anticon-message"></i> Invite to answer</a>
+                      </li>
+                      <li nz-menu-item>
+                        <a><i class="anticon anticon-dashboard"></i> Post Activities</a>
+                      </li>
+                      <li nz-menu-item>
+                        <a><i class="anticon anticon-exclamation-circle-o"></i> Report</a>
+                      </li>
+                    </ul>
+                  </nz-dropdown> -->
               <a href="#" class="remove-border" nz-button>
                 <i class="anticon anticon-book"></i> Save</a>
-              <a href="#" class="remove-border" nz-button>
-                <i class="anticon anticon-share-alt"></i> Share</a>
+              <button (click)="toggleShare()"  class="remove-border" nz-button>
+                <i class="anticon anticon-share-alt"></i> Share</button>
             </div>
+            <app-share-post [hidden]="!sharePost" *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post>
           </div>
         </nz-card>
         

@@ -1,0 +1,6 @@
+<div id="share-question">
+    <nz-divider nzDashed [nzText]="text">
+      <ng-template #text><i class="anticon anticon-share-alt"></i> Share {{postType}}</ng-template>
+    </nz-divider>
+    <a  *ngFor="let share of shares" target="_blank" [href]="share.link" nz-button nzType="default" nzSize="large" nzShape="circle" [ngClass]="share.name"><i [ngClass]="share.icon"></i></a>
+ </div>

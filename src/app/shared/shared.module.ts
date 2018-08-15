@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { SharePostComponent } from './share-post/share-post.component';
 
 @NgModule({
   imports: [
@@ -15,12 +16,14 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    SharePostComponent
   ],
   exports: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    SharePostComponent
   ]
 })
 export class SharedModule { }

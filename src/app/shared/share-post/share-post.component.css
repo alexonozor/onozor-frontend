@@ -1,0 +1,40 @@
+
+ #share-question {
+    text-align: center;
+    font-size: 15px;
+  }
+ 
+  #share-question .reddit {
+   color: #ff4500;
+  }
+ 
+  #share-question .twitter {
+   color: #1890ff;
+  }
+ 
+  #share-question .facebook {
+   color: #3b5998;
+  }
+ 
+  #share-question .google {
+   color: #ff4500;
+  } 
+ 
+  #share-question .whatsapp {
+   color: #25d366;
+  }
+ 
+  #share-question .y-combinator {
+   color: #ff4500;
+  }
+
+
+  #share-question .linkedin {
+    color: #3b5998;
+   }
+
+  
+
+  #share-question a {
+    margin-left: 15px;
+   }
