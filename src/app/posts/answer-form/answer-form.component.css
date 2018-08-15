@@ -1,0 +1,17 @@
+.answer-form-action-button {
+    float: right;
+    margin: 10px 0px !important;
+  }
+
+  .card-user-info {
+    margin-bottom: 15px;
+  }
+  
+  .card-user-name {
+    margin-bottom: 0px;
+    line-height: 1;
+    color: black;
+    font-weight: bolder;
+  }
+
+  

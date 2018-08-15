@@ -1,8 +1,9 @@
+
 :host > ::ng-deep .ant-layout {
     margin-bottom: 48px;
     height: 100%;
     
-  }
+}
 
   .ant-layout {
     background-color: #e1e4f2;

@@ -1,0 +1,22 @@
+.login-form {
+    max-width: 300px;
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+  }
+
+  nz-alert {
+    margin-bottom: 16px;
+  }
+
+  #authenticate {
+    margin-right: auto;
+    margin-left: auto;
+    width: 300px;
+    margin-top: 300px;
+  }

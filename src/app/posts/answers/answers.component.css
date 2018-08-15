@@ -1,0 +1,57 @@
+
+.card-user-name {
+    margin-bottom: 0px;
+    line-height: 1;
+    color: black;
+    font-weight: bolder;
+  }
+  
+  .card-user-info {
+    margin-bottom: 15px;
+  }
+  
+  
+  [nz-button] {
+    margin-right: 15px;
+    font-weight: bolder;
+  }
+  
+  .remove-border {
+    border: none;
+  }
+
+
+.post-body {
+    font-size: 25px;
+    margin-bottom: 20px;
+    word-break: break-word;
+    line-height: 1.6;
+    font-size: 1.13rem;
+    color: #23242b;
+   }
+  
+   .post-action-bar {
+     margin-top: 25px;
+   }
+  
+   .answer-form-action-button {
+     float: right;
+     margin: 10px 0px !important;
+   }
+  
+   .answer-body-text {
+    font-size: 25px;
+    margin-bottom: 20px;
+    word-break: break-word;
+    line-height: 1.6;
+    font-size: 1.13rem;
+    color: #23242b;
+   }
+  
+   .comment-answer-form {
+     margin-top: 30px;
+   }
+
+   .question-date {
+    float: right;
+  }

@@ -1,0 +1,71 @@
+.ant-layout {
+  background-color: #e1e4f2;
+}
+
+.ant-layout-sider {
+  transition: all .2s;
+  position: relative;
+  background: #ffffff;
+  min-width: 0;
+  width: 250px !important;
+  min-width: 250px !important;
+  max-width: 250px !important;
+}
+
+
+.card-user-name {
+  margin-bottom: 0px;
+  line-height: 1;
+  color: black;
+  font-weight: bolder;
+}
+
+.card-user-info {
+  margin-bottom: 15px;
+}
+
+
+[nz-button] {
+  margin-right: 15px;
+  font-weight: bolder;
+}
+
+.remove-border {
+  border: none;
+}
+
+.post-title {
+  font-size: 30px;
+  font-weight: bolder;
+  line-height: 35px;
+}
+
+.post-body {
+  font-size: 25px;
+  margin-bottom: 20px;
+  word-break: break-word;
+  line-height: 1.6;
+  font-size: 1.13rem;
+  color: #23242b;
+ }
+
+ .post-action-bar {
+   margin-top: 25px;
+ }
+
+.answer-form-action-button {
+   float: right;
+   margin: 10px 0px !important;
+ }
+
+ .question-date {
+   float: right;
+ }
+
+ .red {
+   color: #ff0000;
+ }
+ 
+
+
+

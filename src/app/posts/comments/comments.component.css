@@ -1,0 +1,37 @@
+.card-user-name {
+    margin-bottom: 0px;
+    line-height: 1;
+    color: black;
+    font-weight: bolder;
+  }
+  
+  .card-user-info {
+    margin-bottom: 15px;
+  }
+  
+  
+  [nz-button] {
+    margin-right: 15px;
+    font-weight: bolder;
+  }
+  
+  .remove-border {
+    border: none;
+  }
+
+  .post-action-bar {
+    margin-top: 25px;
+  }
+
+  .question-date {
+    float: right;
+  }
+
+  .answer-form-action-button {
+    float: right;
+    margin: 10px 0px !important;
+  }
+
+  
+
+ 

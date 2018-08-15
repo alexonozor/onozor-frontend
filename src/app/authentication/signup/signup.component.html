@@ -1,3 +1,50 @@
-<p>
-  signup works!
-</p>
+<!-- 
+<div id="authenticate">
+  <form nz-form [formGroup]="signupForm" class="login-form" (ngSubmit)="signup()">
+    <nz-alert
+    *ngIf="isThereError"
+    nzType="warning"
+    nzType="error"
+    nzCloseable
+    nzMessage="Signup Failed"
+    [nzDescription]="formErrors"
+    (nzOnClose)="afterClose()"
+    nzShowIcon>
+</nz-alert>
+    <nz-form-item>
+        <nz-form-control>
+          <nz-input-group nzPrefixIcon="anticon anticon-user">
+            <input type="text" nz-input formControlName="username" placeholder="Username">
+          </nz-input-group>
+          <nz-form-explain *ngIf="signupForm.get('username').dirty && signupForm.get('username').errors">Please input your username!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="anticon anticon-user">
+          <input type="text" nz-input formControlName="email" placeholder="Email">
+        </nz-input-group>
+        <nz-form-explain *ngIf="signupForm.get('email').dirty && signupForm.get('email').errors">Please input your email!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="anticon anticon-lock">
+          <input type="password" nz-input formControlName="password" placeholder="Password">
+        </nz-input-group>
+        <nz-form-explain *ngIf="signupForm.get('password').dirty && signupForm.get('password').errors">Please input your Password!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox>
+          <span>Remember me</span>
+        </label>
+        <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
+        <button nz-button class="login-form-button" [nzLoading]="isSubmited" [nzType]="'primary'">Join Onozor</button>
+        Or
+        <a [routerLink]="['/authenticate']">Login</a>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div> -->

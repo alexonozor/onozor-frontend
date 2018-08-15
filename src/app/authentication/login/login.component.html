@@ -1,3 +1,20 @@
-<p>
-  login works!
-</p>
+
+<div nzAlign="center" id="authenticate">
+    <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="login()">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-user">
+              <input type="text" nz-input formControlName="email" placeholder="Email">
+            </nz-input-group>
+            <nz-form-explain *ngIf="loginForm.get('email').dirty && loginForm.get('email').errors">Please input your email!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+           
+            <button nz-button class="login-form-button" [nzLoading]="isSubmited" [nzType]="'primary'">Log in</button>
+          
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+</div>

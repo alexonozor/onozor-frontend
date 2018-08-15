@@ -1,0 +1,17 @@
+<nz-card style="margin-bottom:25px;">
+  <div nz-row class="card-user-info">
+    <div nz-col nzSpan="2">
+      <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="currentUser.avatar.thumb.url"></nz-avatar>
+    </div>
+    <div nz-col nzXl="8">
+      <a>
+        <p class="card-user-name">{{currentUser.first_name}} {{currentUser.last_name}}</p>
+      </a>
+      <span>@{{currentUser.username}}</span>
+    </div>
+  </div>
+  <form nz-form [formGroup]="answerForm" class="login-form" (ngSubmit)="submitForm()">
+    <textarea [nzAutosize]="{ minRows: 8, maxRows: 10 }" formControlName="body" placeholder="Write your answer" nz-input></textarea>
+    <button nz-button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Submit</button>
+  </form>
+</nz-card>
