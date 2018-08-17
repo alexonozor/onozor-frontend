@@ -60,7 +60,6 @@ export class AuthService {
   getCurrentUser() {
     const encrypt = localStorage.getItem('currentUser');
     const currentUser =  this.decrypt(encrypt);
-    console.log(currentUser);
     return currentUser;
   }
 

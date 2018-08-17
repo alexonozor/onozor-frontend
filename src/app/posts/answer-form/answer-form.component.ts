@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import {
   AbstractControl,
   FormBuilder,
@@ -24,6 +25,12 @@ export class AnswerFormComponent implements OnInit {
   currentUser: any;
 
   @Input() questionId: string;
+
+  public options: Object = {
+    charCounterCount: true,
+    toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript',
+    'superscript', '|', 'quote', 'insertLink', 'insertImage', '|', 'html']
+};
 
 
   constructor(

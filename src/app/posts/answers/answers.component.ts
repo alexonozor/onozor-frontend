@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PostsService } from '../posts.service';
+import { AuthService } from '../../authentication/auth.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -26,14 +27,18 @@ export class AnswersComponent implements OnInit {
   formErrors: Array<any>;
   isThereError: Boolean = false;
   pageMeta: any;
+  currentUser: any;
 
   constructor(
     private fb: FormBuilder,
     public _postService: PostsService,
     public notification: NzNotificationService,
     public modalService: NzModalService,
-    public message: NzMessageService
-  ) { }
+    public message: NzMessageService,
+    public auth: AuthService
+  ) {
+    this.currentUser = this.auth.getCurrentUser();
+  }
 
   ngOnInit() {
     this.getAnswers(this.slug);

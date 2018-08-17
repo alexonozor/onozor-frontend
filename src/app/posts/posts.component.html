@@ -24,43 +24,57 @@
 
           <h2 class="post-title">{{post?.question?.name}}</h2>
           <!-- <div class="post-body" markdown [data]="post?.question?.body"></div> -->
-          <div class="post-body" [innerHTML]="post?.question?.body  | markdown"></div>
+          <div class="post-body"  [innerHTML]="post?.question?.body  | markdown"></div>
 
           <div nz-row nzGutter="48" class="post-action-bar">
-            <div nz-col nzSpan="12">
-              <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
-                <i class="anticon anticon-like"></i> Like</button>
-              <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()">
-                <i class="anticon anticon-message"></i> Ask details ({{post?.question?.comments_count}})</button>
+            <div nz-col nzSpan="15">
+
+              <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="upvote()">
+                <i class="fa fa-arrow-up"></i> Upvote {{post?.question?.vote_count}}</button>
+                <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="downvote()">
+                  <i class="fa fa-arrow-down"></i> Downvote</button>
+
+              <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()" nz-tooltip nzTitle="Unable to understand the question? ask for more info.">
+                <i class="fa fa-reply"></i> Ask details ({{post?.question?.comments_count}})</button>
               <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
                   <i class="anticon anticon-plus-circle-o"></i> Follow </button> -->
             </div>
 
-
-            <div nz-col nzSpan="12" style="text-align: right;">
-              <!-- <nz-dropdown>
-                <a href="#" class="remove-border" nz-button nz-dropdown>
-                  <i class="anticon anticon-down"></i>More</a>
+            <div nz-col nzSpan="9" style="text-align: right;">
+              <nz-dropdown *ngIf="currentUser && currentUser.id == post?.author?.id">
+                <button class="remove-border" nzSize="large" nz-button nz-dropdown nz-tooltip nzTitle="More">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
                 <ul nz-menu>
-                  <li nz-menu-item>
+                    <li nz-menu-item>
+                      <a>
+                        <i class="fa fa-edit"></i> Edit </a>
+                    </li>
+                    <li nz-menu-item>
+                      <a>
+                        <i class="fa fa-trash-alt"></i> Delete Post </a>
+                    </li>   
+                  <!-- <li nz-menu-item>
                     <a>
                       <i class="anticon anticon-message"></i> Invite to answer</a>
                   </li>
                   <li nz-menu-item>
                     <a>
-                      <i class="anticon anticon-dashboard"></i>Post Activities</a>
+                      <i class="anticon anticon-dashboard"></i> Post Activities</a>
                   </li>
                   <li nz-menu-item>
                     <a>
                       <i class="anticon anticon-exclamation-circle-o"></i> Report</a>
-                  </li>
+                  </li> -->
                 </ul>
-              </nz-dropdown> -->
+              </nz-dropdown>
 
-              <button  class="remove-border" nz-button (click)="favouritePost(post)">
-                <i [ngClass]="favourite? 'anticon anticon-heart red' : 'anticon anticon-heart-o'"></i> Favorite</button>
-              <button (click)="toggleShare()" class="remove-border" nz-button>
-                <i class="anticon anticon-share-alt"></i> Share</button>
+              <button class="remove-border" nzSize="large" nz-button (click)="favouritePost(post)" nz-tooltip nzTitle="Favorite">
+                <i [ngClass]="favourite? 'anticon anticon-heart red' : 'anticon anticon-heart-o'"></i>
+              </button>
+              <button (click)="toggleShare()" nzSize="large" class="remove-border" nz-button nz-tooltip nzTitle="Share">
+                <i class="anticon anticon-share-alt"></i>
+              </button>
             </div>
           </div>
 

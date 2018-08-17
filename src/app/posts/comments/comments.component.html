@@ -31,16 +31,16 @@
       <span [attr.id]="'comment-form-body' + comment?.id">{{comment?.body}}</span>
       <div nz-row nzGutter="48" class="post-action-bar">
         <div nz-col nzSpan="20">
-          <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
-          <i class="anticon anticon-like"></i> Like</button>
-          <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="editComment(editing, comment?.id, i, this)"> Edit</button>
-          <button nz-button class="remove-border" (click)="deleteComment(comment.id)" nzType="default" [nzSize]="large">Delete</button>
+          <span *ngIf="currentUser && currentUser.id == comment?.user?.id">
+            <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="editComment(editing, comment?.id, i, this)"> Edit</button>
+            <button nz-button class="remove-border" (click)="deleteComment(comment.id)" nzType="default" [nzSize]="large">Delete</button>
+         </span>
         </div>
       </div>
     </div>
   </div>
 </div>
-<small *ngIf="pageMeta.next_page && !loadingComments"><nz-divider (click)="loadMoreComments(pageMeta.next_page)" nzText="show more comments"></nz-divider></small>
+<small *ngIf="pageMeta.next_page && !loadingComments"><nz-divider (click)="loadMoreComments(pageMeta.next_page)" style="cursor: pointer;" nzText="show more comments"></nz-divider></small>
 <span *ngIf="pageMeta.next_page && loadingComments" style="text-align: center">
     <ng-template #indicatorTemplate><i class="anticon anticon-spin anticon-loading" style="font-size: 24px;"></i>
     </ng-template>
