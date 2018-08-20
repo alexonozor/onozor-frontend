@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { MomentModule } from 'ngx-moment';
 import { MarkdownModule } from 'ngx-markdown';
+import { PostActionComponent } from '../post-action/post-action.component';
 
 
 
@@ -30,7 +31,9 @@ import { MarkdownModule } from 'ngx-markdown';
     AnswersComponent,
     AnswerFormComponent,
     CommentsComponent,
-    CommentFormComponent
-  ]
+    CommentFormComponent,
+    PostActionComponent
+  ],
+  exports: [PostActionComponent]
 })
 export class PostModule { }

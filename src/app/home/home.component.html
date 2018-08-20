@@ -7,7 +7,7 @@
     <div nz-row nzGutter="48">
       <div nz-col nz-col nzSpan="12">
         <nz-card *ngFor="let feed of feeds" style="margin-bottom: 20px" [nzLoading]="loading" [nzBordered]="true" [nzExtra]="extraTemplate" 
-        infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta.next_page)" >
+        infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)" >
           <div nz-row class="card-user-info">
             <div nz-col nzSpan="2">
               <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="feed?.author?.avatar?.thumb.url"></nz-avatar>
@@ -27,37 +27,8 @@
           </a>
           <p>{{feed?.body}}</p>
           <div nz-row nzGutter="48">
-            <div nz-col nzSpan="12">
-              <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
-                <i class="anticon anticon-like"></i> Like</button>
-              <button nz-button class="remove-border" nzType="default" [nzSize]="large">
-                <i class="anticon anticon-message"></i> Answer</button>
-              <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
-                    <i class="anticon anticon-plus-circle-o"></i> Follow</button> -->
-            </div>
-
-
-            <div nz-col nzSpan="12" style="text-align: right;">
-              <!-- <nz-dropdown>
-                    <a href="#"  class="remove-border" nz-button nz-dropdown><i class="anticon anticon-down"></i>More</a>
-                    <ul nz-menu>
-                      <li nz-menu-item>
-                        <a><i class="anticon anticon-message"></i> Invite to answer</a>
-                      </li>
-                      <li nz-menu-item>
-                        <a><i class="anticon anticon-dashboard"></i> Post Activities</a>
-                      </li>
-                      <li nz-menu-item>
-                        <a><i class="anticon anticon-exclamation-circle-o"></i> Report</a>
-                      </li>
-                    </ul>
-                  </nz-dropdown> -->
-              <a href="#" class="remove-border" nz-button>
-                <i class="anticon anticon-book"></i> Save</a>
-              <button (click)="toggleShare()"  class="remove-border" nz-button>
-                <i class="anticon anticon-share-alt"></i> Share</button>
-            </div>
-            <app-share-post [hidden]="!sharePost" *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post>
+            <app-post-action-bar  [post]="feed" postType="question" [componentName]='componentName'></app-post-action-bar>
+            <app-share-post [hidden]="!feed.sharePost" *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post>
           </div>
         </nz-card>
         

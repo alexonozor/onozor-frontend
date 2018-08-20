@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { AuthService } from '../../authentication/auth.service';
+import { UiUpdateService } from '../ui-update.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -28,6 +29,8 @@ export class AnswersComponent implements OnInit {
   isThereError: Boolean = false;
   pageMeta: any;
   currentUser: any;
+  postUrL: String;
+  componentName: String = 'answer';
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +38,8 @@ export class AnswersComponent implements OnInit {
     public notification: NzNotificationService,
     public modalService: NzModalService,
     public message: NzMessageService,
-    public auth: AuthService
+    public auth: AuthService,
+    public _uiUpdateService: UiUpdateService
   ) {
     this.currentUser = this.auth.getCurrentUser();
   }
@@ -44,6 +48,7 @@ export class AnswersComponent implements OnInit {
     this.getAnswers(this.slug);
     this.listenToNewAnswerChanges();
     this.prepareForm();
+    this.listenAndChooseVote();
   }
 
   getAnswers(slug, page?) {
@@ -128,6 +133,69 @@ export class AnswersComponent implements OnInit {
       });
     }
   }
+
+  upvote(answer) {
+    if (answer.vote.currentUserHasUpvote) {
+      answer.vote_count -= 1;
+      answer.vote.currentUserHasUpvote = false;
+      answer.vote.voteValue = -1;
+    } else if (answer.vote_count === -1) {
+      answer.vote_count += 2;
+      answer.vote.voteValue = +1;
+      answer.vote.currentUserHasUpvote = true;
+      answer.vote.currentUserHasDownVote = false;
+    } else {
+      answer.vote_count += 1;
+      answer.vote.voteValue = +1;
+      answer.vote.currentUserHasUpvote = true;
+      answer.vote.currentUserHasDownVote = false;
+    }
+
+    this.vote({value: answer.vote.voteValue, id: answer.id  }, 'answers');
+    // console.log({value: this.post.question.vote_count, id: this.post.question.id  });
+  }
+
+  downvote(answer) {
+    if (answer.vote.currentUserHasDownVote) {
+      answer.vote_count += 1;
+      answer.vote.voteValue = +1;
+      // this.post.question.vote.currentUserHasUpvote = false;
+      answer.vote.currentUserHasDownVote = false;
+    } else if (answer.vote_count === +1) {
+      answer.vote_count -= 2;
+      answer.vote.voteValue = -1;
+      answer.vote.currentUserHasDownVote = true;
+      answer.vote.currentUserHasUpvote = false;
+    } else {
+      answer.vote_count -= 1;
+      answer.vote.voteValue = -1;
+      //  this.post.question.vote.currentUserHasUpvote = false;
+      answer.vote.currentUserHasDownVote = true;
+    }
+    this.vote({value: answer.vote.voteValue, id: answer.id  }, 'answers');
+  }
+
+  listenAndChooseVote() {
+    this._uiUpdateService.listenToVotes.subscribe(res => {
+      if (res && res.postType === 'answer') {
+        if (res.direction === 'up') {
+          this.upvote(res);
+        } else {
+          this.downvote(res);
+        }
+      }
+    });
+  }
+
+  vote(params, type) {
+    this._postService.vote(params, type).subscribe(res => {
+      if (res.success) {}
+    }, err => {
+      console.log(err);
+    });
+  }
+
+
 
 
 }

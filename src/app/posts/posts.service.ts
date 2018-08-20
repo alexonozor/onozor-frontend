@@ -113,8 +113,8 @@ export class PostsService {
   }
 
 
-  vote(voteParams: object, id: string, type: string): Observable<any> {
-    return this.http.post(`${this.host}/${this.version}/${type}/${id}/vote`, voteParams)
+  vote(voteParams: any, type: string): Observable<any> {
+    return this.http.post(`${this.host}/${this.version}/${type}/${voteParams.id}/vote`, voteParams)
       .pipe(map((res: Response) => res)
     );
   }

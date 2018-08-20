@@ -18,17 +18,8 @@
 
     <div class="answer-body-text" markdown [data]="answer?.body"></div>
     <div nz-row nzGutter="48" class="post-action-bar">
-      <div nz-col nzSpan="15">
-      <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()">
-        <i class="fa fa-arrow-up"></i> Upvote {{answer?.vote_count}}</button>
-        <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()">
-          <i class="fa fa-arrow-down"></i> Downvote</button>
-
-        <button nz-button class="remove-border" nzType="default" [nzSize]="large">
-          <i class="anticon anticon-message"></i> reply ({{answer?.comments_count}})</button>
-        <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
-                          <i class="anticon anticon-plus-circle-o"></i> Follow </button> -->
-      </div>
+  
+      <app-post-action-bar  [post]="answer" postType="answer" [componentName]='componentName'></app-post-action-bar>
 
 
       <div nz-col nzSpan="16" style="text-align: right;">
@@ -45,24 +36,9 @@
               <a>
                 <i class="anticon anticon-delete"></i> Delete</a>
             </li>
-            <!-- <li nz-menu-item>
-              <a>
-                <i class="anticon anticon-message"></i> Invite to answer</a>
-            </li>
-            <li nz-menu-item>
-              <a>
-                <i class="anticon anticon-dashboard"></i> Post Activities</a>
-            </li>
-            <li nz-menu-item>
-              <a>
-                <i class="anticon anticon-exclamation-circle-o"></i> Report</a>
-            </li> -->
+           
           </ul>
         </nz-dropdown>
-        <!-- <a href="#" class="remove-border" nz-button>
-          <i class="anticon anticon-book"></i> Save</a>
-        <a href="#" class="remove-border" nz-button>
-          <i class="anticon anticon-share-alt"></i> Share</a> -->
       </div>
     </div>
 
