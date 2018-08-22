@@ -1,24 +1,33 @@
-<nz-card style="margin-bottom:25px;">
-    <div nz-row class="card-user-info">
-        <div nz-col nzSpan="2">
-          <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="currentUser.avatar.thumb.url"></nz-avatar>
-        </div>
-        <div nz-col nzXl="8">
-          <a>
-            <p class="card-user-name">{{currentUser.first_name}} {{currentUser.last_name}}</p>
-          </a>
-          <span>@{{currentUser.username}}</span>
-        </div>
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
+  <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+    <mat-card class="example-card">
+      <div class="row" fxFlexAlign="start">
+        <mat-card-header fxFlex="50">
+          <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + currentUser.avatar.thumb.url+ ')', 'background-size': 'cover'}"></div>
+          <mat-card-title>{{currentUser.first_name}} {{currentUser.last_name}}</mat-card-title>
+          <mat-card-subtitle>@{{currentUser.username}}</mat-card-subtitle>
+        </mat-card-header>
       </div>
-  <nz-tabset>
-    <nz-tab nzTitle="Write">
-      <form nz-form [formGroup]="answerForm" class="login-form" (ngSubmit)="submitForm()">
-        <textarea [nzAutosize]="{ minRows: 8, maxRows: 10 }"  formControlName="body" placeholder="Write your answer" nz-input></textarea>
-        <button nz-button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Submit</button>
-      </form>
-    </nz-tab>
-    <nz-tab nzTitle="Preview">
-        <div class="post-body"  [innerHTML]="answerForm.value.body | markdown"></div>
-    </nz-tab>
-  </nz-tabset>
-</nz-card>
+
+      <mat-card-content>
+        <mat-tab-group>
+          <mat-tab label="WRITE">
+            <form [formGroup]="answerForm" class="login-form" (ngSubmit)="submitForm()" fxLayout="column" fxLayoutAlign="start end">
+              <mat-form-field fxFlex="100%" fxFlexFill>
+                <textarea matInput rows="10" formControlName="body" placeholder="Write your answer"></textarea>
+                <mat-hint align="start">
+                  <strong>This form support markdown</strong>
+                </mat-hint>
+              </mat-form-field>
+              <button mat-raised-button color="primary">Submit</button>
+            </form>
+          </mat-tab>
+          <mat-tab label="PREVIEW">
+            <div class="post-body" [innerHTML]="answerForm.value.body | markdown"></div>
+          </mat-tab>
+
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

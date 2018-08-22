@@ -1,8 +1,8 @@
-<div  [attr.id]="'comment-form-' + commentId">
+<div  [attr.id]="'comment-form-' + commentId" style="margin-top: 40px;">
   <mat-progress-bar *ngIf="isSubmited" mode="indeterminate"></mat-progress-bar>
 
   <form [formGroup]="commentForm" (ngSubmit)="submitForm()" fxLayout="column" fxLayoutAlign="start end">
-    <mat-form-field nz-form fxFlex="100%" fxFlexFill class="login-form">
+    <mat-form-field  fxFlex="100%" fxFlexFill class="login-form">
       <div mat-card-avatar matPrefix [ngStyle]="{'background-image': 'url(' + currentUser.avatar?.thumb?.url+ ')', 'background-size': 'cover', 'margin-right': '10px'}"></div>
       <textarea matInput #body maxlength="256" formControlName="body" placeholder="Write your comment"></textarea>
       <mat-hint align="start">

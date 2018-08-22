@@ -6,6 +6,12 @@ import { Location } from '@angular/common';
 import { AuthService } from '../authentication/auth.service';
 import { UiUpdateService } from './ui-update.service';
 
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+
+
 
 @Component({
   selector: 'app-posts',
@@ -27,7 +33,13 @@ export class PostsComponent implements OnInit, OnDestroy {
   postUrL: String;
   componentName: String = 'post';
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     public router: Router,
     public location: Location,

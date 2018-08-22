@@ -9,7 +9,9 @@ import {
 import { PostsService } from '../posts.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { AuthService } from '../../authentication/auth.service';
-
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-answer-form',
@@ -26,6 +28,12 @@ export class AnswerFormComponent implements OnInit {
 
   @Input() questionId: string;
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
+
   public options: Object = {
     charCounterCount: true,
     toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript',
@@ -34,6 +42,7 @@ export class AnswerFormComponent implements OnInit {
 
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     public auth: AuthService,
     private fb: FormBuilder,
     private message: NzMessageService,

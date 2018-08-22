@@ -3,6 +3,8 @@
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
+    <span *ngIf="isHandset$ | async">VH</span>
+
     <div class="form" fxLayout="row" fxLayoutGap="20px" *ngIf="isDesktop$ | async">
         <mat-icon matSuffix class="mat-icon-default">search</mat-icon>
         <input type="search" fxFlex="85" matInput placeholder="Search" class="">     

@@ -1,37 +1,4 @@
-<!-- <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="post?.question?.author?.avatar?.thumb?.url">
-
-</nz-avatar>
-</div>
-<div nz-col nzXl="5">
-  <a>
-    <p class="card-user-name">{{post?.question?.author?.full_name}}</p>
-  </a>
-  <span>@{{post?.question?.author?.slug}}</span>
-</div>
-<div nz-col nzXl="17">
-  <small class="question-date">{{post?.question?.created_at | amTimeAgo}}</small>
-</div>
-</div>
-
-<h2 class="post-title">{{post?.question?.name}}</h2>
-<div class="post-body" [innerHTML]="post?.question?.body  | markdown"></div>
-
-<app-post-action-bar *ngIf="post?.question" [post]="post?.question" postType="question" [componentName]="componentName"></app-post-action-bar>
-
-
-<div class="comment" [hidden]="!showComment">
-  <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
-  <app-comment-form *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comment-form>
-</div>
-
-<app-share-post [hidden]="!sharePost" *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
- -->
-
-
-
-
-
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" class="margin-top2">
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-top: 66px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
   <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
     <mat-card class="example-card">
       <div class="row" fxFlexAlign="start">
@@ -79,5 +46,8 @@
 
 </div>
 
-<!-- <app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>
-<app-answers [slug]="slug"></app-answers> -->
+
+<app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>
+
+
+<app-answers [slug]="slug"></app-answers>

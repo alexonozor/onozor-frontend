@@ -1,58 +1,42 @@
-<div *ngFor="let comment of comments" [attr.id]="'comment-' + comment?.id">
+<div *ngFor="let comment of comments" [attr.id]="'comment-' + comment?.id" fxLayout="column" style="padding-top: 20px">
   <mat-divider></mat-divider>
-  <mat-card-header>
-    <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + comment?.user?.avatar?.thumb?.url + ')', 'background-size': 'cover'}"></div>
-    <mat-card-title>{{comment?.user?.full_name}}</mat-card-title>
-    <mat-card-subtitle>Replied at {{comment?.created_at | amTimeAgo}}</mat-card-subtitle>
-  </mat-card-header>
-  <div class="card-user-info">
-    <div style="display: none" [attr.id]="'comment-form-' + comment?.id">
+  <div fxLayout="row" fxFlex="100%" style="padding-top: 20px">
+    <mat-card-header>
+      <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + comment?.user?.avatar?.thumb?.url + ')', 'background-size': 'cover'}"></div>
+      <mat-card-title>{{comment?.user?.full_name}}</mat-card-title>
+      <mat-card-subtitle style="margin-bottom: 5px;">Replied at {{comment?.created_at | amTimeAgo}}</mat-card-subtitle>
+    </mat-card-header>
+  </div>
+
+  <div class="card-user-info" fxLayout="row">
+    <div style="display: none" [attr.id]="'comment-form-' + comment?.id" fxFlexOffset="50px" fxFlex="100%" fxFlexFill >
       <div class="comment-answer-form" *ngIf="comment?.id">
         <form [formGroup]="commentUpdateForm" (ngSubmit)="updateCommentForm(comment)">
-          <textarea formControlName="body" [value]="comment?.body" placeholder="Update Comment"></textarea>
+          <mat-form-field nz-form fxFlex="100%" fxFlexFill>
+            <textarea matInput rows="1" cols="1" #body maxlength="256" formControlName="body" [value]="comment?.body" placeholder="Update Comment"></textarea>
+            <mat-hint align="start">
+              <strong>Don't disclose personal info</strong>
+            </mat-hint>
+            <mat-hint align="end">{{body.value.length}} / 256</mat-hint>
+          </mat-form-field>
           <button mat-button color="primary">Reply</button>
         </form>
       </div>
     </div>
-    <div [attr.id]="'comment-body-' + comment?.id">
-      <mat-card-content>
+    <div [attr.id]="'comment-body-' + comment?.id" fxFlex="100%" fxFlexFill fxFlexOffset="50px">
+      <mat-card-content style="margin-bottom: 5px;">
         <span [attr.id]="'comment-form-body' + comment?.id">{{comment?.body}}</span>
       </mat-card-content>
-      <mat-card-actions *ngIf="currentUser && currentUser.id == comment?.user?.id">
-        <button mat-button (click)="editComment(editing, comment?.id, i, this)">EDIT</button>
-        <button mat-button color="warn" (click)="deleteComment(comment.id)">DELETE</button>
+      <mat-card-actions *ngIf="currentUser && currentUser.id == comment?.user?.id" style="margin-bottom: 0px;">
+        <button mat-button (click)="editComment(editing, comment?.id, i, this)" class="small-icon"><i class="material-icons small-icon">edit</i> EDIT</button>
+        <button mat-button color="warn" (click)="deleteComment(comment.id)" class="small-icon"><i class="material-icons small-icon">delete</i> DELETE</button>
       </mat-card-actions>
     </div>
   </div>
-
-  <!-- <div nz-row class="card-user-info">
-    <div nz-col nzSpan="3"></div>
-    <div nz-col nzXl="19" style="display: none" [attr.id]="'comment-form-' + comment?.id">
-      <div class="comment-answer-form" *ngIf="comment?.id">
-        <form nz-form [formGroup]="commentUpdateForm" class="login-form" (ngSubmit)="updateCommentForm(comment)">
-          <textarea row="3" formControlName="body" [value]="comment?.body" placeholder="Update Comment" nz-input></textarea>
-          <button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Reply</button>
-        </form>
-      </div>
-    </div>
-    <div [attr.id]="'comment-body-' + comment?.id" nz-col nzXl="19" *ngIf="!editing">
-      <div nz-row nzGutter="48" class="post-action-bar">
-        <div nz-col nzSpan="20">
-          <span *ngIf="currentUser && currentUser.id == comment?.user?.id">
-            <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="editComment(editing, comment?.id, i, this)">Edit</button>
-            <button nz-button class="remove-border" (click)="deleteComment(comment.id)" nzType="default" [nzSize]="large">Delete</button>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </div>
 <small *ngIf="pageMeta.next_page && !loadingComments">
-  <nz-divider (click)="loadMoreComments(pageMeta.next_page)" style="cursor: pointer;" nzText="show more comments"></nz-divider>
+  <button mat-button (click)="loadMoreComments(pageMeta.next_page)" style="text-align: center" (click)="onClick">LOAD MORE COMMENTS</button>
 </small>
-<span *ngIf="pageMeta.next_page && loadingComments" style="text-align: center">
-  <ng-template #indicatorTemplate>
-    <i class="anticon anticon-spin anticon-loading" style="font-size: 24px;"></i>
-  </ng-template>
-  <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>
-</span>
+
+    <mat-progress-bar *ngIf="pageMeta.next_page && loadingComments"  mode="indeterminate"></mat-progress-bar>
+

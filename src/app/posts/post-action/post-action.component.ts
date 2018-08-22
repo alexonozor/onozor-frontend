@@ -21,14 +21,14 @@ import { AuthService } from '../../authentication/auth.service';
       </button>
 
       <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()"
-      class="mat-icon-default">Ask details ({{post.comments_count}})</button>
+      class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK DETAILS ({{post.comments_count}})</button>
       <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()"
-      class="mat-icon-default"> Answers ({{post.answers_count}})</button>
+      class="mat-icon-default"> ANSWERS ({{post.answers_count}})</button>
       <button mat-button *ngIf="componentName==='answer'" (click)="toggleComment()"
-      class="mat-icon-default"> Comments ({{post.comments_count}})</button>
+      class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
     </div>
     <div fxFlex="50" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end center" *ngIf="postType === 'question'">
-      <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' " 
+      <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' "
       (click)="favouritePost(post)" matTooltip="Mark as favourite">
         <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
       </button>
