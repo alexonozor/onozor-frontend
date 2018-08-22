@@ -1,5 +1,5 @@
 
-    .margin-top2 {
+  .margin-top2 {
     padding: 20px;
   }
   
@@ -8,4 +8,8 @@
   .mat-card-title {
     display: block;
     margin-bottom: 8px;
+  }
+
+  .example-tab-icon {
+    margin-right: 8px;
   }

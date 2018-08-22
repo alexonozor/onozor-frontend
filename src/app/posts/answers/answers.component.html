@@ -1,74 +1,40 @@
-<nz-divider *ngIf="allanswers.length > 0" nzText="Answers" ></nz-divider>
 <div *ngFor="let answer of allanswers" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll(pageMeta.next_page)">
-  <nz-card style="margin-bottom:25px;" [attr.id]="'answer-' + answer?.id" >
-    <div nz-row class="card-user-info">
-      <div nz-col nzSpan="2">
-        <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="answer?.author?.avatar?.thumb?.url"></nz-avatar>
-      </div>
-      <div nz-col nzXl="5">
-        <a>
-          <p class="card-user-name">{{answer?.author?.full_name}}</p>
-        </a>
-        <span>@{{answer?.author?.slug}}</span>
-      </div>
-      <div nz-col nzXl="17">
-        <small class="question-date">{{answer?.created_at | amTimeAgo}}</small>
-      </div>
+  <div fxLayout="row" *ngIf="!answer?.editing" fxLayoutGap="20px" fxLayout.xs="column" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'"
+    [attr.id]="'answer-' + answer?.id">
+    <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+      <mat-card>
+        <div class="row" fxFlexAlign="start">
+          <mat-card-header fxFlex="50">
+            <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + answer?.author?.avatar?.thumb?.url + ')', 'background-size': 'cover'}"></div>
+            <mat-card-title>{{answer?.author?.full_name}}</mat-card-title>
+            <mat-card-subtitle>@{{answer?.author?.slug}}</mat-card-subtitle>
+          </mat-card-header>
+
+          <div fxFlex="50" style="text-align: right">
+            <small>{{answer?.created_at | amTimeAgo}}</small>
+          </div>
+        </div>
+
+        <mat-card-content>
+          <div class="post-body" markdown [data]="answer?.body"></div>
+        </mat-card-content>
+
+        <mat-card-actions *ngIf="answer" app-post-action-bar fxLayout="row" [post]="answer" postType="answer" [componentName]='componentName'>
+        </mat-card-actions>
+
+        <app-comments *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comments>
+        <app-comment-form *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comment-form>
+
+      </mat-card>
+
     </div>
-
-    <div class="answer-body-text" markdown [data]="answer?.body"></div>
-    <div nz-row nzGutter="48" class="post-action-bar">
-  
-      <!-- <app-post-action-bar  [post]="answer" postType="answer" [componentName]='componentName'></app-post-action-bar> -->
+  </div>
 
 
-      <div nz-col nzSpan="16" style="text-align: right;">
-        <nz-dropdown *ngIf="currentUser && currentUser.id == answer?.author?.id">
-          <button class="remove-border" nzSize="large" nz-button nz-dropdown nz-tooltip nzTitle="More">
-            <i class="fas fa-ellipsis-h"></i>
-          </button>
-          <ul nz-menu>
-            <li nz-menu-item (click)="editAnswer(answer)">
-              <a>
-                <i class="anticon anticon-edit"></i> Edit</a>
-            </li>
-            <li nz-menu-item (click)="deleteAnswer(answer?.id)">
-              <a>
-                <i class="anticon anticon-delete"></i> Delete</a>
-            </li>
-           
-          </ul>
-        </nz-dropdown>
-      </div>
-    </div>
-
-    <app-comments *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comments>
-    <!-- comment or replies -->
-    <app-comment-form *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comment-form>
-  </nz-card>
-
-  <nz-card style="margin-bottom:25px; display: none" [attr.id]="'answer-update-form-' + answer?.id" [nzLoading]="loading">
-    <div nz-row class="card-user-info">
-      <div nz-col nzSpan="2">
-        <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="currentUser?.avatar?.thumb?.url"></nz-avatar>
-      </div>
-      <div nz-col nzXl="8">
-        <a>
-          <p class="card-user-name">{{currentUser?.first_name}} {{currentUser?.last_name}}</p>
-        </a>
-        <span>@{{currentUser?.username}}</span>
-      </div>
-    </div>
-    <form nz-form [formGroup]="updateForm" (ngSubmit)="submitForm(answer)">
-      <textarea [nzAutosize]="{ minRows: 8, maxRows: 10 }" formControlName="body" [value]="answer?.body" placeholder="Update your answer"
-        nz-input></textarea>
-      <button nz-button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Update</button>
-    </form>
-  </nz-card>
+  <app-edit-answer-form *ngIf="answer?.editing" [answer]="answer"></app-edit-answer-form>
 </div>
 
+
 <span *ngIf="pageMeta?.next_page && loadingAnswer" style="text-align: center">
-    <ng-template #indicatorTemplate><i class="anticon anticon-spin anticon-loading" style="font-size: 50px;"></i>
-    </ng-template>
-    <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>
+  <mat-spinner strokeWidth="5"></mat-spinner>
 </span>

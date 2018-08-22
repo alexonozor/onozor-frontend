@@ -10,6 +10,9 @@ import {
 } from '@angular/forms';
 import { NzMessageService, NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { map } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-answers',
@@ -32,7 +35,14 @@ export class AnswersComponent implements OnInit {
   postUrL: String;
   componentName: String = 'answer';
 
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private fb: FormBuilder,
     public _postService: PostsService,
     public notification: NzNotificationService,
@@ -49,6 +59,7 @@ export class AnswersComponent implements OnInit {
     this.listenToNewAnswerChanges();
     this.prepareForm();
     this.listenAndChooseVote();
+    this.listenToEditAnswerEvent();
   }
 
   getAnswers(slug, page?) {
@@ -57,6 +68,7 @@ export class AnswersComponent implements OnInit {
       this.loading = false;
       this.pageMeta = res.meta;
       res.answers.map(item => {
+        item['editing'] = false;
         this.allanswers.push(item);
       });
     }, err => {
@@ -96,8 +108,22 @@ export class AnswersComponent implements OnInit {
   }
 
   editAnswer(answer) {
-    document.getElementById(`answer-${answer.id}`).style.display = 'none';
-    document.getElementById(`answer-update-form-${answer.id}`).style.display = 'block';
+    answer['editing'] = true;
+  }
+
+  cancleEditAnswer(answer) {
+    answer['editing'] = false;
+  }
+
+  listenToEditAnswerEvent() {
+    this._uiUpdateService.listenToEditPost.subscribe(data => {
+      console.log(data);
+      if (data && data.postType === this.componentName) {
+        this.editAnswer(data);
+      }
+    }, err => {
+      console.log(err);
+    });
   }
 
   submitForm(answer) {
@@ -127,6 +153,7 @@ export class AnswersComponent implements OnInit {
         this.loadingAnswer = false;
         this.pageMeta = res.meta;
         res.answers.map(item => {
+          item['editing'] = false;
           this.allanswers.push(item);
         });
       }, err => {

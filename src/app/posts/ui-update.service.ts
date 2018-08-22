@@ -9,9 +9,13 @@ export class UiUpdateService {
   private toggleCommentSource = new BehaviorSubject<any>(null);
   private toggleSharedSource = new BehaviorSubject<any>(null);
   private voteSource = new BehaviorSubject<any>(null);
+  private deleteSource = new BehaviorSubject<any>(null);
+  private editSource = new BehaviorSubject<any>(null);
+
   listenToToggleComment = this.toggleCommentSource.asObservable();
   listenToToggleShared = this.toggleSharedSource.asObservable();
   listenToVotes = this.voteSource.asObservable();
+  listenToEditPost = this.editSource.asObservable();
 
   constructor() { }
 
@@ -27,5 +31,14 @@ export class UiUpdateService {
      post['direction'] = direction;
      post['postType'] = postType;
     this.voteSource.next(post);
+  }
+
+  editPost(post, type) {
+    post['postType'] = type;
+    this.editSource.next(post);
+  }
+
+  deletePost(post) {
+    this.deleteSource.next(post);
   }
 }

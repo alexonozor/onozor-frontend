@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import {
   AbstractControl,
@@ -14,31 +14,24 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-answer-form',
-  templateUrl: './answer-form.component.html',
-  styleUrls: ['./answer-form.component.css']
+  selector: 'app-edit-answer-form',
+  templateUrl: './edit-answer-form.component.html',
+  styleUrls: ['./edit-answer-form.component.scss']
 })
-export class AnswerFormComponent implements OnInit {
-  answerForm: FormGroup;
+export class EditAnswerFormComponent implements OnInit {
+  updateForm: FormGroup;
   isSubmited: Boolean = false;
   formErrors: Array<any>;
   isThereError: Boolean = false;
   loading: Boolean = true;
   currentUser: any;
 
-  @Input() questionId: string;
+  @Input() answer: any;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
     map(result => result.matches)
   );
-
-
-  public options: Object = {
-    charCounterCount: true,
-    toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript',
-    'superscript', '|', 'quote', 'insertLink', 'insertImage', '|', 'html']
-};
 
 
   constructor(
@@ -47,36 +40,33 @@ export class AnswerFormComponent implements OnInit {
     private fb: FormBuilder,
     private message: NzMessageService,
     public _postService: PostsService
-  ) {
-    this.currentUser = this.auth.getCurrentUser();
-   }
+  ) { }
 
   ngOnInit() {
     this.prepareForm();
+    this.currentUser = this.auth.getCurrentUser();
   }
 
   prepareForm() {
-    this.answerForm = this.fb.group({
-      body: [null, [Validators.required]],
-      user_id: [this.currentUser.id, [Validators.required]],
-      question_id: [this.questionId, [Validators.required]],
+    this.updateForm = this.fb.group({
+      body: [this.answer.body, [Validators.required]],
       send_mail: [true]
     });
   }
 
-  submitForm() {
+  submitForm(answer) {
     this.isSubmited = true;
-    this._postService.saveAnswer(this.answerForm.value, this.questionId).subscribe(res => {
+    this._postService.updateAnswer(this.updateForm.value, answer.id).subscribe(res => {
       this.isSubmited = false;
       if (res.status === 500) {
         this.message.error('You can\'t submit empty answer', { nzDuration: 3000 });
       } else {
-        this.answerForm.patchValue({body: ''});
-        this._postService.updateRecentAnswer(res.answer);
+        answer.editing = !answer.editing;
+        this.answer.body = this.updateForm.value.body;
       }
     }, error => {
       this.isSubmited = false;
-      this.message.error('validation error', { nzDuration: 3000 });
+      this.message.error('Network or server error', { nzDuration: 3000 });
     });
   }
 

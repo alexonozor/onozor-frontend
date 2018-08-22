@@ -12,8 +12,7 @@
           <small>{{post?.question?.created_at | amTimeAgo}}</small>
         </div>
       </div>
-
-
+      
       <mat-card-content>
         <h2 class="title">
           <a class="post-link">{{post?.question?.name}}</a>
@@ -21,15 +20,14 @@
         <span class="post-body" [innerHTML]="post?.question?.body  | markdown"></span>
       </mat-card-content>
 
-
       <mat-card-actions *ngIf="post" app-post-action-bar fxLayout="row" [post]="post?.question" postType="question" [componentName]="componentName">
       </mat-card-actions>
-      <div class="comment" *ngIf="showComment" >
+      <div class="comment" *ngIf="showComment">
         <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
         <app-comment-form *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comment-form>
       </div>
       <div *ngIf="sharePost">
-        <app-share-post  *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
+        <app-share-post *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
       </div>
     </mat-card>
   </div>

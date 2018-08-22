@@ -9,7 +9,7 @@
   </div>
 
   <div class="card-user-info" fxLayout="row">
-    <div style="display: none" [attr.id]="'comment-form-' + comment?.id" fxFlexOffset="50px" fxFlex="100%" fxFlexFill >
+    <div style="display: none" [attr.id]="'comment-form-' + comment?.id" fxFlexOffset="50px" fxFlex="100%" fxFlexFill>
       <div class="comment-answer-form" *ngIf="comment?.id">
         <form [formGroup]="commentUpdateForm" (ngSubmit)="updateCommentForm(comment)">
           <mat-form-field nz-form fxFlex="100%" fxFlexFill>
@@ -28,8 +28,8 @@
         <span [attr.id]="'comment-form-body' + comment?.id">{{comment?.body}}</span>
       </mat-card-content>
       <mat-card-actions *ngIf="currentUser && currentUser.id == comment?.user?.id" style="margin-bottom: 0px;">
-        <button mat-button (click)="editComment(editing, comment?.id, i, this)" class="small-icon"><i class="material-icons small-icon">edit</i> EDIT</button>
-        <button mat-button color="warn" (click)="deleteComment(comment.id)" class="small-icon"><i class="material-icons small-icon">delete</i> DELETE</button>
+        &nbsp; &nbsp; <a  color="warn" (click)="editComment(editing, comment?.id, i, this)" class="small-icon"> EDIT</a> &nbsp;  &nbsp;  &nbsp;
+        <a  (click)="deleteComment(comment.id)" class="small-icon">DELETE</a>
       </mat-card-actions>
     </div>
   </div>
@@ -38,5 +38,4 @@
   <button mat-button (click)="loadMoreComments(pageMeta.next_page)" style="text-align: center" (click)="onClick">LOAD MORE COMMENTS</button>
 </small>
 
-    <mat-progress-bar *ngIf="pageMeta.next_page && loadingComments"  mode="indeterminate"></mat-progress-bar>
-
+<mat-progress-bar *ngIf="pageMeta.next_page && loadingComments" mode="indeterminate"></mat-progress-bar>

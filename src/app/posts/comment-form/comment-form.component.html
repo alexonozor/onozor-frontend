@@ -10,6 +10,6 @@
       </mat-hint>
       <mat-hint align="end">{{body.value.length}} / 256</mat-hint>
     </mat-form-field>
-    <button mat-button color="primary">REPLY</button>
+    <button [disabled]="!commentForm.valid"  mat-raised-button  color="primary">REPLY</button>
   </form>
 </div>

@@ -11,7 +11,10 @@
 
       <mat-card-content>
         <mat-tab-group>
-          <mat-tab label="WRITE">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">edit</mat-icon> WRITE
+            </ng-template>
             <form [formGroup]="answerForm" class="login-form" (ngSubmit)="submitForm()" fxLayout="column" fxLayoutAlign="start end">
               <mat-form-field fxFlex="100%" fxFlexFill>
                 <textarea matInput rows="10" formControlName="body" placeholder="Write your answer"></textarea>
@@ -19,10 +22,13 @@
                   <strong>This form support markdown</strong>
                 </mat-hint>
               </mat-form-field>
-              <button mat-raised-button color="primary">Submit</button>
+              <button mat-raised-button [disabled]="!answerForm.valid" color="primary"> Submit</button>
             </form>
           </mat-tab>
-          <mat-tab label="PREVIEW">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">visibility</mat-icon> PREVIEW
+            </ng-template>
             <div class="post-body" [innerHTML]="answerForm.value.body | markdown"></div>
           </mat-tab>
 
@@ -31,3 +37,5 @@
     </mat-card>
   </div>
 </div>
+
+

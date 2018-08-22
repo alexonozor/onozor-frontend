@@ -5,6 +5,7 @@ import { AnswersComponent } from '../answers/answers.component';
 import { AnswerFormComponent } from '../answer-form/answer-form.component';
 import { CommentsComponent } from '../comments/comments.component';
 import { CommentFormComponent } from '../comment-form/comment-form.component';
+import { EditAnswerFormComponent } from '../edit-answer-form/edit-answer-form.component';
 import { SharedModule } from '../../shared/shared.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,8 +34,9 @@ import { MyOwnCustomMaterialModule } from '../../material';
     AnswerFormComponent,
     CommentsComponent,
     CommentFormComponent,
-    PostActionComponent
+    PostActionComponent,
+    EditAnswerFormComponent
   ],
-  exports: [PostActionComponent]
+  exports: [PostActionComponent, EditAnswerFormComponent]
 })
 export class PostModule { }
