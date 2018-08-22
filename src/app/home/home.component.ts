@@ -5,6 +5,10 @@ import { environment } from '../../environments/environment';
 import { UiUpdateService } from '../posts/ui-update.service';
 import { PostsService } from '../posts/posts.service';
 
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,7 +23,13 @@ export class HomeComponent implements OnInit {
   postUrL: String;
   componentName: String = 'home';
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
   constructor(
+    private breakpointObserver: BreakpointObserver,
     public _postService: PostsService,
     public _uiUpdateService: UiUpdateService,
     public feedsService: FeedsService,

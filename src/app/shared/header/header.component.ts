@@ -1,13 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
+  isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Web)
+  .pipe(
+    map(result => result.matches)
+  );
+
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
   }

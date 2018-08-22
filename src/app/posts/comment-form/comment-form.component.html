@@ -1,6 +1,15 @@
-<div class="comment-answer-form" [attr.id]="'comment-form-' + commentId">
-  <form nz-form [formGroup]="commentForm" class="login-form" (ngSubmit)="submitForm()">
-    <textarea row="3" formControlName="body" placeholder="Write your comment" nz-input></textarea>
-    <button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Reply</button>
+<div  [attr.id]="'comment-form-' + commentId">
+  <mat-progress-bar *ngIf="isSubmited" mode="indeterminate"></mat-progress-bar>
+
+  <form [formGroup]="commentForm" (ngSubmit)="submitForm()" fxLayout="column" fxLayoutAlign="start end">
+    <mat-form-field nz-form fxFlex="100%" fxFlexFill class="login-form">
+      <div mat-card-avatar matPrefix [ngStyle]="{'background-image': 'url(' + currentUser.avatar?.thumb?.url+ ')', 'background-size': 'cover', 'margin-right': '10px'}"></div>
+      <textarea matInput #body maxlength="256" formControlName="body" placeholder="Write your comment"></textarea>
+      <mat-hint align="start">
+        <strong>Don't disclose personal info</strong>
+      </mat-hint>
+      <mat-hint align="end">{{body.value.length}} / 256</mat-hint>
+    </mat-form-field>
+    <button mat-button color="primary">REPLY</button>
   </form>
 </div>

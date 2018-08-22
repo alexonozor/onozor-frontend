@@ -1,55 +1,83 @@
-<nz-layout>
-  <nz-sider>
-    <app-sidebar></app-sidebar>
-  </nz-sider>
+<!-- <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="post?.question?.author?.avatar?.thumb?.url">
 
-  <nz-content style="margin:25px 55px;">
-    <div nz-row nzGutter="48">
-      <div nz-col nz-col nzSpan="12">
-        <nz-card style="margin-bottom: 20px" [nzLoading]="loading">
-          <div nz-row class="card-user-info">
-            <div nz-col nzSpan="2">
-              <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="post?.question?.author?.avatar?.thumb?.url"></nz-avatar>
-            </div>
-            <div nz-col nzXl="5">
-              <a>
-                <p class="card-user-name">{{post?.question?.author?.full_name}}</p>
-              </a>
-              <span>@{{post?.question?.author?.slug}}</span>
-            </div>
-            <div nz-col nzXl="17">
-              <small class="question-date">{{post?.question?.created_at | amTimeAgo}}</small>
-            </div>
-          </div>
+</nz-avatar>
+</div>
+<div nz-col nzXl="5">
+  <a>
+    <p class="card-user-name">{{post?.question?.author?.full_name}}</p>
+  </a>
+  <span>@{{post?.question?.author?.slug}}</span>
+</div>
+<div nz-col nzXl="17">
+  <small class="question-date">{{post?.question?.created_at | amTimeAgo}}</small>
+</div>
+</div>
 
-          <h2 class="post-title">{{post?.question?.name}}</h2>
-          <div class="post-body" [innerHTML]="post?.question?.body  | markdown"></div>
+<h2 class="post-title">{{post?.question?.name}}</h2>
+<div class="post-body" [innerHTML]="post?.question?.body  | markdown"></div>
 
-          <app-post-action-bar *ngIf="post?.question" [post]="post?.question" postType="question" [componentName]="componentName"></app-post-action-bar>
+<app-post-action-bar *ngIf="post?.question" [post]="post?.question" postType="question" [componentName]="componentName"></app-post-action-bar>
 
 
-          <div class="comment" [hidden]="!showComment">
-            <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
-            <app-comment-form *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comment-form>
-          </div>
+<div class="comment" [hidden]="!showComment">
+  <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
+  <app-comment-form *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comment-form>
+</div>
 
-          <app-share-post [hidden]="!sharePost" *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
+<app-share-post [hidden]="!sharePost" *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
+ -->
 
-        </nz-card>
 
-        <app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>
-        <app-answers [slug]="slug"></app-answers>
 
-      </div>
-      <div nz-col nz-col nzSpan="9">
-        <nz-card style="width:300px;">
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-        </nz-card>
+
+
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" class="margin-top2">
+  <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+    <mat-card class="example-card">
+      <div class="row" fxFlexAlign="start">
+        <mat-card-header fxFlex="50">
+          <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + post?.question?.author?.avatar?.thumb?.url+ ')', 'background-size': 'cover'}"></div>
+          <mat-card-title>{{post?.question?.author?.full_name}}</mat-card-title>
+          <mat-card-subtitle>@{{post?.question?.author?.slug}}</mat-card-subtitle>
+        </mat-card-header>
+
+        <div fxFlex="50" style="text-align: right">
+          <small>{{post?.question?.created_at | amTimeAgo}}</small>
+        </div>
       </div>
 
-    </div>
 
-  </nz-content>
-</nz-layout>
+      <mat-card-content>
+        <h2 class="title">
+          <a class="post-link">{{post?.question?.name}}</a>
+        </h2>
+        <span class="post-body" [innerHTML]="post?.question?.body  | markdown"></span>
+      </mat-card-content>
+
+
+      <mat-card-actions *ngIf="post" app-post-action-bar fxLayout="row" [post]="post?.question" postType="question" [componentName]="componentName">
+      </mat-card-actions>
+      <div class="comment" *ngIf="showComment" >
+        <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
+        <app-comment-form *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comment-form>
+      </div>
+      <div *ngIf="sharePost">
+        <app-share-post  *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
+      </div>
+    </mat-card>
+  </div>
+  <div fxFlex="25">
+    <mat-card class="example-card">
+      <mat-card-content>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
+          very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+
+<!-- <app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>
+<app-answers [slug]="slug"></app-answers> -->

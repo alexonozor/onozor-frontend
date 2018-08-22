@@ -1,48 +1,58 @@
-<div  *ngFor="let comment of comments" [attr.id]="'comment-' + comment?.id" >
-  <nz-divider></nz-divider>
-  <div nz-row class="card-user-info">
-    <div nz-col nzSpan="1"></div>
-    <div nz-col nzSpan="2">
-      <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="comment?.user?.avatar?.thumb?.url"></nz-avatar>
-    </div>
-    <div nz-col nzXl="8">
-      <a>
-        <p class="card-user-name">{{comment?.user?.full_name}}</p>
-      </a>
-      <span><small>Replied at {{comment?.created_at | amTimeAgo}}</small></span>
-    </div>
-    <div nz-col nzXl="13">
-        <!-- <small class="question-date">{{comment?.created_at | amTimeAgo}}</small> -->
+<div *ngFor="let comment of comments" [attr.id]="'comment-' + comment?.id">
+  <mat-divider></mat-divider>
+  <mat-card-header>
+    <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + comment?.user?.avatar?.thumb?.url + ')', 'background-size': 'cover'}"></div>
+    <mat-card-title>{{comment?.user?.full_name}}</mat-card-title>
+    <mat-card-subtitle>Replied at {{comment?.created_at | amTimeAgo}}</mat-card-subtitle>
+  </mat-card-header>
+  <div class="card-user-info">
+    <div style="display: none" [attr.id]="'comment-form-' + comment?.id">
+      <div class="comment-answer-form" *ngIf="comment?.id">
+        <form [formGroup]="commentUpdateForm" (ngSubmit)="updateCommentForm(comment)">
+          <textarea formControlName="body" [value]="comment?.body" placeholder="Update Comment"></textarea>
+          <button mat-button color="primary">Reply</button>
+        </form>
       </div>
+    </div>
+    <div [attr.id]="'comment-body-' + comment?.id">
+      <mat-card-content>
+        <span [attr.id]="'comment-form-body' + comment?.id">{{comment?.body}}</span>
+      </mat-card-content>
+      <mat-card-actions *ngIf="currentUser && currentUser.id == comment?.user?.id">
+        <button mat-button (click)="editComment(editing, comment?.id, i, this)">EDIT</button>
+        <button mat-button color="warn" (click)="deleteComment(comment.id)">DELETE</button>
+      </mat-card-actions>
+    </div>
   </div>
 
-  
-  <div nz-row class="card-user-info" >
+  <!-- <div nz-row class="card-user-info">
     <div nz-col nzSpan="3"></div>
     <div nz-col nzXl="19" style="display: none" [attr.id]="'comment-form-' + comment?.id">
       <div class="comment-answer-form" *ngIf="comment?.id">
-          <form nz-form [formGroup]="commentUpdateForm" class="login-form" (ngSubmit)="updateCommentForm(comment)">
-            <textarea row="3" formControlName="body" [value]="comment?.body" placeholder="Update Comment" nz-input></textarea>
-            <button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Reply</button>
-          </form>
-        </div>
+        <form nz-form [formGroup]="commentUpdateForm" class="login-form" (ngSubmit)="updateCommentForm(comment)">
+          <textarea row="3" formControlName="body" [value]="comment?.body" placeholder="Update Comment" nz-input></textarea>
+          <button class="answer-form-action-button" [nzLoading]="isSubmited" nz-button nzType="primary">Reply</button>
+        </form>
+      </div>
     </div>
     <div [attr.id]="'comment-body-' + comment?.id" nz-col nzXl="19" *ngIf="!editing">
-      <span [attr.id]="'comment-form-body' + comment?.id">{{comment?.body}}</span>
       <div nz-row nzGutter="48" class="post-action-bar">
         <div nz-col nzSpan="20">
           <span *ngIf="currentUser && currentUser.id == comment?.user?.id">
-            <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="editComment(editing, comment?.id, i, this)"> Edit</button>
+            <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="editComment(editing, comment?.id, i, this)">Edit</button>
             <button nz-button class="remove-border" (click)="deleteComment(comment.id)" nzType="default" [nzSize]="large">Delete</button>
-         </span>
+          </span>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
-<small *ngIf="pageMeta.next_page && !loadingComments"><nz-divider (click)="loadMoreComments(pageMeta.next_page)" style="cursor: pointer;" nzText="show more comments"></nz-divider></small>
+<small *ngIf="pageMeta.next_page && !loadingComments">
+  <nz-divider (click)="loadMoreComments(pageMeta.next_page)" style="cursor: pointer;" nzText="show more comments"></nz-divider>
+</small>
 <span *ngIf="pageMeta.next_page && loadingComments" style="text-align: center">
-    <ng-template #indicatorTemplate><i class="anticon anticon-spin anticon-loading" style="font-size: 24px;"></i>
-    </ng-template>
-    <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>
+  <ng-template #indicatorTemplate>
+    <i class="anticon anticon-spin anticon-loading" style="font-size: 24px;"></i>
+  </ng-template>
+  <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>
 </span>

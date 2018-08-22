@@ -6,12 +6,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { SharePostComponent } from './share-post/share-post.component';
+import { MyOwnCustomMaterialModule } from '../material';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedRoutingModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    MyOwnCustomMaterialModule
   ],
   declarations: [
     HeaderComponent,

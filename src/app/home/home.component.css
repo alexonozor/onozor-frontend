@@ -1,60 +1,43 @@
 
-:host > ::ng-deep .ant-layout {
-    margin-bottom: 48px;
-    height: 100%;
-    
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
 }
 
-  .ant-layout {
-    background-color: #e1e4f2;
+.sidenav-container {
+  position: relative;
+  background: #e1e4f1;
 }
 
-  :host ::ng-deep .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color .3s;
-  }
+.mat-sidenav {
+  width: 250px;
+  margin-right: 10px;
 
-  :host ::ng-deep .trigger:hover {
-    color: #1890ff;
-  }
-
-  :host ::ng-deep .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, .2);
-    margin: 16px;
-  }
-
-  .ant-layout-sider {
-    transition: all .2s;
-    position: relative;
-    background: #ffffff;
-    min-width: 0;
-    width: 250px !important;
-    min-width: 250px !important;
-    max-width: 250px !important;
 }
 
 
-.card-user-name {
-  margin-bottom: 0px;
-  line-height: 1;
-  color: black;
-  font-weight: bolder;
+
+.margin-top2 {
+  margin-top: 66px;
+  padding: 20px;
 }
 
-.card-user-info {
-  margin-bottom: 15px;
+.post-link {
+  color: rgba(0,0,0,0.87);
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  max-height: 56px;
+  text-decoration: none;
 }
 
-
-[nz-button] {
-  margin-right: 15px;
-  font-weight: bolder;
-}
-
-.remove-border {
-  border: none;
+.mat-card-title {
+  display: block;
+  margin-bottom: 8px;
 }

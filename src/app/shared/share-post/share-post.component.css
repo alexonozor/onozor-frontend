@@ -1,7 +1,7 @@
 
  #share-question {
-    text-align: center;
     font-size: 15px;
+    margin-top: 20px;
   }
  
   #share-question .reddit {
@@ -36,5 +36,5 @@
   
 
   #share-question a {
-    margin-left: 15px;
+    margin: 24px 10px 0px 10px;
    }

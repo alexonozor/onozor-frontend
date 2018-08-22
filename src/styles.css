@@ -1,15 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-body, html {
-  background-color: #e1e4f2;
-  height: 100%;  
-}
-
-
-app-home {
-  height: 100% !important;
-}
-
-
 html, body { height: 100%; }
-body { margin: 0; font-family: 'Roboto', sans-serif; }
+body { 
+  margin: 0; 
+  font-family: 'Roboto', sans-serif; 
+  background-color: #e1e4f2;
+}
+
+.mat-icon-default {
+  color: #5b5e6a;
+}
+
+.basic-button {
+  background: #fff !important;
+}

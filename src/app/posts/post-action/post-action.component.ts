@@ -1,61 +1,41 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {  } from '../posts.service';
+import { } from '../posts.service';
 import { PostsService } from '../posts.service';
 import { UiUpdateService } from '../ui-update.service';
 import { AuthService } from '../../authentication/auth.service';
 
 
 @Component({
-  selector: 'app-post-action-bar',
+  selector: '[app-post-action-bar]',
   template: `
-    <div nz-row nzGutter="48" class="post-action-bar">
-    <div nz-col nzSpan="15">
 
-      <button nz-button class="remove-border" [ngClass]="{active: post?.vote?.currentUserHasUpvote}"
-      nzType="default" [nzSize]="large" (click)="vote(post, 'up')">
-        <i class="fa fa-arrow-up"></i> Upvote {{post.vote_count}}</button>
-
-        <button nz-button class="remove-border" [ngClass]="{active: post?.vote?.currentUserHasDownVote}"
-        nzType="default" [nzSize]="large" (click)="vote(post, 'down')">
-          <i class="fa fa-arrow-down"></i> Downvote</button>
-
-      <button *ngIf="componentName==='post'" nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()"
-      nz-tooltip nzTitle="Unable to understand the question? ask for more info.">
-        <i class="fa fa-reply"></i> Ask details ({{post.comments_count}})</button>
-
-      <button *ngIf="componentName==='home'" nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()"
-      nz-tooltip>
-        <i class="fa fa-reply"></i> Answers ({{post.answers_count}})</button>
-
-      <button *ngIf="componentName==='answer'" nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()">
-          <i class="fa fa-reply"></i> Comments ({{post.comments_count}})</button>
-
-    </div>
-
-    <div nz-col nzSpan="9" style="text-align: right;">
-      <nz-dropdown *ngIf="currentUser && currentUser.id == post?.author?.id">
-        <button class="remove-border" nzSize="large" nz-button nz-dropdown nz-tooltip nzTitle="More">
-          <i class="fas fa-ellipsis-h"></i>
-        </button>
-        <ul nz-menu>
-            <li nz-menu-item>
-              <a><i class="fa fa-edit"></i> Edit </a>
-            </li>
-            <li nz-menu-item>
-              <a>
-                <i class="fa fa-trash-alt"></i> Delete Post </a>
-            </li>
-        </ul>
-      </nz-dropdown>
-    <div *ngIf="postType === 'question'">
-      <button class="remove-border" nzSize="large" nz-button (click)="favouritePost(post)" nz-tooltip nzTitle="Favorite">
-        <i [ngClass]="post?.favourited? 'anticon anticon-heart red' : 'anticon anticon-heart-o'"></i>
+    <div fxFlex="50" fxLayout="row" fxFlexAlign="start">
+      <button mat-icon-button  [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " 
+      (click)="vote(post, 'up')" matTooltip="Up vote">
+        <mat-icon aria-label="Example icon-button with a heart icon">thumb_up_alt</mat-icon>
       </button>
-      <button (click)="toggleShare(post)" nzSize="large" class="remove-border" nz-button nz-tooltip nzTitle="Share">
-        <i class="anticon anticon-share-alt"></i>
+      <button mat-icon-button disabled>{{post.vote_count}}</button>
+      <button mat-icon-button [ngClass]="post?.vote?.currentUserHasDownVote? 'mat-warn' : 'mat-icon-default'" 
+      (click)="vote(post, 'down')" matTooltip="Down vote">
+        <mat-icon aria-label="Example icon-button with a heart icon">thumb_down_alt</mat-icon>
+      </button>
+
+      <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()"
+      class="mat-icon-default">Ask details ({{post.comments_count}})</button>
+      <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()"
+      class="mat-icon-default"> Answers ({{post.answers_count}})</button>
+      <button mat-button *ngIf="componentName==='answer'" (click)="toggleComment()"
+      class="mat-icon-default"> Comments ({{post.comments_count}})</button>
+    </div>
+    <div fxFlex="50" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end center" *ngIf="postType === 'question'">
+      <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' " 
+      (click)="favouritePost(post)" matTooltip="Mark as favourite">
+        <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+      </button>
+      <button mat-icon-button class="mat-icon-default" (click)="toggleShare(post)" matTooltip="Share post">
+        <mat-icon aria-label="Example icon-button with a heart icon">share</mat-icon>
       </button>
     </div>
-  </div>
   `,
   styles: []
 })
@@ -68,9 +48,9 @@ export class PostActionComponent implements OnInit {
     public _postService: PostsService,
     public auth: AuthService,
     public _uiService: UiUpdateService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   toggleComment() {
     this._uiService.toggleComment(this.post);
@@ -84,10 +64,10 @@ export class PostActionComponent implements OnInit {
     this._uiService.chooseVote(this.post, direction, this.postType);
   }
 
-    /**
-   * Save/favorite a post requires the post id only available for authenticated user.
-   * @param post: Object
-   */
+  /**
+ * Save/favorite a post requires the post id only available for authenticated user.
+ * @param post: Object
+ */
   favouritePost(post) {
     this.post.favourited = !post.favourited;
     this._postService.savePost(post.id).subscribe(res => {

@@ -16,6 +16,10 @@ import { PostModule } from './posts/post/post.module';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TokenInterceptor } from './authentication/auth.interceptor';
+import { MyOwnCustomMaterialModule } from './material';
+import { BREAKPOINTS} from '@angular/flex-layout';
+import { MomentModule } from 'ngx-moment';
+import { NgProgressModule } from '@ngx-progressbar/core';
 
 
 registerLocaleData(en);
@@ -24,7 +28,7 @@ registerLocaleData(en);
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,10 +36,13 @@ registerLocaleData(en);
     FormsModule,
     HttpModule,
     HttpClientModule,
+    MomentModule,
     NgZorroAntdModule,
+    MyOwnCustomMaterialModule,
     AppRoutingModule,
     PostModule,
     SharedModule,
+    NgProgressModule,
     InfiniteScrollModule,
     MarkdownModule.forRoot({
       markedOptions: {

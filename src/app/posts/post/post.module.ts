@@ -12,7 +12,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { MomentModule } from 'ngx-moment';
 import { MarkdownModule } from 'ngx-markdown';
 import { PostActionComponent } from '../post-action/post-action.component';
-
+import { MyOwnCustomMaterialModule } from '../../material';
 
 
 @NgModule({
@@ -23,6 +23,7 @@ import { PostActionComponent } from '../post-action/post-action.component';
     NgZorroAntdModule,
     SharedModule,
     MomentModule,
+    MyOwnCustomMaterialModule,
     InfiniteScrollModule,
     MarkdownModule.forChild()
   ],

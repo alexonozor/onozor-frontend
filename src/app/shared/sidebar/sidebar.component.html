@@ -1,12 +1,17 @@
-
-  <div class="logo">
-  </div>
-  <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
-  
-    <li nz-menu-item *ngFor="let category of categories">
-      <span>
-        <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="category?.image"></nz-avatar>
-        <span class="nav-text">{{category?.name}}</span>
-      </span>
-    </li>
-  </ul>
+<mat-toolbar [hidden]="(isHandset$ | async)" class="mat-elevation-z8">
+  <h1 routerLink="">VitaNote +</h1>
+</mat-toolbar>
+<mat-nav-list>
+  <a mat-list-item href="#" class="mat-icon-default">
+    <i class="material-icons mat-icon-default side-menu-icon">art_track</i> Posts</a>
+  <a mat-list-item href="#" class="mat-icon-default">
+    <i class="material-icons mat-icon-default side-menu-icon">assignment </i>Blogs</a>
+  <a mat-list-item href="#" class="mat-icon-default">
+    <i class="material-icons mat-icon-default side-menu-icon">public</i> News</a>
+  <a mat-list-item href="#" class="mat-icon-default">
+    <i class="material-icons mat-icon-default side-menu-icon">group_work</i> Communities</a>
+  <a mat-list-item href="#" class="mat-icon-default">
+    <i class="material-icons mat-icon-default side-menu-icon">work_outline</i> Jobs</a>
+  <a mat-list-item href="#" class="mat-icon-default">
+    <i class="material-icons mat-icon-default side-menu-icon">people_outline</i> Users</a>
+</mat-nav-list>
