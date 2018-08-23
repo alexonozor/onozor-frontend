@@ -23,7 +23,6 @@ export class HeaderComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
-    console.log(this.drawer);
   }
 
 }

@@ -3,7 +3,7 @@ import { } from '../posts.service';
 import { PostsService } from '../posts.service';
 import { UiUpdateService } from '../ui-update.service';
 import { AuthService } from '../../authentication/auth.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: '[app-post-action-bar]',
@@ -18,7 +18,8 @@ export class PostActionComponent implements OnInit {
   constructor(
     public _postService: PostsService,
     public auth: AuthService,
-    public _uiService: UiUpdateService
+    public _uiService: UiUpdateService,
+    public router: Router
   ) { }
 
   ngOnInit() { }
@@ -50,7 +51,7 @@ export class PostActionComponent implements OnInit {
     if (componentType === 'answer') {
       this._uiService.editPost(post, componentType);
     } else {
-      // navigate to edit post
+      this.router.navigate(['post/edit', post.slug]);
     }
   }
 

@@ -12,7 +12,7 @@ import en from '@angular/common/locales/en';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
-import { PostModule } from './posts/post/post.module';
+import { PostModule } from './posts/post.module';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TokenInterceptor } from './authentication/auth.interceptor';

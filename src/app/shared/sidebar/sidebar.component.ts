@@ -27,13 +27,13 @@ export class SidebarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.feedsService.userCategories(2).subscribe(res => {
-      this.loading = false;
-      this.meta = res.meta;
-      this.categories = res.categories;
-    }, err => {
-      console.log(err);
-    });
+    // this.feedsService.userCategories(2).subscribe(res => {
+    //   this.loading = false;
+    //   this.meta = res.meta;
+    //   this.categories = res.categories;
+    // }, err => {
+    //   console.log(err);
+    // });
   }
 
 }

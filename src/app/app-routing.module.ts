@@ -8,13 +8,15 @@ import { RouterResolver } from './router.resolver';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '', component: HomeComponent, resolve: { crisis: RouterResolver } },
   {
     path: 'authenticate',
     loadChildren: './authentication/auth.module#AuthModule'
   },
-  { path: 'posts/:slug', component: PostsComponent, resolve: { crisis: RouterResolver } }
+  {
+    path: 'posts',
+    loadChildren: './posts/post.module#PostModule'
+  }
 ];
 
 @NgModule({

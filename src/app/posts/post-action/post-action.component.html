@@ -19,11 +19,9 @@
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="editPost(post, componentName)">
-      <mat-icon>edit</mat-icon>
       <span>Edit</span>
     </button>
     <button mat-menu-item (click)="deletePost(post?.id, componentName)">
-      <mat-icon>delete</mat-icon>
       <span>Delete</span>
     </button>
   </mat-menu>
