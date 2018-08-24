@@ -112,6 +112,25 @@ export class PostsService {
     );
   }
 
+  deleteQuestion(id: string) {
+    return this.http.delete(`${this.host}/${this.version}/questions/${id}`)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  createQuestion(formParams: object) {
+    return this.http.post(`${this.host}/${this.version}/questions`, formParams)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+
+  updateQuestion(formParams: object, id: string) {
+    return this.http.put(`${this.host}/${this.version}/questions/${id}`, formParams)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
 
   vote(voteParams: any, type: string): Observable<any> {
     return this.http.post(`${this.host}/${this.version}/${type}/${voteParams.id}/vote`, voteParams)

@@ -4,6 +4,8 @@ import { PostsService } from '../posts.service';
 import { UiUpdateService } from '../ui-update.service';
 import { AuthService } from '../../authentication/auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { NgProgress } from '@ngx-progressbar/core';
 
 @Component({
   selector: '[app-post-action-bar]',
@@ -14,12 +16,13 @@ export class PostActionComponent implements OnInit {
   @Input() post: any;
   @Input() postType: string;
   @Input() componentName: string;
-
+  rootUrl: string = environment.rootUrl;
   constructor(
     public _postService: PostsService,
     public auth: AuthService,
     public _uiService: UiUpdateService,
-    public router: Router
+    public router: Router,
+    public progress: NgProgress
   ) { }
 
   ngOnInit() { }
@@ -57,9 +60,21 @@ export class PostActionComponent implements OnInit {
 
   deletePost(post, componentType) {
     if (componentType === 'answer') {
-      // push delete  event to the answer controller
+      this._uiService.deletePost(post, componentType);
     } else {
-      // push delete  event to the question controller
+      const confirmDelete = confirm('Are you sure you want to delete this post?');
+      if (confirmDelete) {
+        this.progress.start();
+        this._postService.deleteQuestion(post.id).subscribe(res => {
+          this.progress.complete();
+          if (res.status === 200) {
+            this.router.navigate(['']);
+          }
+        }, err => {
+          console.log('err');
+        });
+      }
     }
   }
 }
+

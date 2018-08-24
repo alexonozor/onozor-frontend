@@ -1,36 +1,40 @@
-<div fxFlex="50" fxLayout="row" fxFlexAlign="start">
-  <button mat-icon-button [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " (click)="vote(post, 'up')"
-    matTooltip="Up vote">
-    <mat-icon aria-label="Example icon-button with a heart icon">thumb_up_alt</mat-icon>
-  </button>
-  <button mat-icon-button disabled>{{post.vote_count}}</button>
-  <button mat-icon-button [ngClass]="post?.vote?.currentUserHasDownVote? 'mat-warn' : 'mat-icon-default'" (click)="vote(post, 'down')"
-    matTooltip="Down vote">
-    <mat-icon aria-label="Example icon-button with a heart icon">thumb_down_alt</mat-icon>
-  </button>
-
-  <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK DETAILS ({{post.comments_count}})</button>
-  <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> ANSWERS ({{post.answers_count}})</button>
-  <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
-</div>
-<div fxFlex="50" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end center">
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_horiz</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="editPost(post, componentName)">
-      <span>Edit</span>
+<div fxLayout="row" fxFlex="100%%" fxFlexFill fxLayoutAlign="space-between">
+  <div>
+    <button mat-icon-button [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " (click)="vote(post, 'up')"
+      matTooltip="Up vote">
+      <mat-icon aria-label="Example icon-button with a heart icon">thumb_up_alt</mat-icon>
     </button>
-    <button mat-menu-item (click)="deletePost(post?.id, componentName)">
-      <span>Delete</span>
+    <button mat-icon-button disabled>{{post.vote_count}}</button>
+    <button mat-icon-button [ngClass]="post?.vote?.currentUserHasDownVote? 'mat-warn' : 'mat-icon-default'" (click)="vote(post, 'down')"
+      matTooltip="Down vote">
+      <mat-icon aria-label="Example icon-button with a heart icon">thumb_down_alt</mat-icon>
     </button>
-  </mat-menu>
 
-  <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' " (click)="favouritePost(post)" matTooltip="Mark as favourite"
-    *ngIf="postType === 'question'">
-    <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="mat-icon-default" (click)="toggleShare(post)" matTooltip="Share post" *ngIf="postType === 'question'">
-    <mat-icon aria-label="Example icon-button with a heart icon">share</mat-icon>
-  </button>
+    <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK DETAILS ({{post.comments_count}})</button>
+    <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> ANSWERS ({{post.answers_count}})</button>
+    <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
+  </div>
+  <div fxLayout="row" fxLayoutGap="10px">
+    <div>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="editPost(post, componentName)">
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="deletePost(post, componentName)">
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' " (click)="favouritePost(post)" matTooltip="Mark as favourite"
+      *ngIf="postType === 'question'">
+      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="mat-icon-default" (click)="toggleShare(post)" matTooltip="Share post" *ngIf="postType === 'question'">
+      <mat-icon aria-label="Example icon-button with a heart icon">share</mat-icon>
+    </button>
+  </div>
 </div>

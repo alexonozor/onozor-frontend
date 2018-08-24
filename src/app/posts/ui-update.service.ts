@@ -16,6 +16,7 @@ export class UiUpdateService {
   listenToToggleShared = this.toggleSharedSource.asObservable();
   listenToVotes = this.voteSource.asObservable();
   listenToEditPost = this.editSource.asObservable();
+  listenToDeletePost = this.deleteSource.asObservable();
 
   constructor() { }
 
@@ -38,7 +39,8 @@ export class UiUpdateService {
     this.editSource.next(post);
   }
 
-  deletePost(post) {
+  deletePost(post, type) {
+    post['postType'] = type;
     this.deleteSource.next(post);
   }
 }

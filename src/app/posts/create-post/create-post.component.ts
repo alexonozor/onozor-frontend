@@ -12,7 +12,7 @@ import { AuthService } from '../../authentication/auth.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -43,7 +43,8 @@ export class CreatePostComponent implements OnInit {
     private fb: FormBuilder,
     public _postService: PostsService,
     public activatedRoute: ActivatedRoute,
-    public location: Location
+    public location: Location,
+    public router: Router
   ) {
     this.subscribeForQuestion();
    }
@@ -74,7 +75,7 @@ export class CreatePostComponent implements OnInit {
       this.updateForm = this.fb.group({
         body: [''],
         name: ['', [Validators.required]],
-        is_anonymous: ['', [Validators.required]],
+        is_anonymous: [''],
         send_mail: [true]
       });
     }
@@ -84,18 +85,30 @@ export class CreatePostComponent implements OnInit {
    this.location.back();
   }
 
-  submitForm(answer) {
+  submitForm() {
     this.isSubmited = true;
-    this._postService.updateAnswer(this.updateForm.value, answer.id).subscribe(res => {
+    if (this.isUpdateForm) {
+      this.updateQuestion(this.post.id);
+    } else {
+      this.createQuestion();
+    }
+  }
+
+  updateQuestion(id) {
+    this._postService.updateQuestion(this.updateForm.value, id).subscribe(res => {
       this.isSubmited = false;
-      if (res.status === 500) {
-      } else {
-        answer.editing = !answer.editing;
-        this.answer.body = this.updateForm.value.body;
-      }
+      this.router.navigate(['posts', res.data.slug]);
     }, error => {
       this.isSubmited = false;
     });
   }
 
+  createQuestion() {
+    this._postService.createQuestion(this.updateForm.value).subscribe(resp => {
+      this.isSubmited = false;
+      this.router.navigate(['posts', resp.question.slug]);
+    }, err => {
+      this.isSubmited = false;
+    });
+  }
 }

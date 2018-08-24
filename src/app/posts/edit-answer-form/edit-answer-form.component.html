@@ -8,7 +8,7 @@
           <mat-card-subtitle>@{{answer.author.slug}}</mat-card-subtitle>
         </mat-card-header>
       </div>
-
+      <mat-progress-bar mode="indeterminate" [hidden]="!isSubmited"></mat-progress-bar>
       <mat-card-content>
         <mat-tab-group>
           <mat-tab>
@@ -17,14 +17,15 @@
             </ng-template>
             <form [formGroup]="updateForm" class="login-form" (ngSubmit)="submitForm(answer)" fxLayout="column" fxLayoutAlign="start end">
               <mat-form-field fxFlex="100%" fxFlexFill>
-                <textarea matInput rows="10" formControlName="body"  placeholder="Write your answer"></textarea>
+                <textarea matInput rows="10" formControlName="body" placeholder="Write your answer"></textarea>
                 <mat-hint align="start">
                   <strong>This form support markdown</strong>
                 </mat-hint>
               </mat-form-field>
               <div fxLayoutGap="30px">
-                  <a mat-stroked-button  (click)="answer.editing = !answer.editing"> CANCEL</a>
-                  <button mat-raised-button  color="primary"> Update</button>
+                  
+                <a mat-stroked-button (click)="answer.editing = !answer.editing"> CANCEL</a>
+                <button mat-raised-button color="primary"> Update</button>
               </div>
             </form>
           </mat-tab>
@@ -32,7 +33,7 @@
             <ng-template mat-tab-label>
               <mat-icon class="example-tab-icon">visibility</mat-icon> PREVIEW
             </ng-template>
-            <!-- <div class="post-body" [innerHTML]="answer?.body| markdown"></div> -->
+            <div class="post-body" [innerHTML]="answer?.body| markdown"></div>
           </mat-tab>
 
         </mat-tab-group>

@@ -20,7 +20,8 @@ import {
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatTabsModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatDialogModule,
 } from '@angular/material';
 
 
@@ -46,7 +47,8 @@ import {
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule,
@@ -67,7 +69,8 @@ import {
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogModule
   ],
 })
 export class MyOwnCustomMaterialModule { }

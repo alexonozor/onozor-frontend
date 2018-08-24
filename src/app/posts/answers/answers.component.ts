@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { AuthService } from '../../authentication/auth.service';
 import { UiUpdateService } from '../ui-update.service';
@@ -12,6 +12,8 @@ import { NzMessageService, NzNotificationService, NzModalService } from 'ng-zorr
 import { map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
+import { ISubscription } from 'rxjs/Subscription';
+
 
 
 @Component({
@@ -20,11 +22,12 @@ import { Observable } from 'rxjs';
   styleUrls: ['./answers.component.css']
 })
 
-export class AnswersComponent implements OnInit {
+export class AnswersComponent implements OnInit, OnDestroy {
   @Input() slug: string;
   public loading: Boolean = true;
   public loadingAnswer: Boolean = true;
   public allanswers: Array<any> = [];
+  private subscription: ISubscription;
 
   updateForm: FormGroup;
   isSubmited: Boolean = false;
@@ -34,12 +37,12 @@ export class AnswersComponent implements OnInit {
   currentUser: any;
   postUrL: String;
   componentName: String = 'answer';
-
+  sub: Observable<any>;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches)
-  );
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -57,6 +60,7 @@ export class AnswersComponent implements OnInit {
   ngOnInit() {
     this.getAnswers(this.slug);
     this.listenToNewAnswerChanges();
+    this.listenToDeleteAnswerEvent();
     this.prepareForm();
     this.listenAndChooseVote();
     this.listenToEditAnswerEvent();
@@ -77,7 +81,7 @@ export class AnswersComponent implements OnInit {
 
   listenToNewAnswerChanges() {
     this._postService.currenetAddedAnswer.subscribe(answer => {
-      if (this.allanswers.length > 0) {
+      if (answer) {
         this.allanswers.unshift(answer);
       }
     });
@@ -90,21 +94,19 @@ export class AnswersComponent implements OnInit {
     });
   }
 
-  deleteAnswer(id): void {
-    const self = this;
-    this.modalService.confirm({
-      nzTitle: 'Confirm',
-      nzContent: 'Are you sure you want to delete this question?',
-      nzOkText: 'Yes',
-      nzCancelText: 'Cancel',
-      nzOnOk: function handelCancle() {
-        const deletedElement = document.getElementById(`answer-${id}`);
-        deletedElement.style.display = 'none';
-        self._postService.deleteAnswer(self.slug, id).subscribe(res => { }, err => {
-          self.message.error('Unable to delete this message, server or internet error', { nzDuration: 5000 });
-        });
-      }
-    });
+  deleteAnswer(answer): void {
+    const confirmDelete = confirm('Are you sure you want to this answer');
+    if (confirmDelete) {
+      const deletedElement = document.getElementById(`answer-${answer.id}`);
+      deletedElement.style.display = 'none';
+      this._postService.deleteAnswer(this.slug, answer.id).subscribe(res => { }, err => {
+        this.message.error('Unable to delete this message, server or internet error', { nzDuration: 5000 });
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    // this.subscription.unsubscribe();
   }
 
   editAnswer(answer) {
@@ -117,7 +119,6 @@ export class AnswersComponent implements OnInit {
 
   listenToEditAnswerEvent() {
     this._uiUpdateService.listenToEditPost.subscribe(data => {
-      console.log(data);
       if (data && data.postType === this.componentName) {
         this.editAnswer(data);
       }
@@ -126,6 +127,18 @@ export class AnswersComponent implements OnInit {
     });
   }
 
+  listenToDeleteAnswerEvent() {
+    this._uiUpdateService.listenToDeletePost.subscribe(data => {
+      if (data && data.postType === this.componentName) {
+        this.deleteAnswer(data);
+      }
+    }, err => {
+      console.log(err);
+    });
+  }
+
+
+
   submitForm(answer) {
     this.isSubmited = true;
     this._postService.updateAnswer(this.updateForm.value, answer.id).subscribe(res => {
@@ -133,8 +146,7 @@ export class AnswersComponent implements OnInit {
       if (res.status === 500) {
         this.message.error('You can\'t submit empty answer', { nzDuration: 3000 });
       } else {
-        document.getElementById(`answer-${answer.id}`).style.display = 'block';
-        document.getElementById(`answer-update-form-${answer.id}`).style.display = 'none';
+        this.editAnswer(answer);
         answer.body = this.updateForm.value.body;
       }
     }, error => {
@@ -178,7 +190,7 @@ export class AnswersComponent implements OnInit {
       answer.vote.currentUserHasDownVote = false;
     }
 
-    this.vote({value: answer.vote.voteValue, id: answer.id  }, 'answers');
+    this.vote({ value: answer.vote.voteValue, id: answer.id }, 'answers');
     // console.log({value: this.post.question.vote_count, id: this.post.question.id  });
   }
 
@@ -199,7 +211,7 @@ export class AnswersComponent implements OnInit {
       //  this.post.question.vote.currentUserHasUpvote = false;
       answer.vote.currentUserHasDownVote = true;
     }
-    this.vote({value: answer.vote.voteValue, id: answer.id  }, 'answers');
+    this.vote({ value: answer.vote.voteValue, id: answer.id }, 'answers');
   }
 
   listenAndChooseVote() {
@@ -216,7 +228,7 @@ export class AnswersComponent implements OnInit {
 
   vote(params, type) {
     this._postService.vote(params, type).subscribe(res => {
-      if (res.success) {}
+      if (res.success) { }
     }, err => {
       console.log(err);
     });
