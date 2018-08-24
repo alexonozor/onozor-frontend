@@ -17,6 +17,7 @@ import { MyOwnCustomMaterialModule } from './../material';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { PostsRouteRoutingModule } from './posts-route-routing.module';
 import { PostEditResolver } from './posts-resolver';
+import { ContentLoaderModule } from '@netbasal/content-loader';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { PostEditResolver } from './posts-resolver';
     InfiniteScrollModule,
     MarkdownModule.forChild(),
     PostsRouteRoutingModule,
+    ContentLoaderModule
   ],
   declarations: [
     PostsComponent,

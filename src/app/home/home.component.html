@@ -1,94 +1,53 @@
-<!-- <nz-layout>
-  <nz-sider>
-    <app-sidebar></app-sidebar>
-  </nz-sider>
-
-  <nz-content style="margin:25px 55px;">
-    <div nz-row nzGutter="48">
-      <div nz-col nz-col nzSpan="12">
-        <nz-card *ngFor="let feed of feeds" style="margin-bottom: 20px" [nzLoading]="loading" [nzBordered]="true" [nzExtra]="extraTemplate" 
-        infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)" >
-          <div nz-row class="card-user-info">
-            <div nz-col nzSpan="2">
-              <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="feed?.author?.avatar?.thumb.url"></nz-avatar>
-            </div>
-            <div nz-col nzXl="5">
-              <a>
-                <p class="card-user-name">{{feed?.author?.full_name}}</p>
-              </a>
-              <span>@{{feed?.author?.slug}}</span>
-            </div>
-          </div>
-
-          <a [routerLink]="['posts', feed.slug ]">
-            <h2>
-              <b>{{feed?.name}}</b>
-            </h2>
-          </a>
-          <p>{{feed?.body}}</p>
-          <div nz-row nzGutter="48">
-            <app-share-post [hidden]="!feed.sharePost" *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post>
-          </div>
-        </nz-card>
-        
-        <span *ngIf="meta?.next_page && loadingAnswer" style="text-align: center">
-          <ng-template #indicatorTemplate><i class="anticon anticon-spin anticon-loading" style="font-size: 50px;"></i>
-          </ng-template>
-          <nz-spin [nzIndicator]="indicatorTemplate"></nz-spin>
-      </span>
-      </div>
-      <div nz-col nz-col nzSpan="9">
-        <nz-card style="width:300px;">
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-        </nz-card>
-      </div>
-
-    </div>
-
-  </nz-content>
-</nz-layout> -->
-
-
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-top: 66px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
-    <div fxFlex="45" fxLayout="column" fxLayoutGap="30px">
-      <mat-card class="example-card" *ngFor="let feed of feeds" style="margin-bottom: 20px" infiniteScroll [infiniteScrollDistance]="5"
-        [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)">
-        <div class="row" fxFlexAlign="start">
-          <mat-card-header fxFlex="50">
-            <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + feed?.author?.avatar?.thumb.url+ ')', 'background-size': 'cover'}"></div>
-            <mat-card-title>{{feed?.author?.full_name}}</mat-card-title>
-            <mat-card-subtitle>@{{feed?.author?.slug}}</mat-card-subtitle>
-          </mat-card-header>
+  <div fxFlex="45" fxLayout="column" fxLayoutGap="30px">
+    <mat-card class="example-card" *ngFor="let feed of feeds" style="margin-bottom: 20px" infiniteScroll [infiniteScrollDistance]="5"
+      [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)" [hidden]="loading">
+      <div class="row" fxFlexAlign="start">
+        <mat-card-header fxFlex="50">
+          <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + feed?.author?.avatar?.thumb.url+ ')', 'background-size': 'cover'}"></div>
+          <mat-card-title>{{feed?.author?.full_name}}</mat-card-title>
+          <mat-card-subtitle>@{{feed?.author?.slug}}</mat-card-subtitle>
+        </mat-card-header>
 
-          <div fxFlex="50" style="text-align: right">
-            <small>{{feed?.created_at | amTimeAgo}}</small>
-          </div>
+        <div fxFlex="50" style="text-align: right">
+          <small>{{feed?.created_at | amTimeAgo}}</small>
         </div>
+      </div>
 
 
-        <mat-card-content>
-          <h2 [routerLink]="['posts', feed.slug ]" class="title">
-            <a class="post-link">{{feed?.name}}</a>
-          </h2>
-          <p class="body-2">{{feed?.body}}</p>
-        </mat-card-content>
-       
+      <mat-card-content>
+        <h2 [routerLink]="['posts', feed.slug ]" class="title">
+          <a class="post-link">{{feed?.name}}</a>
+        </h2>
+        <p class="body-2">{{feed?.body}}</p>
+      </mat-card-content>
 
-        <mat-card-actions app-post-action-bar fxLayout="row" [post]="feed" postType="question" [componentName]='componentName'> </mat-card-actions>
-        <div *ngIf="feed.sharePost"><app-share-post  *ngIf="feed?.id"  [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post></div>
-      </mat-card>
-    </div>
-    <div fxFlex="25">
-      <mat-card class="example-card">
-        <mat-card-content>
-          <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
-            very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
 
+      <mat-card-actions app-post-action-bar fxLayout="row" [post]="feed" postType="question" [componentName]='componentName'> </mat-card-actions>
+      <div *ngIf="feed.sharePost">
+        <app-share-post *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post>
+      </div>
+    </mat-card>
+
+    <span *ngIf="meta?.next_page && loadingAnswer" style="text-align: center">
+        <mat-card class="example-card">
+            <facebook-content-loader></facebook-content-loader>
+          </mat-card>
+    </span>
+
+    <mat-card class="example-card" *ngFor="let feed of feeds" [hidden]="!loading">
+      <facebook-content-loader></facebook-content-loader>
+    </mat-card>
   </div>
+  <div fxFlex="25">
+    <mat-card class="example-card">
+      <mat-card-content>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
+          very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

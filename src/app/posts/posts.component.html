@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-top: 66px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
   <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
-    <mat-card class="example-card">
+    <mat-card class="example-card" *ngIf="!loading">
       <div class="row" fxFlexAlign="start">
         <mat-card-header fxFlex="50">
           <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + post?.question?.author?.avatar?.thumb?.url+ ')', 'background-size': 'cover'}"></div>
@@ -30,6 +30,9 @@
         <app-share-post *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
       </div>
     </mat-card>
+    <mat-card *ngIf="loading">
+        <facebook-content-loader></facebook-content-loader>
+      </mat-card>
   </div>
   <div fxFlex="25">
     <mat-card class="example-card">
@@ -41,8 +44,8 @@
       </mat-card-content>
     </mat-card>
   </div>
-
 </div>
+
 
 
 <app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>

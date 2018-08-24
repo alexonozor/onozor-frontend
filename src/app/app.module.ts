@@ -20,6 +20,7 @@ import { MyOwnCustomMaterialModule } from './material';
 import { BREAKPOINTS} from '@angular/flex-layout';
 import { MomentModule } from 'ngx-moment';
 import { NgProgressModule } from '@ngx-progressbar/core';
+import { ContentLoaderModule } from '@netbasal/content-loader';
 
 
 registerLocaleData(en);
@@ -44,6 +45,7 @@ registerLocaleData(en);
     SharedModule,
     NgProgressModule,
     InfiniteScrollModule,
+    ContentLoaderModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,
@@ -60,7 +62,8 @@ registerLocaleData(en);
     }),
   ],
   exports: [
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    ContentLoaderModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, {
     provide: HTTP_INTERCEPTORS,

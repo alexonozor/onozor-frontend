@@ -102,7 +102,7 @@ export class PostsService {
 
   deleteComment(questiond_id: string, id: string) {
     return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/comments/${id}`)
-      .pipe(map((res: Response) => res.json())
+      .pipe(map((res: Response) => res)
     );
   }
 
