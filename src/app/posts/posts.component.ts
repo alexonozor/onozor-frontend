@@ -23,7 +23,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   showComment: Boolean = false;
   sharePost: Boolean = false;
   private sub: any;
-  slug: String;
   public post: any;
   public loading: Boolean = true;
   public newAnswerReciver: Object = {};
@@ -40,7 +39,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     public router: Router,
     public location: Location,
     private _postService: PostsService,
@@ -53,30 +52,26 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      this.slug = params['slug'];
-      this.getPost(this.slug);
-    });
+    this.getPost();
     this.toggleComment();
     this.toggleShare();
     this.listenAndChooseVote();
   }
 
-  getPost(slug) {
-    this._postService.getPost(slug).subscribe(res => {
+  getPost() {
+    this.activatedRoute.data.pipe(map(data => data.post)).subscribe(resp => {
+      this.post = resp.question;
+      this.favourite = this.post.favourited;
       this.loading = false;
-      this.post = res;
-      this.favourite = res.question.favourited;
     }, err => {
-      this.location.back();
-      this.notification.create('error', 'Error Feching Data',
-        'We have detect some internal server error while try to render your requested data. This is embarassing and we are sorry.');
+      console.log(err);
     });
+
   }
 
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 
   updateAnswers(event) {

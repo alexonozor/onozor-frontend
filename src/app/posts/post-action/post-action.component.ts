@@ -17,13 +17,16 @@ export class PostActionComponent implements OnInit {
   @Input() postType: string;
   @Input() componentName: string;
   rootUrl: string = environment.rootUrl;
+  currentUser: any;
   constructor(
     public _postService: PostsService,
     public auth: AuthService,
     public _uiService: UiUpdateService,
     public router: Router,
     public progress: NgProgress
-  ) { }
+  ) {
+    this.currentUser =  this.auth.getCurrentUser();
+  }
 
   ngOnInit() { }
 

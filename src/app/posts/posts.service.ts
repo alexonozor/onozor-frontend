@@ -100,32 +100,32 @@ export class PostsService {
     this.commentSource.next(comments);
   }
 
-  deleteComment(questiond_id: string, id: string) {
+  deleteComment(questiond_id: string, id: string): Observable<any> {
     return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/comments/${id}`)
       .pipe(map((res: Response) => res)
     );
   }
 
-  deleteAnswer(questiond_id: string, id: string) {
+  deleteAnswer(questiond_id: string, id: string): Observable<any> {
     return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/answers/${id}`)
       .pipe(map((res: Response) => res)
     );
   }
 
-  deleteQuestion(id: string) {
+  deleteQuestion(id: string): Observable<any> {
     return this.http.delete(`${this.host}/${this.version}/questions/${id}`)
       .pipe(map((res: Response) => res)
     );
   }
 
-  createQuestion(formParams: object) {
+  createQuestion(formParams: object): Observable<any> {
     return this.http.post(`${this.host}/${this.version}/questions`, formParams)
       .pipe(map((res: Response) => res)
     );
   }
 
 
-  updateQuestion(formParams: object, id: string) {
+  updateQuestion(formParams: object, id: string): Observable<any> {
     return this.http.put(`${this.host}/${this.version}/questions/${id}`, formParams)
       .pipe(map((res: Response) => res)
     );

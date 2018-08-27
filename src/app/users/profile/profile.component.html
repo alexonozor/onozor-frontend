@@ -1,0 +1,72 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'" [ngStyle.xs]="{'margin-top': '40px'}">
+  <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+    <mat-card>
+      <mat-card-header fxLayout.xs="column" fxLayoutAlign.xs="center center">
+        <div mat-card-avatar class="profile-card-image" [ngStyle]="{'background-image': 'url(' + user?.avatar?.medium?.url + ')', 'background-size': 'cover'}"></div>
+        <mat-card-title fxLayoutAlign.xs="center center" class="profile-card-title">{{user?.full_name}}</mat-card-title>
+        <mat-card-subtitle fxLayoutAlign.xs="center center" [ngStyle.xs]="{'text-align': 'center'}">{{user?.bio}}</mat-card-subtitle>
+        <mat-card-subtitle fxLayoutAlign.xs="center center">
+          <a mat-icon-button href="">
+            <i class="fas fa-globe-africa"></i>
+          </a>
+          <a mat-icon-button href="">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a mat-icon-button href="">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </mat-card-subtitle>
+        <mat-card-subtitle fxLayoutAlign.xs="center center" fxLayoutGap="20px" *ngIf="currentUser">
+          <button mat-raised-button (click)="onClick" *ngIf="currentUser.id === user.id">
+            <mat-icon>settings</mat-icon> SETTINGS</button>
+            <div *ngIf="currentUser.id !== user.id">
+                <button mat-raised-button color="primary" (click)="onClick"  *ngIf="user.follow">
+                     FOLLOW</button>
+                    <button mat-raised-button color="warn" (click)="onClick"  *ngIf="!user.follow">
+                         UNFOLLOW</button>
+            </div>
+          
+        </mat-card-subtitle>
+      </mat-card-header>
+      
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column" fxLayoutGap.xs="40px">
+        <mat-list>
+          <mat-list-item>
+            <i class="material-icons">location_on</i> &nbsp; {{user.location? user.location : 'Unknown'}} </mat-list-item>
+          <mat-list-item>
+            <i class="material-icons">email</i> &nbsp; {{user.email}} (private)</mat-list-item>
+          <mat-list-item>
+            <i class="material-icons">event</i> &nbsp; Member since {{ user.created_at | amTimeAgo}} </mat-list-item>
+          <mat-list-item>
+            <i class="material-icons">visibility</i> &nbsp; {{ user.views }} Profile views </mat-list-item>
+          <mat-list-item>
+            <i class="material-icons">access_time</i> &nbsp; Last seen {{ user.last_requested_at | amTimeAgo }} </mat-list-item>
+        </mat-list>
+        <div fxLayout="row" fxLayoutGap="20px" style="text-align: center">
+          <div>
+            <h1>{{user.answers_count}}</h1>
+            <p>Answers</p>
+          </div>
+          <div>
+            <h1>{{user.questions_count}}</h1>
+            <p>Questions</p>
+          </div>
+          <div>
+            <h1>{{user.favourites_count}}</h1>
+            <p>Favourites</p>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    <nav mat-tab-nav-bar class="tab-backgroundcolor mat-elevation-z3" style="margin-bottom: 0px;">
+      <a mat-tab-link *ngFor="let link of profileNavLink" [routerLink]="[link.link]" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+        {{link.name}} &nbsp; &nbsp; &nbsp;
+        <span color="primary" [matBadge]="link.count? link.count: ''"></span>
+      </a>
+    </nav>
+
+    <router-outlet></router-outlet>
+
+
+  </div>
+</div>

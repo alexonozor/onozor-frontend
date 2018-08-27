@@ -1,0 +1,83 @@
+.post-title {
+    font-size: 30px;
+    font-weight: bolder;
+    line-height: 35px;
+  }
+  
+  .post-body {
+    font-size: 25px;
+    margin-bottom: 20px;
+    word-break: break-word;
+    line-height: 1.6;
+    font-size: 1.13rem;
+    color: #23242b;
+   }
+  
+   .post-action-bar {
+     margin-top: 25px;
+   }
+  
+  
+  
+  
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+  }
+  
+  .sidenav-container {
+    position: relative;
+    background: #e1e4f1;
+  }
+  
+  .mat-sidenav {
+    width: 250px;
+    margin-right: 10px;
+  }
+  
+  
+  
+  .margin-top2 {
+    margin-top: 66px;
+    padding: 20px;
+  }
+  
+  .post-link {
+    color: rgba(0,0,0,0.87);
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 28px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    max-height: 56px;
+    text-decoration: none;
+  }
+  
+  .mat-card-title {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .profile-card-image {
+    width: 150px !important;
+    height: 150px !important;
+    margin-right: 15px;
+  }
+  .profile-card-title {
+    margin-bottom: 8px;
+    font-size: 30px;
+    margin-top: 15px;
+  }
+
+  .tab-backgroundcolor {
+    background-color: #fff;
+    margin: 0px !important;
+    a {
+      text-decoration: none;
+    }
+  }
+   
+  

@@ -1,9 +1,11 @@
 .mat-sidenav {
-    width: 250px;
-    margin-right: 10px;
-  
-  }
+  width: 250px;
+  margin-right: 10px;
+}
 
-  .mat-drawer-container {
-    background-color: #e1e4f2;
-  }
+.mat-drawer-container {
+  background-color: #e1e4f2;
+}
+
+
+

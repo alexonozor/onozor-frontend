@@ -14,3 +14,29 @@ body {
 .basic-button {
   background: #fff !important;
 }
+
+* {
+  outline: none;
+}
+
+.mat-card-title {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.post-link {
+  color: rgba(0,0,0,0.87);
+  font-size: 1.375rem;
+  font-weight: bold;
+  line-height: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  max-height: 56px;
+  text-decoration: none;
+}
+
+.post-link:hover {
+  color: rgba(0,0,0,0.87);
+}

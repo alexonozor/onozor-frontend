@@ -7,6 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { SharePostComponent } from './share-post/share-post.component';
 import { MyOwnCustomMaterialModule } from '../material';
+import { TruncatePipe } from '../truncate.pipe';
 
 @NgModule({
   imports: [
@@ -19,13 +20,15 @@ import { MyOwnCustomMaterialModule } from '../material';
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    SharePostComponent
+    SharePostComponent,
+    TruncatePipe
   ],
   exports: [
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    SharePostComponent
+    SharePostComponent,
+    TruncatePipe
   ]
 })
 export class SharedModule { }

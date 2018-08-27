@@ -9,7 +9,7 @@ import { PostEditResolver } from './posts-resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
-  { path: ':slug', component: PostsComponent, resolve: { crisis: RouterResolver } },
+  { path: ':slug', component: PostsComponent, resolve: { post: PostEditResolver } },
   { path: 'post/create', component: CreatePostComponent, resolve: { crisis: RouterResolver } },
   { path: 'post/edit/:slug', component: CreatePostComponent, resolve: { post: PostEditResolver } }
 ];

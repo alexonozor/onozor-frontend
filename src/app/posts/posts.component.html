@@ -2,37 +2,37 @@
   <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
     <mat-card class="example-card" *ngIf="!loading">
       <div class="row" fxFlexAlign="start">
-        <mat-card-header fxFlex="50">
-          <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + post?.question?.author?.avatar?.thumb?.url+ ')', 'background-size': 'cover'}"></div>
-          <mat-card-title>{{post?.question?.author?.full_name}}</mat-card-title>
-          <mat-card-subtitle>@{{post?.question?.author?.slug}}</mat-card-subtitle>
+        <mat-card-header fxFlex="50" [routerLink]="['/users', post?.author?.slug]">
+          <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + post?.author?.avatar?.thumb?.url+ ')', 'background-size': 'cover'}"></div>
+          <mat-card-title>{{post?.author?.full_name}}</mat-card-title>
+          <mat-card-subtitle>@{{post?.author?.slug}}</mat-card-subtitle>
         </mat-card-header>
 
         <div fxFlex="50" style="text-align: right">
-          <small>{{post?.question?.created_at | amTimeAgo}}</small>
+          <small>{{post?.created_at | amTimeAgo}}</small>
         </div>
       </div>
-      
+
       <mat-card-content>
         <h2 class="title">
-          <a class="post-link">{{post?.question?.name}}</a>
+          <a class="post-link">{{post?.name}}</a>
         </h2>
-        <span class="post-body" [innerHTML]="post?.question?.body  | markdown"></span>
+        <span class="post-body" [innerHTML]="post?.body  | markdown"></span>
       </mat-card-content>
 
-      <mat-card-actions *ngIf="post" app-post-action-bar fxLayout="row" [post]="post?.question" postType="question" [componentName]="componentName">
+      <mat-card-actions *ngIf="post" app-post-action-bar fxLayout="row" [post]="post" postType="question" [componentName]="componentName">
       </mat-card-actions>
       <div class="comment" *ngIf="showComment">
-        <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
-        <app-comment-form *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comment-form>
+        <app-comments *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comments>
+        <app-comment-form *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comment-form>
       </div>
       <div *ngIf="sharePost">
-        <app-share-post *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
+        <app-share-post *ngIf="post?.id" [title]="post?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
       </div>
     </mat-card>
     <mat-card *ngIf="loading">
-        <facebook-content-loader></facebook-content-loader>
-      </mat-card>
+      <facebook-content-loader></facebook-content-loader>
+    </mat-card>
   </div>
   <div fxFlex="25">
     <mat-card class="example-card">
@@ -48,7 +48,7 @@
 
 
 
-<app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>
+<app-answer-form *ngIf="post?.id" [questionId]="post?.id"></app-answer-form>
 
 
-<app-answers [slug]="slug"></app-answers>
+<app-answers [slug]="post?.slug"></app-answers>

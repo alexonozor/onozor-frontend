@@ -4,7 +4,7 @@
     <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
       <mat-card>
         <div class="row" fxFlexAlign="start">
-          <mat-card-header fxFlex="50">
+          <mat-card-header fxFlex="50" [routerLink]="['/users', answer?.author?.slug]">
             <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + answer?.author?.avatar?.thumb?.url + ')', 'background-size': 'cover'}"></div>
             <mat-card-title>{{answer?.author?.full_name}}</mat-card-title>
             <mat-card-subtitle>@{{answer?.author?.slug}}</mat-card-subtitle>

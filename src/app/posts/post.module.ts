@@ -19,6 +19,8 @@ import { PostsRouteRoutingModule } from './posts-route-routing.module';
 import { PostEditResolver } from './posts-resolver';
 import { ContentLoaderModule } from '@netbasal/content-loader';
 
+
+
 @NgModule({
   imports: [
     CommonModule,

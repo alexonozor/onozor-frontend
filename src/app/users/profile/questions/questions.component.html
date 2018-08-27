@@ -1,6 +1,5 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-top: 66px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
-  <div fxFlex="45" fxLayout="column" fxLayoutGap="30px">
-    <mat-card class="example-card" *ngFor="let feed of feeds" style="margin-bottom: 20px" infiniteScroll [infiniteScrollDistance]="5"
+<div fxLayout="column" fxLayoutGap="30px">
+    <mat-card class="example-card" *ngFor="let feed of questions" style="margin-bottom: 20px" infiniteScroll [infiniteScrollDistance]="5"
       [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)" [hidden]="loading">
       <div class="row" fxFlexAlign="start">
         <mat-card-header fxFlex="50"  [routerLink]="['/users', feed?.author?.slug]">
@@ -16,16 +15,16 @@
 
 
       <mat-card-content>
-        <h2 [routerLink]="['posts', feed.slug ]" class="title">
+        <h2 [routerLink]="['/posts', feed.slug ]" class="title">
           <a class="post-link">{{feed?.name}}</a>
         </h2>
-        <p class="body-2">{{feed?.body | truncate:200}}</p>
+        <p class="body-2">{{feed?.body | truncate:250}}</p>
       </mat-card-content>
 
 
-      <mat-card-actions app-post-action-bar fxLayout="row" [post]="feed" postType="question" [componentName]='componentName'> </mat-card-actions>
+      <!-- <mat-card-actions app-post-action-bar fxLayout="row" [post]="feed" postType="question" [componentName]='componentName'> </mat-card-actions> -->
       <div *ngIf="feed.sharePost">
-        <app-share-post *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post>
+        <!-- <app-share-post *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post> -->
       </div>
     </mat-card>
 
@@ -39,15 +38,3 @@
       <facebook-content-loader></facebook-content-loader>
     </mat-card>
   </div>
-  <div fxFlex="25">
-    <mat-card class="example-card">
-      <mat-card-content>
-        <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
-          very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-</div>

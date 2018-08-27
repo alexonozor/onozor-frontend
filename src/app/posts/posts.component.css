@@ -46,19 +46,6 @@
   padding: 20px;
 }
 
-.post-link {
-  color: rgba(0,0,0,0.87);
-  font-size: 25px;
-  font-weight: bold;
-  line-height: 28px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  max-height: 56px;
-  text-decoration: none;
-}
 
 .mat-card-title {
   display: block;

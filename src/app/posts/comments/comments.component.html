@@ -1,7 +1,7 @@
 <div *ngFor="let comment of comments" [attr.id]="'comment-' + comment?.id" fxLayout="column" style="padding-top: 20px">
   <mat-divider></mat-divider>
   <div fxLayout="row" fxFlex="100%" style="padding-top: 20px">
-    <mat-card-header>
+    <mat-card-header [routerLink]="['/users', comment?.user?.slug]">
       <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + comment?.user?.avatar?.thumb?.url + ')', 'background-size': 'cover'}"></div>
       <mat-card-title>{{comment?.user?.full_name}}</mat-card-title>
       <mat-card-subtitle style="margin-bottom: 5px;">Replied at {{comment?.created_at | amTimeAgo}}</mat-card-subtitle>
@@ -28,8 +28,9 @@
         <span [attr.id]="'comment-form-body' + comment?.id">{{comment?.body}}</span>
       </mat-card-content>
       <mat-card-actions *ngIf="currentUser && currentUser.id == comment?.user?.id" style="margin-bottom: 0px;">
-        &nbsp; &nbsp; <a  color="warn" (click)="editComment(editing, comment?.id, i, this)" class="small-icon"> EDIT</a> &nbsp;  &nbsp;  &nbsp;
-        <a  (click)="deleteComment(comment.id)" class="small-icon">DELETE</a>
+        &nbsp; &nbsp;
+        <a color="warn" (click)="editComment(editing, comment?.id, i, this)" class="small-icon"> EDIT</a> &nbsp; &nbsp; &nbsp;
+        <a (click)="deleteComment(comment.id)" class="small-icon">DELETE</a>
       </mat-card-actions>
     </div>
   </div>

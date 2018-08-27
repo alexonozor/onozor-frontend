@@ -15,7 +15,8 @@
     <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
-    <div>
+
+    <div *ngIf="currentUser.id === post?.author?.id">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_horiz</mat-icon>
       </button>

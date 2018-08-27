@@ -1,0 +1,55 @@
+<div fxLayout="row wrap" fxLayout.xs="column" fxFill.xs fxLayoutGap="10px" *ngIf="!(isHandset$ | async)">
+  <mat-card class="user-card" fxFill.xs *ngFor="let user of users" infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll(meta?.next_page)">
+
+    <div class="timeline" mat-card-image [ngStyle]="{'background-image': 'url(' + null+ ')', 'background-size': 'cover', 'background-color': '#3f51b5'}"></div>
+    <div class="row">
+      <mat-card-header [routerLink]="['/users', user?.slug]">
+        <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + user?.avatar?.thumbnails?.url+ ')', 'background-size': 'cover'}"></div>
+        <mat-card-title>{{user.full_name}}</mat-card-title>
+        <mat-card-subtitle>@{{user.slug}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        {{user.bio | truncate }}
+      </mat-card-content>
+      <div *ngIf="currentUser.id !== user.id" >
+        <button mat-raised-button color="primary" (click)="onClick" *ngIf="user.follow">
+          FOLLOW</button>
+        <button mat-raised-button color="warn" (click)="onClick" *ngIf="!user.follow">
+          UNFOLLOW</button>
+      </div>
+    </div>
+  </mat-card>
+
+
+  <span fxLayout="column" fxFill *ngIf="meta?.next_page && loadingUsers" style="margin-right: 10px">
+    <mat-card class="example-card">
+      <facebook-content-loader></facebook-content-loader>
+    </mat-card>
+  </span>
+
+  <mat-card class="example-card" *ngFor="let user of ['feeds']" [hidden]="!loading">
+    <facebook-content-loader></facebook-content-loader>
+  </mat-card>
+</div>
+
+<mat-card *ngIf="(isHandset$ | async)">
+  <mat-list fxLayout="column" fxLayoutAlign="start">
+    <mat-list-item *ngFor="let user of users" infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)">
+      <img matListAvatar [src]="user?.avatar?.thumbnails?.url" alt="..." [routerLink]="['/users', user?.slug]">
+      <h4 matLine [routerLink]="['/users', user?.slug]" class="profile-card-title">{{user.full_name}}</h4>
+      <p matLine class="demo-2" [routerLink]="['/users', user?.slug]">@{{user.slug}} </p>
+      <p matLine class="demo-2" [routerLink]="['/users', user?.slug]">{{user.bio | truncate:40 }}</p>
+      <mat-divider></mat-divider>
+      <div *ngIf="currentUser.id !== user.id">
+        <button mat-raised-button color="primary" (click)="onClick" *ngIf="user.follow">
+          FOLLOW</button>
+        <button mat-raised-button color="warn" (click)="onClick" *ngIf="!user.follow">
+          UNFOLLOW</button>
+      </div>
+    </mat-list-item>
+    <span fxLayout="column" fxFill *ngIf="meta?.next_page && loadingUsers">
+      <bullet-list-content-loader height="10"></bullet-list-content-loader>
+    </span>
+  </mat-list>
+</mat-card>
