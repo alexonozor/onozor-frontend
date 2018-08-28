@@ -64,7 +64,7 @@ export class UserService {
   }
 
   getUserFollowing(slug: String, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users/${slug}/following`)
+    return this.http.get(`${this.host}/${this.version}/users/${slug}/following?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
