@@ -1,25 +1,18 @@
-<div fxLayout="row wrap" fxLayout.xs="column" fxFill.xs fxLayoutGap="10px" *ngIf="!(isHandset$ | async)">
-  <mat-card class="user-card" fxFill.xs *ngFor="let user of users" infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50"
-    (scrolled)="onScroll(meta?.next_page)">
+<div fxLayout="row wrap" fxLayoutAlign="space-around center"  fxLayout.xs="column" fxFill.xs fxLayoutGap="10px" *ngIf="!(isHandset$ | async)">
 
-    <div class="timeline" mat-card-image [ngStyle]="{'background-image': 'url(' + null+ ')', 'background-size': 'cover', 'background-color': '#3f51b5'}"></div>
-    <div class="row">
-      <mat-card-header [routerLink]="['/users', user?.slug]">
-        <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + user?.avatar?.thumbnails?.url+ ')', 'background-size': 'cover'}"></div>
-        <mat-card-title>{{user.full_name}}</mat-card-title>
-        <mat-card-subtitle>@{{user.slug}}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        {{user.bio | truncate }}
-      </mat-card-content>
-      <div *ngIf="currentUser.id !== user.id" >
-        <button mat-raised-button color="primary" (click)="onClick" *ngIf="user.follow">
-          FOLLOW</button>
-        <button mat-raised-button color="warn" (click)="onClick" *ngIf="!user.follow">
-          UNFOLLOW</button>
-      </div>
-    </div>
-  </mat-card>
+
+  <app-user-card 
+  *ngFor="let user of users" 
+  style="margin-bottom: 30px" 
+  infiniteScroll 
+  [infiniteScrollDistance]="5" 
+  [infiniteScrollThrottle]="50" 
+  (scrolled)="onScroll(meta?.next_page)" 
+  [hidden]="loading" 
+  [loading]="loading"
+  [user]="user"
+  [meta]="meta">
+</app-user-card>
 
 
   <span fxLayout="column" fxFill *ngIf="meta?.next_page && loadingUsers" style="margin-right: 10px">
@@ -41,12 +34,8 @@
       <p matLine class="demo-2" [routerLink]="['/users', user?.slug]">@{{user.slug}} </p>
       <p matLine class="demo-2" [routerLink]="['/users', user?.slug]">{{user.bio | truncate:40 }}</p>
       <mat-divider></mat-divider>
-      <div *ngIf="currentUser.id !== user.id">
-        <button mat-raised-button color="primary" (click)="onClick" *ngIf="user.follow">
-          FOLLOW</button>
-        <button mat-raised-button color="warn" (click)="onClick" *ngIf="!user.follow">
-          UNFOLLOW</button>
-      </div>
+      <app-relationiship-button *ngIf="currentUser.id !== user.id" [user]="user"></app-relationiship-button>
+
     </mat-list-item>
     <span fxLayout="column" fxFill *ngIf="meta?.next_page && loadingUsers">
       <bullet-list-content-loader height="10"></bullet-list-content-loader>

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map, catchError } from 'rxjs/operators';
 import { Response } from '@angular/http';
+import { Location } from '@angular/common';
 import CryptoJS from 'crypto-js';
 
 @Injectable({
@@ -15,7 +16,8 @@ export class AuthService {
   private version = environment.version1;
 
   constructor(
-    public http: HttpClient
+    public http: HttpClient,
+    public location: Location
   ) { }
 
 
@@ -61,6 +63,16 @@ export class AuthService {
     const encrypt = localStorage.getItem('currentUser');
     const currentUser =  this.decrypt(encrypt);
     return currentUser;
+  }
+
+  logout() {
+   localStorage.removeItem('accessToken');
+   localStorage.removeItem('currentUser');
+   if (this.location.isCurrentPathEqualTo('/')) {
+     window.location.reload();
+   } else {
+    window.location.href = '/';
+   }
   }
 
 

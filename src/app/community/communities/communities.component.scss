@@ -1,0 +1,37 @@
+.margin-top2 {
+    margin-top: 66px;
+    padding: 20px;
+  }
+  
+  
+  .mat-card-title {
+    display: block;
+    margin-bottom: 8px;
+    small {
+      font-weight: normal;
+    }
+  }
+
+
+  .dim-text {
+      color: #696969;
+  }
+
+  .mat-card-header-text {
+    margin: 10px 8px;
+}
+
+.description {
+    height: 150px;
+    margin: 10px 0px;
+}
+
+.mat-card-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mat-button-wrapper {
+   font-size: 15px !important;
+}

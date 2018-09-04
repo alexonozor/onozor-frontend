@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from '../../posts/posts.service';
 import { Location } from '@angular/common';
 import { AuthService } from '../../authentication/auth.service';
+import { UserService } from '../../users/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +27,8 @@ export class ProfileComponent implements OnInit {
     public router: Router,
     public location: Location,
     private _postService: PostsService,
+    private _userService: UserService,
+    private snackBar: MatSnackBar,
     public auth: AuthService,
   ) {
     this.currentUser = this.auth.getCurrentUser();
@@ -34,11 +39,14 @@ export class ProfileComponent implements OnInit {
     map(result => result.matches)
   );
 
-
+  navigateToSettings() {
+    this.router.navigate(['users/settings']);
+  }
 
   ngOnInit() {
     this.getPost();
   }
+
 
   getPost() {
     this.activatedRoute.data.pipe(map(data => data.user)).subscribe(resp => {

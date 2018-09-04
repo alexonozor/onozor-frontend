@@ -10,8 +10,10 @@
       <mat-icon aria-label="Example icon-button with a heart icon">thumb_down_alt</mat-icon>
     </button>
 
-    <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK DETAILS ({{post.comments_count}})</button>
-    <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> ANSWERS ({{post.answers_count}})</button>
+    <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK
+      DETAILS ({{post.comments_count}})</button>
+    <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> ANSWERS
+      ({{post.answers_count}})</button>
     <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
@@ -30,8 +32,8 @@
       </mat-menu>
     </div>
 
-    <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' " (click)="favouritePost(post)" matTooltip="Mark as favourite"
-      *ngIf="postType === 'question'">
+    <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' " (click)="favouritePost(post)"
+      matTooltip="Mark as favourite" *ngIf="postType === 'question'">
       <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
     </button>
     <button mat-icon-button class="mat-icon-default" (click)="toggleShare(post)" matTooltip="Share post" *ngIf="postType === 'question'">

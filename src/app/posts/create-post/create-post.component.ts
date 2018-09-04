@@ -5,15 +5,26 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
-  Validators
+  Validators,
+  FormControl
 } from '@angular/forms';
 import { PostsService } from '../posts.service';
 import { AuthService } from '../../authentication/auth.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+
+export interface Category {
+  id: number;
+  name: string;
+  description: string;
+  permalink: string;
+  slug: string;
+  image: string;
+  links: {questions: string };
+}
 
 @Component({
   selector: 'app-create-post',
@@ -28,8 +39,11 @@ export class CreatePostComponent implements OnInit {
   loading: Boolean = true;
   currentUser: any;
   post: any;
+  categories: Array<any> = [];
   @Input() answer: any;
   isUpdateForm: Boolean = false;
+  filteredCategories: Observable<Category[]>;
+  categoriesCtrl = new FormControl();
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -47,7 +61,10 @@ export class CreatePostComponent implements OnInit {
     public router: Router
   ) {
     this.subscribeForQuestion();
+    this.subscribeForCategories();
+    this.prepareForm();
    }
+
 
    subscribeForQuestion() {
     this.activatedRoute.data.pipe(map(data => data)).subscribe(resp => {
@@ -57,15 +74,32 @@ export class CreatePostComponent implements OnInit {
     });
    }
 
+
+  public displayFn = (key) => {
+    const selection = this.categories.find(e => e.name === name);
+    if (selection) {
+      return selection.id;
+    }
+  }
+
+   subscribeForCategories() {
+    this.activatedRoute.data.pipe(map(data => data.categories)).subscribe(resp => {
+      this.categories = resp.categories;
+    }, err => {
+      console.log(err);
+    });
+   }
+
   ngOnInit() {
-    this.prepareForm();
     this.currentUser = this.auth.getCurrentUser();
   }
 
   prepareForm() {
     if (this.post) { // build form for update
+      const categoryId = this.post.category ? this.post.category.id : null;
       this.isUpdateForm = true;
       this.updateForm = this.fb.group({
+        category_id: [categoryId, [Validators.required]],
         body: [this.post.body],
         name: [this.post.name, [Validators.required]],
         is_anonymous: [this.post.is_anonymous],
@@ -73,6 +107,7 @@ export class CreatePostComponent implements OnInit {
       });
     } else {
       this.updateForm = this.fb.group({
+        category_id: ['', [Validators.required]],
         body: [''],
         name: ['', [Validators.required]],
         is_anonymous: [''],

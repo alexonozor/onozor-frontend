@@ -1,0 +1,81 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'"
+  [ngStyle.xs]="{'margin-top': '40px'}">
+  <mat-card fxFlex="40">
+    <div fxLayout="row" fxLayoutAlign="space-between end" style="margin-bottom: 30px">
+      <h3>EDIT PROFILE</h3>
+      <button mat-icon-button (click)="closeSettings()">
+        <mat-icon class="mat-18">close</mat-icon>
+      </button>
+    </div>
+    <form [formGroup]="userInfo" (ngSubmit)="submitForm('userInfo')">
+      <div class="example-container" fxLayout="column" fxLayoutGap="30px">
+
+        <input type="hidden"  formControlName="avatar" />
+        <input type="file" #addAvatar hidden="true" id="avatar" (change)="onFileChange($event)"/>
+        <div mat-card-avatar class="profile-card-image" [ngStyle]="{'background-image': 'url(' + currentUser?.avatar?.medium?.url + ')', 'background-size': 'cover', 'text-align': 'right'}">
+          <mat-icon class="mat-20" color="primary" style="cursor: pointer" (click)="selectAvatar(addAvatar)">add_a_photo</mat-icon>
+        </div>
+
+        <input type="file"  #addPhototo hidden="true" (change)="onFileChangeCoverPhoto($event)" id="cover_photo" />
+        <input type="hidden" formControlName="cover_photo" />
+        <small *ngIf="imageWasChange"><em>Changed!!! Please click the update button to upload.</em></small>
+        <div class="mat-card" style="text-align: center; padding: 50px;" [ngStyle]="{'background-image': 'url(' + currentUser?.cover_photo?.small?.url + ')', 'background-size': 'cover'}">
+          <mat-icon class="mat-20" color="primary" (click)="selectAddPhoto(addPhototo)" style="cursor: pointer">add_a_photo</mat-icon>
+          <h3 style="color: #ffffff">Change Cover Photo</h3>
+        </div>
+
+        <mat-form-field>
+          <input matInput type="input" formControlName="username" placeholder="Username">
+          <mat-icon matSuffix>perm_identity</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="first_name">
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Last Name" formControlName="last_name">
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Location" formControlName="location">
+          <mat-icon matSuffix>location_on</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea matInput placeholder="Tell us more about yourself" formControlName="bio"></textarea>
+          <mat-icon matSuffix>playlist_add</mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button [disabled]="updating" (click)="onClick" color="primary">UPDATE</button>
+      </div>
+    </form>
+
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <mat-divider></mat-divider>
+    <br /> <br />
+    <h3>Your social profiles</h3>
+    <form [formGroup]="userSocialInfo" (ngSubmit)="submitForm('social')">
+      <div class="example-container" fxLayout="column" fxLayoutGap="30px">
+        <mat-form-field>
+          <input matInput type="url" formControlName="facebook_url" placeholder="https://facebook.com/...">
+          <mat-icon matSuffix><i class="fab fa-facebook-f"></i></mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="url" formControlName="twitter_url" placeholder="https://twitter.com/...">
+          <mat-icon matSuffix><i class="fab fa-twitter"></i></mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="url" formControlName="personal_website" placeholder="Personal Website">
+          <mat-icon matSuffix>public</mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button [disabled]="updating" (click)="onClick" color="primary">UPDATE</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

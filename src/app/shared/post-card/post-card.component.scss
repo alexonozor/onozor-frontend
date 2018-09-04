@@ -1,0 +1,30 @@
+
+.mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+  }
+  
+  .sidenav-container {
+    position: relative;
+    background: #e1e4f1;
+  }
+  
+  .mat-sidenav {
+    width: 250px;
+    margin-right: 10px;
+  
+  }
+  
+  .margin-top2 {
+    margin-top: 66px;
+    padding: 20px;
+  }
+  
+  
+  .mat-card-title {
+    display: block;
+    margin-bottom: 8px;
+    small {
+      font-weight: normal;
+    }
+  }

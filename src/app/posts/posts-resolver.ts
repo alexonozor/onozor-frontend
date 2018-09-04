@@ -26,3 +26,17 @@ export class PostEditResolver implements Resolve<any> {
      }
   }
 }
+
+@Injectable()
+export class CommunitiesRouterResolver implements Resolve<any> {
+
+  constructor(
+    //   public http: HttpClient,
+      private router: Router,
+      private _postService: PostsService
+    ) { }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+        return this._postService.categories();
+  }
+}

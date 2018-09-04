@@ -40,3 +40,7 @@ body {
 .post-link:hover {
   color: rgba(0,0,0,0.87);
 }
+
+.mat-tab-body-wrapper {
+  padding-top: 20px;
+}

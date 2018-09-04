@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: './users/users.module#UsersModule'
+  },
+  {
+    path: 'communities',
+    loadChildren: './community/community.module#CommunityModule'
   }
 ];
 

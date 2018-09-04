@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { } from '../posts.service';
-import { PostsService } from '../posts.service';
-import { UiUpdateService } from '../ui-update.service';
+import { PostsService } from '../../posts/posts.service';
+import { UiUpdateService } from '../../posts/ui-update.service';
 import { AuthService } from '../../authentication/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { NgProgress } from '@ngx-progressbar/core';
 
 @Component({
-  selector: '[app-post-action-bar]',
+  selector: 'app-post-action-bar',
   templateUrl: './post-action.component.html',
   styles: []
 })
@@ -71,7 +71,7 @@ export class PostActionComponent implements OnInit {
         this._postService.deleteQuestion(post.id).subscribe(res => {
           this.progress.complete();
           if (res.status === 200) {
-            this.router.navigate(['']);
+            window.location.href = '/';
           }
         }, err => {
           console.log('err');

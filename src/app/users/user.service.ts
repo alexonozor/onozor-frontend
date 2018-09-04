@@ -27,7 +27,6 @@ export class UserService {
   private host = environment.baseUrl;
   private version = environment.version1;
 
-
   constructor(
     public http: HttpClient
   ) { }
@@ -69,8 +68,26 @@ export class UserService {
     );
   }
 
-  getUsers(): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users`)
+  getUsers(page = 1): Observable<any> {
+    return this.http.get(`${this.host}/${this.version}/users?page=${page}`)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  updateUser(params, slug): Observable<any> {
+    return this.http.put(`${this.host}/${this.version}/users/${slug}`, params)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  follow(id): Observable<any> {
+    return this.http.post(`${this.host}/${this.version}/relationships`, {followed_id: id})
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  unFollow(id): Observable<any> {
+    return this.http.delete(`${this.host}/${this.version}/relationships/${id}`)
       .pipe(map((res: Response) => res)
     );
   }

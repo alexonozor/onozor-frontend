@@ -1,14 +1,8 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-top: 66px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
   <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
     <mat-card class="example-card">
-      <!-- <div class="row" fxFlexAlign="start">
-          <mat-card-header fxFlex="50">
-            <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + answer.author.avatar.thumb.url+ ')', 'background-size': 'cover'}"></div>
-            <mat-card-title>{{answer.author.full_name}}</mat-card-title>
-            <mat-card-subtitle>@{{answer.author.slug}}</mat-card-subtitle>
-          </mat-card-header>
-        </div> -->
-        <mat-progress-bar mode="indeterminate" [hidden]="!isSubmited"></mat-progress-bar>
+
+      <mat-progress-bar mode="indeterminate" [hidden]="!isSubmited"></mat-progress-bar>
       <mat-card-content>
         <mat-tab-group>
           <mat-tab>
@@ -17,6 +11,13 @@
             </ng-template>
             <form [formGroup]="updateForm" class="login-form" (ngSubmit)="submitForm(answer)">
               <div fxLayout="column" fxLayoutAlign="start">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Select communities" formControlName="category_id">
+                    <mat-option *ngFor="let category of categories" [value]="category.id">
+                      {{category.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
                 <mat-form-field fxFlex="100%" fxFlexFill>
                   <input matInput type="text" #title formControlName="name" placeholder="What's your question?" />
                 </mat-form-field>
@@ -32,7 +33,8 @@
                   </div>
                   <div fxLayoutGap="10px">
                     <a mat-stroked-button (click)="exitQuestionForm()"> CANCEL</a>
-                    <button mat-raised-button [disabled]="!updateForm.valid" color="primary">{{isUpdating? 'Update' : 'Submit'}} </button>
+              
+                    <button mat-raised-button [disabled]="!updateForm.valid" color="primary">Save</button>  
                   </div>
                 </div>
               </div>
@@ -45,7 +47,6 @@
             <h1 class="post-title">{{title.value}}</h1>
             <div class="post-body" [innerHTML]="body.value | markdown"></div>
           </mat-tab>
-
         </mat-tab-group>
       </mat-card-content>
     </mat-card>

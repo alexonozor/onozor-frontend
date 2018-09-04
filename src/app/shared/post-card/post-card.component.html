@@ -1,0 +1,30 @@
+<mat-card class="example-card">
+  <div class="row" fxFlexAlign="start">
+    <mat-card-header fxFlex="50" [routerLink]="['/users', feed?.author?.slug]">
+      <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + feed?.author?.avatar?.thumb.url+ ')', 'background-size': 'cover'}"></div>
+      <mat-card-title>{{feed?.author?.full_name}}</mat-card-title>
+      <mat-card-subtitle><small>{{feed?.created_at | amTimeAgo}}</small></mat-card-subtitle>
+    </mat-card-header>
+
+    <div fxFlex="50" fxLayout="column" fxLayoutAlign="start end" style="text-align: right">
+      <mat-chip-list *ngIf="feed?.category">
+        <mat-chip>{{feed?.category?.name}}</mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+
+
+  <mat-card-content>
+    <h2 [routerLink]="['../../posts', feed.slug ]" class="title">
+      <a class="post-link">{{feed?.name}}</a>
+    </h2>
+    <p class="body-2">{{feed?.body | truncate:200}}</p>
+  </mat-card-content>
+
+
+  <app-post-action-bar fxLayout="row" [post]="feed" postType="question" componentName='componentName'></app-post-action-bar>
+
+  <div *ngIf="feed.sharePost">
+    <app-share-post *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post>
+  </div>
+</mat-card>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Http, Response } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map, catchError } from 'rxjs/operators';
@@ -134,6 +134,13 @@ export class PostsService {
 
   vote(voteParams: any, type: string): Observable<any> {
     return this.http.post(`${this.host}/${this.version}/${type}/${voteParams.id}/vote`, voteParams)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  categories(value= ''): Observable<any> {
+    const params = new HttpParams().set('term', value);
+    return this.http.get(`${this.host}/${this.version}/categories`, { params: params })
       .pipe(map((res: Response) => res)
     );
   }

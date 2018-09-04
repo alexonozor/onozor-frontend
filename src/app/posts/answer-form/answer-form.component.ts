@@ -33,14 +33,6 @@ export class AnswerFormComponent implements OnInit {
     map(result => result.matches)
   );
 
-
-  public options: Object = {
-    charCounterCount: true,
-    toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript',
-    'superscript', '|', 'quote', 'insertLink', 'insertImage', '|', 'html']
-};
-
-
   constructor(
     private breakpointObserver: BreakpointObserver,
     public auth: AuthService,

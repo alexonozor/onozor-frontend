@@ -1,0 +1,41 @@
+<div fxLayout="row" *ngIf="!(isHandset$ | async)" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'" fxFlex="70">
+  <div  fxLayout="row wrap">
+   
+    <app-user-card 
+      *ngFor="let user of users" 
+      style="margin-bottom: 20px" 
+      infiniteScroll 
+      [infiniteScrollDistance]="5" 
+      [infiniteScrollThrottle]="50" 
+      (scrolled)="onScroll(meta?.next_page)" 
+      [hidden]="loading" 
+      [loading]="loading"
+      [user]="user"
+      [meta]="meta">
+    </app-user-card>
+
+    <span fxLayout="row" fxLayoutAlign="center center" fxFlex="100"  *ngIf="meta?.next_page && loadingUsers">
+        <div><mat-spinner></mat-spinner></div>
+    </span>
+  </div>
+</div>
+
+
+<mat-card *ngIf="(isHandset$ | async)" class="margin-top2">
+  <mat-list fxLayout="column" fxLayoutAlign="start">
+    <mat-list-item *ngFor="let user of users" infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50"
+      (scrolled)="onScroll(meta?.next_page)">
+      <img matListAvatar [src]="user?.avatar?.thumbnails?.url" alt="..." [routerLink]="['/users', user?.slug]">
+      <h4 matLine [routerLink]="['/users', user?.slug]" class="profile-card-title">{{user.full_name}}</h4>
+      <p matLine class="demo-2" [routerLink]="['/users', user?.slug]">@{{user.slug}} </p>
+      <p matLine class="demo-2" [routerLink]="['/users', user?.slug]">{{user.bio | truncate:40 }}</p>
+      <mat-divider></mat-divider>
+      <app-relationiship-button *ngIf="currentUser.id !== user.id" [user]="user"></app-relationiship-button>
+
+    </mat-list-item>
+    <span fxLayout="column" fxFill *ngIf="meta?.next_page && loadingUsers">
+      <bullet-list-content-loader height="10"></bullet-list-content-loader>
+    </span>
+  </mat-list>
+</mat-card>
+

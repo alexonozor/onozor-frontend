@@ -19,9 +19,9 @@
         </h2>
         <span class="post-body" [innerHTML]="post?.body  | markdown"></span>
       </mat-card-content>
-
-      <mat-card-actions *ngIf="post" app-post-action-bar fxLayout="row" [post]="post" postType="question" [componentName]="componentName">
-      </mat-card-actions>
+      
+      <app-post-action-bar fxLayout="row" [post]="post" postType="question" [componentName]="componentName">
+      </app-post-action-bar>
       <div class="comment" *ngIf="showComment">
         <app-comments *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comments>
         <app-comment-form *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comment-form>

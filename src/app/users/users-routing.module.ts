@@ -10,17 +10,19 @@ import {
   UserProfileFollowingRouterResolver,
   UserProfileFavouriteRouterResolver
 } from './user-resolver.service';
-import { UsersComponent } from './user/users.component';
-import { AllUsersComponent } from './all-users/all-users.component';
+import { UsersComponent } from './users/users.component';
 import { QuestionsComponent } from './profile/questions/questions.component';
 import { AnswersComponent } from './profile/answers/answers.component';
 import { FavoritesComponent } from './profile/favorites/favorites.component';
 import { FollowersComponent } from './profile/followers/followers.component';
 import { FollowingComponent } from './profile/following/following.component';
+import { SettingsComponent } from './settings/settings.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'all', pathMatch: 'full' },
   { path: 'all', component: UsersComponent, resolve: { users: UsersRouterResolver  }  },
+  { path: 'settings', component: SettingsComponent  },
   { path: ':slug', component: ProfileComponent,
   children: [
     {path: '', redirectTo: 'questions', pathMatch: 'full' },

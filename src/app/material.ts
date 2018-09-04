@@ -22,8 +22,11 @@ import {
   MatTabsModule,
   MatSlideToggleModule,
   MatDialogModule,
+  MatSnackBarModule,
+  MatAutocompleteModule,
+  MatChipsModule,
 } from '@angular/material';
-
+import { MatSelectModule,  } from '@angular/material';
 
 
 
@@ -48,7 +51,11 @@ import {
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    MatChipsModule
   ],
   exports: [
     MatButtonModule,
@@ -70,7 +77,11 @@ import {
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    MatChipsModule
   ],
 })
 export class MyOwnCustomMaterialModule { }

@@ -12,11 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { MomentModule } from 'ngx-moment';
 import { MarkdownModule } from 'ngx-markdown';
-import { PostActionComponent } from './post-action/post-action.component';
 import { MyOwnCustomMaterialModule } from './../material';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { PostsRouteRoutingModule } from './posts-route-routing.module';
-import { PostEditResolver } from './posts-resolver';
+import { PostEditResolver, CommunitiesRouterResolver } from './posts-resolver';
 import { ContentLoaderModule } from '@netbasal/content-loader';
 
 
@@ -41,11 +40,10 @@ import { ContentLoaderModule } from '@netbasal/content-loader';
     AnswerFormComponent,
     CommentsComponent,
     CommentFormComponent,
-    PostActionComponent,
     EditAnswerFormComponent,
     CreatePostComponent
   ],
-  exports: [PostActionComponent, EditAnswerFormComponent],
-  providers: [PostEditResolver]
+  exports: [EditAnswerFormComponent],
+  providers: [PostEditResolver, CommunitiesRouterResolver]
 })
 export class PostModule { }
