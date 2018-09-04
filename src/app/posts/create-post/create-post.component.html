@@ -9,7 +9,7 @@
             <ng-template mat-tab-label>
               <mat-icon class="example-tab-icon">edit</mat-icon> WRITE
             </ng-template>
-            <form [formGroup]="updateForm" class="login-form" (ngSubmit)="submitForm(answer)">
+            <form [formGroup]="updateForm" class="login-form" (ngSubmit)="submitForm()">
               <div fxLayout="column" fxLayoutAlign="start">
                 <mat-form-field class="example-full-width">
                   <mat-select placeholder="Select communities" formControlName="category_id">

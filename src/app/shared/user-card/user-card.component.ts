@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FeedsService } from '../../feeds/feeds.service';
 import { Router } from '@angular/router';
-// import { environment } from '../../environments/environment';
-// import { UiUpdateService } from '../posts/ui-update.service';
-// import { PostsService } from '../posts/posts.service';
 import { AuthService } from '../../authentication/auth.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';

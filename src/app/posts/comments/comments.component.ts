@@ -29,7 +29,7 @@ export class CommentsComponent implements OnInit {
   isThereError: Boolean = false;
   loading: Boolean = true;
   commentId: string;
-  pageMeta: Object = {};
+  pageMeta: any;
   loadingComments: Boolean = false;
 
   constructor(
