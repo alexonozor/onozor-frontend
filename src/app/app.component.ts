@@ -1,4 +1,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +10,25 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  constructor() {
+  options = {
+    min: 8,
+    max: 100,
+    ease: 'linear',
+    speed: 200,
+    trickleSpeed: 300,
+    meteor: true,
+    spinner: true,
+    spinnerPosition: 'right',
+    direction: 'ltr+',
+    color: 'red',
+    thick: true
+  };
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
+  constructor(private breakpointObserver: BreakpointObserver) {
   }
 }

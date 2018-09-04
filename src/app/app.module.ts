@@ -12,10 +12,15 @@ import en from '@angular/common/locales/en';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
-import { PostModule } from './posts/post/post.module';
+import { PostModule } from './posts/post.module';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TokenInterceptor } from './authentication/auth.interceptor';
+import { MyOwnCustomMaterialModule } from './material';
+import { BREAKPOINTS} from '@angular/flex-layout';
+import { MomentModule } from 'ngx-moment';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { ContentLoaderModule } from '@netbasal/content-loader';
 
 
 registerLocaleData(en);
@@ -24,7 +29,7 @@ registerLocaleData(en);
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,11 +37,15 @@ registerLocaleData(en);
     FormsModule,
     HttpModule,
     HttpClientModule,
+    MomentModule,
     NgZorroAntdModule,
+    MyOwnCustomMaterialModule,
     AppRoutingModule,
     PostModule,
     SharedModule,
+    NgProgressModule,
     InfiniteScrollModule,
+    ContentLoaderModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,
@@ -53,7 +62,8 @@ registerLocaleData(en);
     }),
   ],
   exports: [
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    ContentLoaderModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, {
     provide: HTTP_INTERCEPTORS,

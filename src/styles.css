@@ -1,12 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 
-body, html {
+html, body { height: 100%; }
+body { 
+  margin: 0; 
+  font-family: 'Roboto', sans-serif; 
   background-color: #e1e4f2;
-  height: 100%;  
 }
 
-
-app-home {
-  height: 100% !important;
+.mat-icon-default {
+  color: #5b5e6a;
 }
 
+.basic-button {
+  background: #fff !important;
+}
+
+* {
+  outline: none;
+}
+
+.mat-card-title {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.post-link {
+  color: rgba(0,0,0,0.87);
+  font-size: 1.375rem;
+  font-weight: bold;
+  line-height: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  max-height: 56px;
+  text-decoration: none;
+}
+
+.post-link:hover {
+  color: rgba(0,0,0,0.87);
+}
+
+.mat-tab-body-wrapper {
+  padding-top: 20px;
+}

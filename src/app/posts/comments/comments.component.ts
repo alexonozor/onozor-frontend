@@ -8,6 +8,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import { AuthService } from '../../authentication/auth.service';
 
 @Component({
   selector: 'app-comments',
@@ -28,7 +29,7 @@ export class CommentsComponent implements OnInit {
   isThereError: Boolean = false;
   loading: Boolean = true;
   commentId: string;
-  pageMeta: Object = {};
+  pageMeta: any;
   loadingComments: Boolean = false;
 
   constructor(
@@ -36,8 +37,11 @@ export class CommentsComponent implements OnInit {
     public _postService: PostsService,
     public notification: NzNotificationService,
     public modalService: NzModalService,
-    public message: NzMessageService
-  ) { }
+    public message: NzMessageService,
+    public auth: AuthService
+  ) {
+    this.currentUser = this.auth.getCurrentUser();
+  }
 
   ngOnInit() {
     this.getComments(this.slug, this.commentableType);

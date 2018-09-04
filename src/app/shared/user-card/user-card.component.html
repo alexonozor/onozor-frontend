@@ -1,0 +1,14 @@
+<mat-card class="user-card">
+  <div class="timeline" mat-card-image [ngStyle]="{'background-image': 'url(' + user?.cover_photo?.small?.url + ')', 'background-size': 'cover', 'background-color': '#3f51b5'}"></div>
+  <div class="row">
+    <mat-card-header [routerLink]="['/users', user?.slug]">
+      <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + user?.avatar?.thumbnails?.url+ ')', 'background-size': 'cover'}"></div>
+      <mat-card-title>{{user.full_name}}</mat-card-title>
+      <mat-card-subtitle>@{{user.slug}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+    </mat-card-content>
+    <app-relationiship-button *ngIf="currentUser.id !== user.id" [user]="user"></app-relationiship-button>
+  </div>
+</mat-card>
+

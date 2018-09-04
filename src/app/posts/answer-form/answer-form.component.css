@@ -1,17 +1,15 @@
-.answer-form-action-button {
-    float: right;
-    margin: 10px 0px !important;
-  }
 
-  .card-user-info {
-    margin-bottom: 15px;
+  .margin-top2 {
+    padding: 20px;
   }
   
-  .card-user-name {
-    margin-bottom: 0px;
-    line-height: 1;
-    color: black;
-    font-weight: bolder;
+ 
+  
+  .mat-card-title {
+    display: block;
+    margin-bottom: 8px;
   }
 
-  
+  .example-tab-icon {
+    margin-right: 8px;
+  }

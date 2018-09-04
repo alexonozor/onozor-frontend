@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Http, Response } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { map, catchError } from 'rxjs/operators';
@@ -100,14 +100,47 @@ export class PostsService {
     this.commentSource.next(comments);
   }
 
-  deleteComment(questiond_id: string, id: string) {
+  deleteComment(questiond_id: string, id: string): Observable<any> {
     return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/comments/${id}`)
-      .pipe(map((res: Response) => res.json())
+      .pipe(map((res: Response) => res)
     );
   }
 
-  deleteAnswer(questiond_id: string, id: string) {
+  deleteAnswer(questiond_id: string, id: string): Observable<any> {
     return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/answers/${id}`)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  deleteQuestion(id: string): Observable<any> {
+    return this.http.delete(`${this.host}/${this.version}/questions/${id}`)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  createQuestion(formParams: object): Observable<any> {
+    return this.http.post(`${this.host}/${this.version}/questions`, formParams)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+
+  updateQuestion(formParams: object, id: string): Observable<any> {
+    return this.http.put(`${this.host}/${this.version}/questions/${id}`, formParams)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+
+  vote(voteParams: any, type: string): Observable<any> {
+    return this.http.post(`${this.host}/${this.version}/${type}/${voteParams.id}/vote`, voteParams)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  categories(value= ''): Observable<any> {
+    const params = new HttpParams().set('term', value);
+    return this.http.get(`${this.host}/${this.version}/categories`, { params: params })
       .pipe(map((res: Response) => res)
     );
   }

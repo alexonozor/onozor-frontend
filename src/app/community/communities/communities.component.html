@@ -1,0 +1,60 @@
+<div fxLayout="column" fxFlex="50%" style="margin-top: 60px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'"
+  infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)"
+  *ngIf="!(isHandset$ | async)">
+
+  <mat-card style="margin-bottom: 30px;">
+    <h1>Explore Communities</h1>
+    <p>Browse and follow communities you care about </p>
+  </mat-card>
+
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+    <mat-card class="card" fxFlex="30%" *ngFor="let community of communities" style="margin-bottom: 30px;">
+      <mat-card-header [routerLink]="['/communities', community.slug]">
+        <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + community.image+ ')', 'background-size': 'cover'}"></div>
+        <mat-card-title>{{community.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="description">
+        <p>
+          {{community.description}}
+        </p>
+      </mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="space-around center" [routerLink]="['/communities', community.slug]">
+        <h3 fxLayout="column" fxLayoutAlign="center center">
+          <span>{{community.question_count}}</span>
+          <small class="dim-text">POSTS</small>
+        </h3>
+        <h3 fxLayout="column" fxLayoutAlign="center center">
+          <span>{{community.subscribers_count}}</span>
+          <small class="dim-text">SUBSCRIBERS</small>
+        </h3>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-around center">
+        <button mat-raised-button (click)="subscribe(community)" color="primary" *ngIf="!community.subscribe">SUBSCRIBE</button>
+        <button mat-raised-button (click)="unsubscribe(community)" color="warn" *ngIf="community.subscribe">UNSUBSCRIBE</button>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<mat-card *ngIf="(isHandset$ | async)" style="margin-top: 85px;">
+  <mat-list fxLayout="column" fxLayoutAlign="start">
+    <mat-list-item *ngFor="let community of communities" infiniteScroll [infiniteScrollDistance]="5"
+      [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)">
+      <img matListAvatar [src]="community.image" alt="..." [routerLink]="['/communities', community.slug]">
+      <h4 matLine [routerLink]="['/communities', community.slug]" class="profile-card-title">{{community.name}}</h4>
+      <mat-divider></mat-divider>
+
+      <button mat-icon-button color="primary" (click)="subscribe(community)" *ngIf="!community.subscribe">
+        <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+      </button>
+
+      <button mat-icon-button color="warn" (click)="unsubscribe(community)" *ngIf="community.subscribe">
+        <mat-icon aria-label="Example icon-button with a heart icon">remove</mat-icon>
+      </button>
+    </mat-list-item>
+    <span fxLayout="column" fxFill *ngIf="meta?.next_page && loadingUsers">
+      <bullet-list-content-loader height="10"></bullet-list-content-loader>
+    </span>
+  </mat-list>
+</mat-card>

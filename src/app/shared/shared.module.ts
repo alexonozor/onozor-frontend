@@ -6,24 +6,48 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { SharePostComponent } from './share-post/share-post.component';
+import { PostCardComponent } from './post-card/post-card.component';
+import { MyOwnCustomMaterialModule } from '../material';
+import { TruncatePipe } from '../truncate.pipe';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { PostActionComponent } from './post-action/post-action.component';
+import { MomentModule } from 'ngx-moment';
+import { ContentLoaderModule } from '@netbasal/content-loader';
+import { UserCardComponent } from './user-card/user-card.component';
+import { RelationishipButtonComponent } from './relationiship-button/relationiship-button.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
     SharedRoutingModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    MyOwnCustomMaterialModule,
+    InfiniteScrollModule,
+    MomentModule,
+    ContentLoaderModule
   ],
   declarations: [
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    SharePostComponent
+    SharePostComponent,
+    PostCardComponent,
+    TruncatePipe,
+    PostActionComponent,
+    UserCardComponent,
+    RelationishipButtonComponent,
   ],
   exports: [
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    SharePostComponent
+    SharePostComponent,
+    PostCardComponent,
+    TruncatePipe,
+    PostActionComponent,
+    UserCardComponent,
+    RelationishipButtonComponent
   ]
 })
 export class SharedModule { }

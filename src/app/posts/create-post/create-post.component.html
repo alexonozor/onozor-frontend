@@ -1,0 +1,54 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-top: 66px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
+  <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+    <mat-card class="example-card">
+
+      <mat-progress-bar mode="indeterminate" [hidden]="!isSubmited"></mat-progress-bar>
+      <mat-card-content>
+        <mat-tab-group>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">edit</mat-icon> WRITE
+            </ng-template>
+            <form [formGroup]="updateForm" class="login-form" (ngSubmit)="submitForm()">
+              <div fxLayout="column" fxLayoutAlign="start">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Select communities" formControlName="category_id">
+                    <mat-option *ngFor="let category of categories" [value]="category.id">
+                      {{category.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex="100%" fxFlexFill>
+                  <input matInput type="text" #title formControlName="name" placeholder="What's your question?" />
+                </mat-form-field>
+                <mat-form-field fxFlex="100%" fxFlexFill>
+                  <textarea matInput rows="20" #body formControlName="body" placeholder="Tell us more about your question (Optional)"></textarea>
+                  <mat-hint align="start">
+                    <strong>This form support markdown</strong>
+                  </mat-hint>
+                </mat-form-field>
+                <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center">
+                  <div>
+                    <mat-slide-toggle formControlName="send_mail">Send me post reply notifications</mat-slide-toggle>
+                  </div>
+                  <div fxLayoutGap="10px">
+                    <a mat-stroked-button (click)="exitQuestionForm()"> CANCEL</a>
+              
+                    <button mat-raised-button [disabled]="!updateForm.valid" color="primary">Save</button>  
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="example-tab-icon">visibility</mat-icon> PREVIEW
+            </ng-template>
+            <h1 class="post-title">{{title.value}}</h1>
+            <div class="post-body" [innerHTML]="body.value | markdown"></div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

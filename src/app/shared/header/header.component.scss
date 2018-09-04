@@ -1,0 +1,23 @@
+.toolbar-settings {
+  position: fixed;
+  z-index: 500;
+}
+
+.form {
+  border: 1px solid #ccc;
+  background: #e1e4f2;
+  border-radius: 4px;
+  padding: 8px;
+  border: 1px solid #e1e4f2;
+  outline: none;
+  width: 39%;
+  input {
+    border: none;
+    background: none;
+    outline: none;
+  }
+  .mat-icon {
+    margin-top: 4px;
+    text-align: center;
+  }
+}

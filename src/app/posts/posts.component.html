@@ -1,92 +1,54 @@
-<nz-layout>
-  <nz-sider>
-    <app-sidebar></app-sidebar>
-  </nz-sider>
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-top: 66px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
+  <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+    <mat-card class="example-card" *ngIf="!loading">
+      <div class="row" fxFlexAlign="start">
+        <mat-card-header fxFlex="50" [routerLink]="['/users', post?.author?.slug]">
+          <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + post?.author?.avatar?.thumb?.url+ ')', 'background-size': 'cover'}"></div>
+          <mat-card-title>{{post?.author?.full_name}}</mat-card-title>
+          <mat-card-subtitle>@{{post?.author?.slug}}</mat-card-subtitle>
+        </mat-card-header>
 
-  <nz-content style="margin:25px 55px;">
-    <div nz-row nzGutter="48">
-      <div nz-col nz-col nzSpan="12">
-        <nz-card style="margin-bottom: 20px" [nzLoading]="loading">
-          <div nz-row class="card-user-info">
-            <div nz-col nzSpan="2">
-              <nz-avatar nzIcon="anticon anticon-user" [nzSrc]="post?.question?.author?.avatar?.thumb?.url"></nz-avatar>
-            </div>
-            <div nz-col nzXl="5">
-              <a>
-                <p class="card-user-name">{{post?.question?.author?.full_name}}</p>
-              </a>
-              <span>@{{post?.question?.author?.slug}}</span>
-            </div>
-            <div nz-col nzXl="17">
-              <small class="question-date">{{post?.question?.created_at | amTimeAgo}}</small>
-            </div>
-          </div>
-
-          <h2 class="post-title">{{post?.question?.name}}</h2>
-          <!-- <div class="post-body" markdown [data]="post?.question?.body"></div> -->
-          <div class="post-body" [innerHTML]="post?.question?.body  | markdown"></div>
-
-          <div nz-row nzGutter="48" class="post-action-bar">
-            <div nz-col nzSpan="12">
-              <button nz-button class="remove-border" nzType="primary" [nzSize]="large">
-                <i class="anticon anticon-like"></i> Like</button>
-              <button nz-button class="remove-border" nzType="default" [nzSize]="large" (click)="toggleComment()">
-                <i class="anticon anticon-message"></i> Ask details ({{post?.question?.comments_count}})</button>
-              <!-- <button nz-button class="remove-border" nzType="default" [nzSize]="large">
-                  <i class="anticon anticon-plus-circle-o"></i> Follow </button> -->
-            </div>
-
-
-            <div nz-col nzSpan="12" style="text-align: right;">
-              <!-- <nz-dropdown>
-                <a href="#" class="remove-border" nz-button nz-dropdown>
-                  <i class="anticon anticon-down"></i>More</a>
-                <ul nz-menu>
-                  <li nz-menu-item>
-                    <a>
-                      <i class="anticon anticon-message"></i> Invite to answer</a>
-                  </li>
-                  <li nz-menu-item>
-                    <a>
-                      <i class="anticon anticon-dashboard"></i>Post Activities</a>
-                  </li>
-                  <li nz-menu-item>
-                    <a>
-                      <i class="anticon anticon-exclamation-circle-o"></i> Report</a>
-                  </li>
-                </ul>
-              </nz-dropdown> -->
-
-              <button  class="remove-border" nz-button (click)="favouritePost(post)">
-                <i [ngClass]="favourite? 'anticon anticon-heart red' : 'anticon anticon-heart-o'"></i> Favorite</button>
-              <button (click)="toggleShare()" class="remove-border" nz-button>
-                <i class="anticon anticon-share-alt"></i> Share</button>
-            </div>
-          </div>
-
-
-          <div class="comment" [hidden]="!showComment">
-            <app-comments *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comments>
-            <app-comment-form *ngIf="post?.question?.id" [slug]="post?.question?.id" commentableType="Question"></app-comment-form>
-          </div>
-
-          <app-share-post [hidden]="!sharePost" *ngIf="post?.question?.id" [title]="post?.question?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
-
-        </nz-card>
-
-        <app-answer-form *ngIf="post?.question?.id" [questionId]="post?.question?.id"></app-answer-form>
-        <app-answers [slug]="slug"></app-answers>
-
-      </div>
-      <div nz-col nz-col nzSpan="9">
-        <nz-card style="width:300px;">
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-        </nz-card>
+        <div fxFlex="50" style="text-align: right">
+          <small>{{post?.created_at | amTimeAgo}}</small>
+        </div>
       </div>
 
-    </div>
+      <mat-card-content>
+        <h2 class="title">
+          <a class="post-link">{{post?.name}}</a>
+        </h2>
+        <span class="post-body" [innerHTML]="post?.body  | markdown"></span>
+      </mat-card-content>
+      
+      <app-post-action-bar fxLayout="row" [post]="post" postType="question" [componentName]="componentName">
+      </app-post-action-bar>
+      <div class="comment" *ngIf="showComment">
+        <app-comments *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comments>
+        <app-comment-form *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comment-form>
+      </div>
+      <div *ngIf="sharePost">
+        <app-share-post *ngIf="post?.id" [title]="post?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
+      </div>
+    </mat-card>
+    <mat-card *ngIf="loading">
+      <facebook-content-loader></facebook-content-loader>
+    </mat-card>
+  </div>
+  <div fxFlex="25">
+    <mat-card class="example-card">
+      <mat-card-content>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
+          very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
 
-  </nz-content>
-</nz-layout>
+
+
+<app-answer-form *ngIf="post?.id" [questionId]="post?.id"></app-answer-form>
+
+
+<app-answers [slug]="post?.slug"></app-answers>

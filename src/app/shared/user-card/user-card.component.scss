@@ -1,0 +1,29 @@
+.user-card {
+    max-width: 260px !important; 
+    max-height: 300px !important;
+    width: 260px !important; 
+    height: 300px !important;
+    margin-bottom: 20px;
+    margin-left: 10px;
+  }
+  
+  .user-card:nth-child(3n) {
+    margin-right: 0px !important;
+  }
+  
+  .timeline {
+      height: 100px;
+  }
+  
+  .mat-card-title {
+    display: block;
+    margin-bottom: 8px;
+  }
+    
+  
+  
+  .margin-top2 {
+    margin-top: 66px;
+    padding: 20px;
+  }
+  

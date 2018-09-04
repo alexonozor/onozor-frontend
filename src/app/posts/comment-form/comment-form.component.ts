@@ -6,6 +6,7 @@ import {
   Validators
 } from '@angular/forms';
 import { PostsService } from '../posts.service';
+import { AuthService } from '../../authentication/auth.service';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
@@ -20,7 +21,7 @@ export class CommentFormComponent implements OnInit {
   formErrors: Array<any>;
   isThereError: Boolean = false;
   loading: Boolean = true;
-  currentUser: Number = 1;
+  currentUser: any;
 
   @Input() commentableType: string;
   @Input() slug: string;
@@ -31,8 +32,11 @@ export class CommentFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private message: NzMessageService,
-    public  _postService: PostsService
-  ) { }
+    public  _postService: PostsService,
+    public _authService: AuthService
+  ) {
+    this.currentUser = this._authService.getCurrentUser();
+  }
 
   ngOnInit() {
     this.prepareCommentForm();
@@ -44,7 +48,7 @@ export class CommentFormComponent implements OnInit {
   prepareCommentForm() {
     this.commentForm = this.fb.group({
       body:             [null, [Validators.required]],
-      user_id:          [this.currentUser, [Validators.required]],
+      user_id:          [this.currentUser.id, [Validators.required]],
       commentable_type: [this.commentableType, [Validators.required]],
       commentable_id:   [this.slug, [Validators.required]],
     });

@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { PostsService } from '../posts.service';
+import { AuthService } from '../../authentication/auth.service';
+import { UiUpdateService } from '../ui-update.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,6 +10,11 @@ import {
 } from '@angular/forms';
 import { NzMessageService, NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { map } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { ISubscription } from 'rxjs/Subscription';
+
+
 
 @Component({
   selector: 'app-answers',
@@ -15,30 +22,48 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./answers.component.css']
 })
 
-export class AnswersComponent implements OnInit {
+export class AnswersComponent implements OnInit, OnDestroy {
   @Input() slug: string;
   public loading: Boolean = true;
   public loadingAnswer: Boolean = true;
   public allanswers: Array<any> = [];
+  private subscription: ISubscription;
 
   updateForm: FormGroup;
   isSubmited: Boolean = false;
   formErrors: Array<any>;
   isThereError: Boolean = false;
   pageMeta: any;
+  currentUser: any;
+  postUrL: String;
+  componentName: String = 'answer';
+  sub: Observable<any>;
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private fb: FormBuilder,
     public _postService: PostsService,
     public notification: NzNotificationService,
     public modalService: NzModalService,
-    public message: NzMessageService
-  ) { }
+    public message: NzMessageService,
+    public auth: AuthService,
+    public _uiUpdateService: UiUpdateService
+  ) {
+    this.currentUser = this.auth.getCurrentUser();
+  }
 
   ngOnInit() {
     this.getAnswers(this.slug);
     this.listenToNewAnswerChanges();
+    this.listenToDeleteAnswerEvent();
     this.prepareForm();
+    this.listenAndChooseVote();
+    this.listenToEditAnswerEvent();
   }
 
   getAnswers(slug, page?) {
@@ -47,6 +72,7 @@ export class AnswersComponent implements OnInit {
       this.loading = false;
       this.pageMeta = res.meta;
       res.answers.map(item => {
+        item['editing'] = false;
         this.allanswers.push(item);
       });
     }, err => {
@@ -55,7 +81,7 @@ export class AnswersComponent implements OnInit {
 
   listenToNewAnswerChanges() {
     this._postService.currenetAddedAnswer.subscribe(answer => {
-      if (this.allanswers.length > 0) {
+      if (answer) {
         this.allanswers.unshift(answer);
       }
     });
@@ -68,27 +94,50 @@ export class AnswersComponent implements OnInit {
     });
   }
 
-  deleteAnswer(id): void {
-    const self = this;
-    this.modalService.confirm({
-      nzTitle: 'Confirm',
-      nzContent: 'Are you sure you want to delete this question?',
-      nzOkText: 'Yes',
-      nzCancelText: 'Cancel',
-      nzOnOk: function handelCancle() {
-        const deletedElement = document.getElementById(`answer-${id}`);
-        deletedElement.style.display = 'none';
-        self._postService.deleteAnswer(self.slug, id).subscribe(res => { }, err => {
-          self.message.error('Unable to delete this message, server or internet error', { nzDuration: 5000 });
-        });
-      }
-    });
+  deleteAnswer(answer): void {
+    const confirmDelete = confirm('Are you sure you want to this answer');
+    if (confirmDelete) {
+      const deletedElement = document.getElementById(`answer-${answer.id}`);
+      deletedElement.style.display = 'none';
+      this._postService.deleteAnswer(this.slug, answer.id).subscribe(res => { }, err => {
+        this.message.error('Unable to delete this message, server or internet error', { nzDuration: 5000 });
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    // this.subscription.unsubscribe();
   }
 
   editAnswer(answer) {
-    document.getElementById(`answer-${answer.id}`).style.display = 'none';
-    document.getElementById(`answer-update-form-${answer.id}`).style.display = 'block';
+    answer['editing'] = true;
   }
+
+  cancleEditAnswer(answer) {
+    answer['editing'] = false;
+  }
+
+  listenToEditAnswerEvent() {
+    this._uiUpdateService.listenToEditPost.subscribe(data => {
+      if (data && data.postType === this.componentName) {
+        this.editAnswer(data);
+      }
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  listenToDeleteAnswerEvent() {
+    this._uiUpdateService.listenToDeletePost.subscribe(data => {
+      if (data && data.postType === this.componentName) {
+        this.deleteAnswer(data);
+      }
+    }, err => {
+      console.log(err);
+    });
+  }
+
+
 
   submitForm(answer) {
     this.isSubmited = true;
@@ -97,8 +146,7 @@ export class AnswersComponent implements OnInit {
       if (res.status === 500) {
         this.message.error('You can\'t submit empty answer', { nzDuration: 3000 });
       } else {
-        document.getElementById(`answer-${answer.id}`).style.display = 'block';
-        document.getElementById(`answer-update-form-${answer.id}`).style.display = 'none';
+        this.editAnswer(answer);
         answer.body = this.updateForm.value.body;
       }
     }, error => {
@@ -117,12 +165,76 @@ export class AnswersComponent implements OnInit {
         this.loadingAnswer = false;
         this.pageMeta = res.meta;
         res.answers.map(item => {
+          item['editing'] = false;
           this.allanswers.push(item);
         });
       }, err => {
       });
     }
   }
+
+  upvote(answer) {
+    if (answer.vote.currentUserHasUpvote) {
+      answer.vote_count -= 1;
+      answer.vote.currentUserHasUpvote = false;
+      answer.vote.voteValue = -1;
+    } else if (answer.vote_count === -1) {
+      answer.vote_count += 2;
+      answer.vote.voteValue = +1;
+      answer.vote.currentUserHasUpvote = true;
+      answer.vote.currentUserHasDownVote = false;
+    } else {
+      answer.vote_count += 1;
+      answer.vote.voteValue = +1;
+      answer.vote.currentUserHasUpvote = true;
+      answer.vote.currentUserHasDownVote = false;
+    }
+
+    this.vote({ value: answer.vote.voteValue, id: answer.id }, 'answers');
+    // console.log({value: this.post.question.vote_count, id: this.post.question.id  });
+  }
+
+  downvote(answer) {
+    if (answer.vote.currentUserHasDownVote) {
+      answer.vote_count += 1;
+      answer.vote.voteValue = +1;
+      // this.post.question.vote.currentUserHasUpvote = false;
+      answer.vote.currentUserHasDownVote = false;
+    } else if (answer.vote_count === +1) {
+      answer.vote_count -= 2;
+      answer.vote.voteValue = -1;
+      answer.vote.currentUserHasDownVote = true;
+      answer.vote.currentUserHasUpvote = false;
+    } else {
+      answer.vote_count -= 1;
+      answer.vote.voteValue = -1;
+      //  this.post.question.vote.currentUserHasUpvote = false;
+      answer.vote.currentUserHasDownVote = true;
+    }
+    this.vote({ value: answer.vote.voteValue, id: answer.id }, 'answers');
+  }
+
+  listenAndChooseVote() {
+    this._uiUpdateService.listenToVotes.subscribe(res => {
+      if (res && res.postType === 'answer') {
+        if (res.direction === 'up') {
+          this.upvote(res);
+        } else {
+          this.downvote(res);
+        }
+      }
+    });
+  }
+
+  vote(params, type) {
+    this._postService.vote(params, type).subscribe(res => {
+      if (res.success) { }
+    }, err => {
+      console.log(err);
+    });
+  }
+
+
 
 
 }
