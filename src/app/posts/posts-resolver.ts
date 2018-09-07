@@ -8,7 +8,7 @@ import { PostsService } from './posts.service';
 
 
 const host = environment.baseUrl;
- const version = environment.version1;
+
 
 @Injectable()
 export class PostEditResolver implements Resolve<any> {

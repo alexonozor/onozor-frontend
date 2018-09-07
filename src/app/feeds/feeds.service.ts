@@ -11,19 +11,18 @@ import { Response } from '@angular/http';
 })
 export class FeedsService {
   private host = environment.baseUrl;
-  private version = environment.version1;
   constructor(
     public http: HttpClient
   ) { }
 
   getFeeds(pageNumber = 1, perPage = 5): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/questions?page=${pageNumber}&per_page=${perPage}`)
+    return this.http.get(`${this.host}/questions?page=${pageNumber}&per_page=${perPage}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   userCategories(userId): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users/2/user_categories`)
+    return this.http.get(`${this.host}/users/2/user_categories`)
       .pipe(map((res: Response) => res)
     );
   }
