@@ -25,7 +25,7 @@ interface Answer {
 })
 export class UserService {
   private host = environment.baseUrl;
-  private version = environment.version1;
+
 
   constructor(
     public http: HttpClient
@@ -33,61 +33,61 @@ export class UserService {
 
 
   getUser(slug: String): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users/${slug}`)
+    return this.http.get(`${this.host}/users/${slug}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getUserQuestions(slug: String, page = 1 ): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users/${slug}/questions?page=${page}`)
+    return this.http.get(`${this.host}/users/${slug}/questions?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getUserAnswers(slug: String, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users/${slug}/answers?page=${page}`)
+    return this.http.get(`${this.host}/users/${slug}/answers?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getUserFavourites(slug: String, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users/${slug}/favorites?page=${page}`)
+    return this.http.get(`${this.host}/users/${slug}/favorites?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getUserFollowers(slug: String, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users/${slug}/followers?page=${page}`)
+    return this.http.get(`${this.host}/users/${slug}/followers?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getUserFollowing(slug: String, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users/${slug}/following?page=${page}`)
+    return this.http.get(`${this.host}/users/${slug}/following?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getUsers(page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/users?page=${page}`)
+    return this.http.get(`${this.host}/users?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   updateUser(params, slug): Observable<any> {
-    return this.http.put(`${this.host}/${this.version}/users/${slug}`, params)
+    return this.http.put(`${this.host}/users/${slug}`, params)
       .pipe(map((res: Response) => res)
     );
   }
 
   follow(id): Observable<any> {
-    return this.http.post(`${this.host}/${this.version}/relationships`, {followed_id: id})
+    return this.http.post(`${this.host}/relationships`, {followed_id: id})
       .pipe(map((res: Response) => res)
     );
   }
 
   unFollow(id): Observable<any> {
-    return this.http.delete(`${this.host}/${this.version}/relationships/${id}`)
+    return this.http.delete(`${this.host}/relationships/${id}`)
       .pipe(map((res: Response) => res)
     );
   }

@@ -13,7 +13,7 @@ import CryptoJS from 'crypto-js';
 })
 export class AuthService {
   private host = environment.baseUrl;
-  private version = environment.version1;
+
 
   constructor(
     public http: HttpClient,
@@ -22,13 +22,13 @@ export class AuthService {
 
 
   getUser(loginToken: String): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/user/login-token/${loginToken}`)
+    return this.http.get(`${this.host}/user/login-token/${loginToken}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   login(formParams: String): Observable<any> {
-    return this.http.post(`${this.host}/${this.version}/sessions/create`, formParams)
+    return this.http.post(`${this.host}/sessions/create`, formParams)
       .pipe(map((res: Response) => res)
     );
   }

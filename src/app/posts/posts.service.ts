@@ -25,8 +25,6 @@ interface Answer {
 })
 export class PostsService {
   private host = environment.baseUrl;
-  private version = environment.version1;
-
   private dataSource = new BehaviorSubject<Answer>(null);
   private commentSource = new BehaviorSubject<Comment>(null);
   currenetAddedAnswer = this.dataSource.asObservable();
@@ -39,55 +37,55 @@ export class PostsService {
 
 
   getPost(slug: String): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/questions/${slug}`)
+    return this.http.get(`${this.host}/questions/${slug}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getQuestionComments(slug: string, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/question/${slug}/comments?page=${page}`)
+    return this.http.get(`${this.host}/question/${slug}/comments?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getAnswerComments(slug: string, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/answer/${slug}/comments?page=${page}`)
+    return this.http.get(`${this.host}/answer/${slug}/comments?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getAnswers(slug: string, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/question/${slug}/answers?page=${page}`)
+    return this.http.get(`${this.host}/question/${slug}/answers?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   saveAnswer(formParams: Object, id: string): Observable<any> {
-    return this.http.post(`${this.host}/${this.version}/questions/${id}/answers`, formParams)
+    return this.http.post(`${this.host}/questions/${id}/answers`, formParams)
       .pipe(map((res: Response) => res)
     );
   }
 
   saveComment(formParams: Object, id: String): Observable<any> {
-    return this.http.post(`${this.host}/${this.version}/questions/${id}/comments`, formParams)
+    return this.http.post(`${this.host}/questions/${id}/comments`, formParams)
       .pipe(map((res: Response) => res)
     );
   }
 
   updateComment(formParams: Object,  id: String): Observable<any> {
-    return this.http.put(`${this.host}/${this.version}/comment/${id}`, formParams)
+    return this.http.put(`${this.host}/comment/${id}`, formParams)
       .pipe(map((res: Response) => res)
     );
   }
 
   updateAnswer(formParams: Object,  id: String): Observable<any> {
-    return this.http.put(`${this.host}/${this.version}/answer/${id}`, formParams)
+    return this.http.put(`${this.host}/answer/${id}`, formParams)
       .pipe(map((res: Response) => res)
     );
   }
 
   savePost(postId: string): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/favourites/${postId}/toggle`)
+    return this.http.get(`${this.host}/favourites/${postId}/toggle`)
       .pipe(map((res: Response) => res)
     );
   }
@@ -101,46 +99,46 @@ export class PostsService {
   }
 
   deleteComment(questiond_id: string, id: string): Observable<any> {
-    return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/comments/${id}`)
+    return this.http.delete(`${this.host}/questions/${questiond_id}/comments/${id}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   deleteAnswer(questiond_id: string, id: string): Observable<any> {
-    return this.http.delete(`${this.host}/${this.version}/questions/${questiond_id}/answers/${id}`)
+    return this.http.delete(`${this.host}/questions/${questiond_id}/answers/${id}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   deleteQuestion(id: string): Observable<any> {
-    return this.http.delete(`${this.host}/${this.version}/questions/${id}`)
+    return this.http.delete(`${this.host}/questions/${id}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   createQuestion(formParams: object): Observable<any> {
-    return this.http.post(`${this.host}/${this.version}/questions`, formParams)
+    return this.http.post(`${this.host}/questions`, formParams)
       .pipe(map((res: Response) => res)
     );
   }
 
 
   updateQuestion(formParams: object, id: string): Observable<any> {
-    return this.http.put(`${this.host}/${this.version}/questions/${id}`, formParams)
+    return this.http.put(`${this.host}/questions/${id}`, formParams)
       .pipe(map((res: Response) => res)
     );
   }
 
 
   vote(voteParams: any, type: string): Observable<any> {
-    return this.http.post(`${this.host}/${this.version}/${type}/${voteParams.id}/vote`, voteParams)
+    return this.http.post(`${this.host}/${type}/${voteParams.id}/vote`, voteParams)
       .pipe(map((res: Response) => res)
     );
   }
 
   categories(value= ''): Observable<any> {
     const params = new HttpParams().set('term', value);
-    return this.http.get(`${this.host}/${this.version}/categories`, { params: params })
+    return this.http.get(`${this.host}/categories`, { params: params })
       .pipe(map((res: Response) => res)
     );
   }

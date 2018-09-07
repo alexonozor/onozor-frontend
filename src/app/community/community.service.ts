@@ -14,7 +14,7 @@ import { map, catchError } from 'rxjs/operators';
 
 export class CommunityService {
   private host = environment.baseUrl;
-  private version = environment.version1;
+
 
   constructor(
     public http: HttpClient
@@ -23,31 +23,31 @@ export class CommunityService {
 
 
   getCommunities(page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/categories?page=${page}`)
+    return this.http.get(`${this.host}/categories?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getCommunity(slug): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/categories/${slug}`)
+    return this.http.get(`${this.host}/categories/${slug}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   getCommunityQuestions(slug, page = 1): Observable<any> {
-    return this.http.get(`${this.host}/${this.version}/categories/${slug}/get_questions?page=${page}`)
+    return this.http.get(`${this.host}/categories/${slug}/get_questions?page=${page}`)
       .pipe(map((res: Response) => res)
     );
   }
 
   subscribe(community): Observable<any> {
-    return this.http.post(`${this.host}/${this.version}/subscribe/communities`, {category_id: community.id})
+    return this.http.post(`${this.host}/subscribe/communities`, {category_id: community.id})
       .pipe(map((res: Response) => res)
     );
   }
 
   unsubscribe(community): Observable<any> {
-    return this.http.delete(`${this.host}/${this.version}/unsubscribe/communities/${community.id}`)
+    return this.http.delete(`${this.host}/unsubscribe/communities/${community.id}`)
       .pipe(map((res: Response) => res)
     );
   }
