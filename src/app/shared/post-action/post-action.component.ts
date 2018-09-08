@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-post-action-bar',
   templateUrl: './post-action.component.html',
-  styles: []
+  styleUrls: ['./post-action.component.scss']
 })
 export class PostActionComponent implements OnInit {
   @Input() post: any;

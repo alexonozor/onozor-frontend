@@ -1,5 +1,5 @@
-<div fxLayout="row" fxFlex="100%%" fxFlexFill fxLayoutAlign="space-between">
-  <div fxLayout="row" fxLayoutGap="4">
+<div fxLayout="row" fxFlex="100%%" fxFlexFill fxLayoutAlign="space-between" *ngIf="isDesktop$ | async">
+  <div>
     <button mat-icon-button [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " (click)="vote(post, 'up')"
       matTooltip="Up vote">
       <mat-icon aria-label="Example icon-button with a heart icon">thumb_up_alt</mat-icon>
@@ -12,12 +12,12 @@
 
     <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK
       DETAILS ({{post.comments_count}})</button>
-    <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> 
-      <span *ngIf="isDesktop$ | async">ANSWERS</span> <i *ngIf=" isHandset$ | async" class="material-icons">mode_comment</i> ({{post.answers_count}})
-    </button>
+    <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> ANSWERS
+      ({{post.answers_count}})</button>
     <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
   </div>
-  <div fxLayout="row" fxLayoutGap="5">
+  <div fxLayout="row" fxLayoutGap="10px">
+
     <div *ngIf="currentUser.id === post?.author?.id">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_horiz</mat-icon>
@@ -41,3 +41,77 @@
     </button>
   </div>
 </div>
+
+<mat-divider></mat-divider>
+<div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center" *ngIf="isHandset$ | async">
+
+  <div fxLayout="column" fxLayoutAlign="space-evenly center">
+    <button mat-icon-button [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " (click)="vote(post, 'up')"
+      matTooltip="Up vote">
+      <mat-icon class="size-3">thumb_up_alt</mat-icon>
+    </button>
+    <small mat-icon-button disabled>{{post.vote_count}}</small>
+  </div>
+
+  <div *ngIf="componentName==='post'" fxLayout="column" fxLayoutAlign="space-evenly center">
+    <button mat-icon-button (click)="toggleComment()" class="mat-icon-default">
+      <mat-icon class="size-3">reply</mat-icon>
+    </button>
+    <small>{{post.comments_count}}</small>
+  </div>
+
+  <div *ngIf="componentName==='home'" fxLayout="column" fxLayoutAlign="space-evenly center">
+    <button mat-icon-button (click)="toggleComment()" class="mat-icon-default">
+      <mat-icon class="size-3">comment</mat-icon>
+    </button>
+    <small>{{post.answers_count}}</small>
+  </div>
+
+  <div *ngIf="componentName==='answer'" fxLayout="column" fxLayoutAlign="center center">
+    <button mat-icon-button class="mat-icon-default">
+      <mat-icon class="mat-18">reply</mat-icon>
+    </button>
+    <small>{{post.comments_count}}</small>
+  </div>
+
+
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' " (click)="favouritePost(post)"
+      matTooltip="Mark as favourite" *ngIf="postType === 'question'">
+      <mat-icon class="size-3">favorite</mat-icon>
+    </button>
+    <small>Favorite</small>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <button mat-icon-button class="mat-icon-default" (click)="toggleShare(post)" matTooltip="Share post" *ngIf="postType === 'question'">
+      <mat-icon class="size-3">share</mat-icon>
+    </button>
+    <small>Share</small>
+  </div>
+
+  <div *ngIf="currentUser.id === post?.author?.id" fxLayout="column" fxLayoutAlign="center center">
+    <div>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon class="size-3">more_horiz</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="editPost(post, componentName)">
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="deletePost(post, componentName)">
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </div>
+    <small>More</small>
+  </div>
+</div>
+
+<style>
+  .size-3 {
+    color: #e0e0e0;
+    font-size: 20px;
+    text-align: center;
+  }
+</style>
