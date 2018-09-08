@@ -48,7 +48,7 @@
   <div fxLayout="column" fxLayoutAlign="space-evenly center">
     <button mat-icon-button [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " (click)="vote(post, 'up')"
       matTooltip="Up vote">
-      <mat-icon class="size-3">thumb_up_alt</mat-icon>
+      <mat-icon [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'size-3' ">thumb_up_alt</mat-icon>
     </button>
     <small mat-icon-button disabled>{{post.vote_count}}</small>
   </div>
@@ -75,15 +75,15 @@
   </div>
 
 
-  <div fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="center center" *ngIf="postType === 'question'">
     <button mat-icon-button [ngClass]="post?.favourited? 'mat-warn' : 'mat-icon-default' " (click)="favouritePost(post)"
-      matTooltip="Mark as favourite" *ngIf="postType === 'question'">
-      <mat-icon class="size-3">favorite</mat-icon>
+      matTooltip="Mark as favourite" >
+      <mat-icon [ngClass]="post?.favourited? 'mat-warn' : 'size-3' ">favorite</mat-icon>
     </button>
     <small>Favorite</small>
   </div>
 
-  <div fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="center center" *ngIf="postType === 'question'">
     <button mat-icon-button class="mat-icon-default" (click)="toggleShare(post)" matTooltip="Share post" *ngIf="postType === 'question'">
       <mat-icon class="size-3">share</mat-icon>
     </button>
