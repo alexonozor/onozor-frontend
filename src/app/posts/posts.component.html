@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-top: 66px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-bottom: 20px">
   <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
     <mat-card class="example-card" *ngIf="!loading">
       <div class="row" fxFlexAlign="start">
@@ -19,13 +19,14 @@
         </h2>
         <span class="post-body" [innerHTML]="post?.body  | markdown"></span>
       </mat-card-content>
-      
-      <app-post-action-bar fxLayout="row" [post]="post" postType="question" [componentName]="componentName">
-      </app-post-action-bar>
+
+      <app-post-action-bar fxLayout="row" [post]="post" postType="question" [componentName]="componentName"></app-post-action-bar>
+
       <div class="comment" *ngIf="showComment">
         <app-comments *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comments>
         <app-comment-form *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comment-form>
       </div>
+
       <div *ngIf="sharePost">
         <app-share-post *ngIf="post?.id" [title]="post?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
       </div>
@@ -34,11 +35,12 @@
       <facebook-content-loader></facebook-content-loader>
     </mat-card>
   </div>
-  <div fxFlex="25">
+  <div fxFlex="25" *ngIf="!(isHandset$ | async )">
     <mat-card class="example-card">
       <mat-card-content>
         <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile
+          dog that copes
           very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
         </p>
       </mat-card-content>
@@ -47,8 +49,12 @@
 </div>
 
 
+<div style="margin-bottom: 20px" id="answer-form">
+    <app-answer-form *ngIf="post?.id" [questionId]="post?.id"></app-answer-form>
+</div>
 
-<app-answer-form *ngIf="post?.id" [questionId]="post?.id"></app-answer-form>
 
+<div id="answers">
+    <app-answers [slug]="post?.slug"></app-answers>
+</div>
 
-<app-answers [slug]="post?.slug"></app-answers>

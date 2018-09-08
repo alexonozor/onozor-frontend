@@ -29,6 +29,11 @@ export class HomeComponent implements OnInit {
     map(result => result.matches)
   );
 
+  isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Web)
+  .pipe(
+    map(result => result.matches)
+  );
+
 
   constructor(
     private breakpointObserver: BreakpointObserver,

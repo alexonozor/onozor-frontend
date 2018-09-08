@@ -10,7 +10,7 @@
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-container">
     <app-header [drawer]="drawer"></app-header>
-    <button mat-fab color="warn" [routerLink]="['/post/create']" style="position: fixed; bottom: 10px; z-index: 2000; right: 10px;" *ngIf="(isHandset$ | async )">
+    <button mat-fab color="warn"(click)="openDialog()" style="position: fixed; bottom: 10px; z-index: 2000; right: 10px;" *ngIf="(isHandset$ | async )">
       <mat-icon class="mat-18">edit</mat-icon>
     </button>
     <div [ngClass]="!(isHandset$ | async )? 'desktop-padding' : 'handset-padding'">

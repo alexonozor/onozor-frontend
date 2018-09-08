@@ -16,5 +16,8 @@
   margin-top: 130px;
 }
 
+mat-dialog-container {
+  padding: 0px !important;
+}
 
 

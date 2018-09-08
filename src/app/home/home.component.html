@@ -24,7 +24,7 @@
   <facebook-content-loader></facebook-content-loader>
 </mat-card>
   </div>
-  <div fxFlex="25">
+  <div fxFlex="25" *ngIf="isDesktop$ | async">
     <mat-card class="example-card">
       <mat-card-content>
         <p>
