@@ -1,5 +1,5 @@
 <div fxLayout="row" fxFlex="100%%" fxFlexFill fxLayoutAlign="space-between">
-  <div>
+  <div fxLayout="row" fxLayoutGap="4">
     <button mat-icon-button [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " (click)="vote(post, 'up')"
       matTooltip="Up vote">
       <mat-icon aria-label="Example icon-button with a heart icon">thumb_up_alt</mat-icon>
@@ -12,12 +12,12 @@
 
     <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK
       DETAILS ({{post.comments_count}})</button>
-    <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> ANSWERS
-      ({{post.answers_count}})</button>
+    <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> 
+      <span *ngIf="isDesktop$ | async">ANSWERS</span> <i *ngIf=" isHandset$ | async" class="material-icons">mode_comment</i> ({{post.answers_count}})
+    </button>
     <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
   </div>
-  <div fxLayout="row" fxLayoutGap="10px">
-
+  <div fxLayout="row" fxLayoutGap="5">
     <div *ngIf="currentUser.id === post?.author?.id">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_horiz</mat-icon>

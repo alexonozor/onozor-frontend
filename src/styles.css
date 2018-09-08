@@ -44,3 +44,12 @@ body {
 .mat-tab-body-wrapper {
   padding-top: 20px;
 }
+
+
+.position-fab {
+  position: fixed;
+  bottom: 10px;
+  z-index: 2000;
+  right: 10px;
+}
+

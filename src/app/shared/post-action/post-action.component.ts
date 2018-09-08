@@ -6,6 +6,9 @@ import { AuthService } from '../../authentication/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { NgProgress } from '@ngx-progressbar/core';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-post-action-bar',
@@ -18,7 +21,18 @@ export class PostActionComponent implements OnInit {
   @Input() componentName: string;
   rootUrl: string = environment.rootUrl;
   currentUser: any;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
+  isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Web)
+  .pipe(
+    map(result => result.matches)
+  );
+
   constructor(
+    private breakpointObserver: BreakpointObserver,
     public _postService: PostsService,
     public auth: AuthService,
     public _uiService: UiUpdateService,
