@@ -18,7 +18,7 @@
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
 
-    <div *ngIf="currentUser.id === post?.author?.id">
+    <div *ngIf="currentUser?.id === post?.author?.id">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_horiz</mat-icon>
       </button>
@@ -90,7 +90,7 @@
     <small>Share</small>
   </div>
 
-  <div *ngIf="currentUser.id === post?.author?.id" fxLayout="column" fxLayoutAlign="center center">
+  <div *ngIf="currentUser?.id === post?.author?.id" fxLayout="column" fxLayoutAlign="center center">
     <div>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon class="size-3">more_horiz</mat-icon>
