@@ -22,7 +22,7 @@
   </mat-card-content>
 
 
-  <app-post-action-bar fxLayout="row" [post]="feed" postType="question" componentName='componentName'></app-post-action-bar>
+  <app-post-action-bar fxLayout="row" [post]="feed" postType="question" [componentName]='componentName'></app-post-action-bar>
 
   <div *ngIf="feed.sharePost">
     <app-share-post *ngIf="feed?.id" [title]="feed?.name" [postUrL]="postUrL+'posts/'+ feed?.slug" postType="Question"></app-share-post>

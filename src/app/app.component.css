@@ -7,5 +7,14 @@
   background-color: #e1e4f2;
 }
 
+.desktop-padding {
+  margin-top: 66px;
+  padding: 20px;
+}
+
+.handset-padding {
+  margin-top: 130px;
+}
+
 
 

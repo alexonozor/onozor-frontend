@@ -1,27 +1,16 @@
-<mat-toolbar class="mat-elevation-z8 toolbar-settings" fxLayout="row" fxLayoutGap="20px">
-  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
-    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-  </button>
-
-
-
-  <div class="form" fxLayout="row" fxLayoutGap="20px" *ngIf="isDesktop$ | async">
+<mat-toolbar class="mat-elevation-z8 toolbar-settings" fxLayout="row" fxLayoutGap="20px" color="primary">
+  <div class="form" fxLayout="row" fxLayoutGap="20px" >
     <mat-icon matSuffix class="mat-icon-default">search</mat-icon>
     <input type="search" fxFlex="85" matInput placeholder="Search" class="">
   </div>
-  <button mat-icon-button *ngIf="isHandset$ | async">
-    <mat-icon class="mat-icon-default">search</mat-icon>
-  </button>
 
 
-
-
-  <button mat-flat-button color="primary" [routerLink]="['/post/create']">Add Question</button>
+  <button mat-raised-button  [routerLink]="['/post/create']">Add Question</button>
   <button mat-button *ngIf="!currentUser" (click)="onClick"><mat-icon class="mat-icon-default">exit_to_app</mat-icon> login </button>
 
   <div *ngIf="currentUser">
     <button mat-icon-button>
-      <mat-icon class="mat-icon-default" matBadge="15" matBadgeColor="warn">notifications_none</mat-icon>
+      <mat-icon  matBadge="15" matBadgeColor="warn">notifications_none</mat-icon>
     </button>
 
     <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -46,5 +35,58 @@
       </button>
     </mat-menu>
   </div>
-
 </mat-toolbar>
+
+<mat-toolbar class="mat-elevation-z8 toolbar-settings" *ngIf="isHandset$ | async" color="primary">
+    <mat-toolbar-row fxLayoutAlign="center center">
+      <span routerLink="">ONOZOR</span>
+     
+    </mat-toolbar-row>
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+  
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+  
+      
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+  
+  
+  
+  
+      <!-- <button mat-raised-button color="warn" [routerLink]="['/post/create']">Add Question</button> -->
+      <button mat-button *ngIf="!currentUser" (click)="onClick">
+        <mat-icon>exit_to_app</mat-icon> login
+      </button>
+  
+  
+      <button mat-icon-button *ngIf="currentUser">
+        <mat-icon matBadge="15" matBadgeColor="warn">notifications_none</mat-icon>
+      </button>
+      <div>
+        <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="currentUser">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/users', currentUser.slug]">
+            <mat-icon>person_outline</mat-icon>
+            <span>Profile</span>
+          </button>
+          <!-- <button mat-menu-item>
+          <mat-icon>assignment</mat-icon>
+          <span>My blog</span>
+        </button> -->
+          <button mat-menu-item [routerLink]="['/users/settings']">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Log out</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>

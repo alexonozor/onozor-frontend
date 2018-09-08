@@ -15,11 +15,11 @@ export class PostCardComponent implements OnInit {
   @Input() feed: any;
   @Input() loading: Boolean;
   @Input() meta: any;
+  @Input() componentName: string;
 
   loadingAnswer: Boolean = true;
   sharePost: Boolean = false;
   postUrL: String;
-  componentName: String = 'home';
   currentUser: any;
 
 
