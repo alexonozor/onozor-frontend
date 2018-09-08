@@ -2,6 +2,9 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CreatePostComponent } from './posts/create-post/create-post.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 
 @Component({
   selector: 'app-root',
@@ -29,6 +32,19 @@ export class AppComponent {
     map(result => result.matches)
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    public dialog: MatDialog
+  ) {}
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreatePostComponent, {
+
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    //   this.animal = result;
+    // });
   }
 }

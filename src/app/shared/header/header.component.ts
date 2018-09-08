@@ -3,7 +3,8 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../../authentication/auth.service';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { CreatePostComponent } from '../../posts/create-post/create-post.component';
 
 @Component({
   selector: 'app-header',
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public auth: AuthService,
+    public dialog: MatDialog
   ) {
     this.currentUser = this.auth.getCurrentUser();
   }
@@ -37,6 +39,17 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.auth.getCurrentUser();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreatePostComponent, {
+      width: '250px',
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    //   this.animal = result;
+    // });
   }
 
 }
