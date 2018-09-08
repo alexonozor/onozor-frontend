@@ -53,3 +53,8 @@ body {
   right: 10px;
 }
 
+.remove-port {
+  color: #ccc !important;
+  background: #fff !important;
+}
+
