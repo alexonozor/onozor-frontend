@@ -47,7 +47,6 @@ export class AuthService {
   }
 
   decrypt(data) {
-    // avoid UTF-8 Decode Error
     try {
       const bytes = CryptoJS.AES.decrypt(data, environment.encriptionKey);
       if (bytes.toString()) {
@@ -61,8 +60,21 @@ export class AuthService {
 
   getCurrentUser() {
     const encrypt = localStorage.getItem('currentUser');
-    const currentUser =  this.decrypt(encrypt);
-    return currentUser;
+    if (encrypt) {
+      const currentUser =  this.decrypt(encrypt);
+      return currentUser;
+    } else {
+      return {};
+    }
+  }
+
+  isCurrentUser(): Boolean {
+    const encrypt = localStorage.getItem('currentUser');
+    if (encrypt) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   logout() {

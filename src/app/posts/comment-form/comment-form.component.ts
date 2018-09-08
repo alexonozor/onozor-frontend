@@ -22,6 +22,7 @@ export class CommentFormComponent implements OnInit {
   isThereError: Boolean = false;
   loading: Boolean = true;
   currentUser: any;
+  isCurrentUser: Boolean;
 
   @Input() commentableType: string;
   @Input() slug: string;
@@ -36,6 +37,7 @@ export class CommentFormComponent implements OnInit {
     public _authService: AuthService
   ) {
     this.currentUser = this._authService.getCurrentUser();
+    this.isCurrentUser = this._authService.isCurrentUser();
   }
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class CommentFormComponent implements OnInit {
   prepareCommentForm() {
     this.commentForm = this.fb.group({
       body:             [null, [Validators.required]],
-      user_id:          [this.currentUser.id, [Validators.required]],
+      user_id:          [this.currentUser.id],
       commentable_type: [this.commentableType, [Validators.required]],
       commentable_id:   [this.slug, [Validators.required]],
     });

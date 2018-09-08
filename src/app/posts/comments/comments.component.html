@@ -35,8 +35,8 @@
     </div>
   </div>
 </div>
-<small *ngIf="pageMeta.next_page && !loadingComments">
+<small *ngIf="pageMeta?.next_page && !loadingComments">
   <button mat-button (click)="loadMoreComments(pageMeta.next_page)" style="text-align: center" (click)="onClick">LOAD MORE COMMENTS</button>
 </small>
 
-<mat-progress-bar *ngIf="pageMeta.next_page && loadingComments" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar *ngIf="pageMeta?.next_page && loadingComments" mode="indeterminate"></mat-progress-bar>

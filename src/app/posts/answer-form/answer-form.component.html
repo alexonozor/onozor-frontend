@@ -3,9 +3,10 @@
     <mat-card class="example-card">
       <div class="row" fxFlexAlign="start">
         <mat-card-header fxFlex="50">
-          <div mat-card-avatar [ngStyle]="{'background-image': 'url(' + currentUser.avatar.thumb.url+ ')', 'background-size': 'cover'}"></div>
-          <mat-card-title>{{currentUser.first_name}} {{currentUser.last_name}}</mat-card-title>
-          <mat-card-subtitle>@{{currentUser.username}}</mat-card-subtitle>
+          <div mat-card-avatar *ngIf="isCurrentUser" [ngStyle]="{'background-image': 'url(' + currentUser.avatar.thumb.url+ ')', 'background-size': 'cover'}"></div>
+          <div mat-card-avatar *ngIf="!isCurrentUser" style="background-size: cover; background-image: url('https://qsf.ec.quoracdn.net/-3-images.new_grid.profile_pic_default_small.png-26-902da2b339fedf49.png')"></div>
+          <mat-card-title *ngIf="isCurrentUser">{{currentUser?.first_name}} {{currentUser?.last_name}}</mat-card-title>
+          <mat-card-subtitle *ngIf="isCurrentUser">@{{currentUser?.username}}</mat-card-subtitle>
         </mat-card-header>
       </div>
       <mat-progress-bar mode="indeterminate" [hidden]="!isSubmited"></mat-progress-bar>
@@ -17,7 +18,7 @@
             </ng-template>
             <form [formGroup]="answerForm" class="login-form" (ngSubmit)="submitForm()" fxLayout="column" fxLayoutAlign="start end">
               <mat-form-field fxFlex="100%" fxFlexFill>
-                <textarea matInput rows="10" formControlName="body" placeholder="Write your answer"></textarea>
+                <textarea matInput [rows]="isCurrentUser? 10 : 5" formControlName="body" placeholder="Write your answer"></textarea>
                 <mat-hint align="start">
                   <strong>This form support markdown</strong>
                 </mat-hint>

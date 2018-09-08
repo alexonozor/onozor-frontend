@@ -25,6 +25,7 @@ export class AnswerFormComponent implements OnInit {
   isThereError: Boolean = false;
   loading: Boolean = true;
   currentUser: any;
+  isCurrentUser: Boolean;
 
   @Input() questionId: string;
 
@@ -41,6 +42,7 @@ export class AnswerFormComponent implements OnInit {
     public _postService: PostsService
   ) {
     this.currentUser = this.auth.getCurrentUser();
+    this.isCurrentUser = this.auth.isCurrentUser();
    }
 
   ngOnInit() {
@@ -50,7 +52,7 @@ export class AnswerFormComponent implements OnInit {
   prepareForm() {
     this.answerForm = this.fb.group({
       body: [null, [Validators.required]],
-      user_id: [this.currentUser.id, [Validators.required]],
+      user_id: [this.currentUser.id],
       question_id: [this.questionId, [Validators.required]],
       send_mail: [true]
     });
