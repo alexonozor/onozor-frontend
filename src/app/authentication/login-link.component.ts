@@ -7,12 +7,8 @@ import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login-link',
-  template: `
-    <p>
-      login-link works!
-    </p>
-  `,
-  styles: []
+  templateUrl: './login-link.component.html',
+  styleUrls: ['./login-link.component.scss']
 })
 export class LoginLinkComponent implements OnInit {
   public loginToken: string;
