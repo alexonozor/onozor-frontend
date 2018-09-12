@@ -1,20 +1,32 @@
 
-<div nzAlign="center" id="authenticate">
-    <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="login()">
-        <nz-form-item>
-          <nz-form-control>
-            <nz-input-group nzPrefixIcon="anticon anticon-user">
-              <input type="text" nz-input formControlName="email" placeholder="Email">
-            </nz-input-group>
-            <nz-form-explain *ngIf="loginForm.get('email').dirty && loginForm.get('email').errors">Please input your email!</nz-form-explain>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-control>
-           
-            <button nz-button class="login-form-button" [nzLoading]="isSubmited" [nzType]="'primary'">Log in</button>
-          
-          </nz-form-control>
-        </nz-form-item>
-      </form>
-</div>
+    <mat-card class="card-login">
+     
+      <img alt="Image representing developers talking in a dev community" *ngIf="isHandset$ | async" class="feat-mobile" src="https://cdn.hashnode.com/res/hashnode/image/upload/v1535212975101/rkP3peJw7.png">
+
+      <div class="login-slogan">
+        <h1>A community to share knowledge and better understand the world.</h1>
+        <p>By having an Onozor account, you can subscribe, vote, follow other users, comment, answer, favorite all
+          your favorite Onozor content. <br /></p>
+      </div>
+
+
+      <div fxLayout="row">
+        <form [formGroup]="loginForm" fxFlex="60" fxFlex.xs="100" class="login-form" (ngSubmit)="login()" fxLayout="column">
+          <em>Get started (no password needed)</em>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput formControlName="email" placeholder="Please enter your email address">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-hint *ngIf="loginForm.get('email').errors">Please input a correct email!</mat-hint>
+          </mat-form-field>
+          <button mat-raised-button class="login-form-button" color="primary">{{
+            isSubmited? "submiting..." :
+            "Login / Signup"}}</button>
+        </form>
+        <div fxFlex="40" style="position: relative;" *ngIf="isDesktop$ | async">
+          <img alt="Image representing developers talking in a dev community" class="feat-bk" src="https://cdn.hashnode.com/res/hashnode/image/upload/v1535212975101/rkP3peJw7.png">
+        </div>
+      </div>
+
+    </mat-card>
+

@@ -4,17 +4,18 @@
     <input type="search" fxFlex="85" matInput placeholder="Search" class="">
   </div>
 
-
   <button mat-raised-button [routerLink]="['/post/create']">Add Question</button>
-  <button mat-button *ngIf="!currentUser" (click)="onClick">
-    <mat-icon class="mat-icon-default">exit_to_app</mat-icon> login
+
+
+  <button mat-icon-button>
+    <mat-icon matBadge="1" matBadgeColor="warn">notifications_none</mat-icon>
   </button>
 
-  <div *ngIf="currentUser">
-    <button mat-icon-button>
-      <mat-icon matBadge="15" matBadgeColor="warn">notifications_none</mat-icon>
-    </button>
+  <button mat-button *ngIf="!isLoging" [routerLink]="['/authenticate']">
+    Sign in
+  </button>
 
+  <div *ngIf="isLoging">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -54,15 +55,12 @@
       <button mat-icon-button>
         <mat-icon>search</mat-icon>
       </button>
+      <button mat-icon-button *ngIf="currentUser" [routerLink]="['/authenticate']">
+        <mat-icon matBadge="1" matBadgeColor="warn">notifications_none</mat-icon>
+      </button>
 
-      <button mat-button *ngIf="!currentUser" (click)="onClick">
-        <mat-icon>exit_to_app</mat-icon> login
-      </button>
-      <button mat-icon-button *ngIf="currentUser">
-        <mat-icon matBadge="15" matBadgeColor="warn">notifications_none</mat-icon>
-      </button>
-      <div>
-        <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="currentUser">
+      <div *ngIf="isLoging">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
@@ -81,6 +79,10 @@
           </button>
         </mat-menu>
       </div>
+
+      <button mat-icon-button *ngIf="!isLoging" [routerLink]="['/authenticate']">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
     </div>
 
   </mat-toolbar-row>

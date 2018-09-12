@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ElementRef } from '@angular/core';
-
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +20,7 @@ import { BREAKPOINTS} from '@angular/flex-layout';
 import { MomentModule } from 'ngx-moment';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { ContentLoaderModule } from '@netbasal/content-loader';
-
+import { AuthModule } from './authentication/auth.module';
 
 registerLocaleData(en);
 
@@ -46,6 +45,7 @@ registerLocaleData(en);
     NgProgressModule,
     InfiniteScrollModule,
     ContentLoaderModule,
+    AuthModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,

@@ -14,6 +14,7 @@ import { CreatePostComponent } from '../../posts/create-post/create-post.compone
 export class HeaderComponent implements OnInit {
   @Input() drawer: any;
   currentUser: any;
+  isLoging: Boolean;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -31,9 +32,11 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.currentUser = this.auth.getCurrentUser();
+    this.isLoging = this.auth.isCurrentUser();
   }
 
   logout() {
+    this.isLoging = false;
     this.auth.logout();
   }
 

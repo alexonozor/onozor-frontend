@@ -21,6 +21,7 @@ import { MyOwnCustomMaterialModule } from '../material';
     SignupComponent,
     LoginComponent,
     LoginLinkComponent
-  ]
+  ],
+  exports: [LoginComponent]
 })
 export class AuthModule { }

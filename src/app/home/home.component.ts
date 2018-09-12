@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { UiUpdateService } from '../posts/ui-update.service';
 import { PostsService } from '../posts/posts.service';
-
+import { AuthService } from '../authentication/auth.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   postUrL: String;
   componentName: String = 'home';
   currentUser: any;
+  isCurrentUser: Boolean;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -40,8 +41,10 @@ export class HomeComponent implements OnInit {
     public _postService: PostsService,
     public _uiUpdateService: UiUpdateService,
     public feedsService: FeedsService,
+    public auth: AuthService,
     public router: Router) {
     this.postUrL = this.router.url;
+    this.isCurrentUser =  this.auth.isCurrentUser();
   }
 
   ngOnInit() {
@@ -53,7 +56,7 @@ export class HomeComponent implements OnInit {
       this.toggleShare();
       this.listenAndChooseVote();
     }, err => {
-      console.log(err);
+
     });
   }
 
