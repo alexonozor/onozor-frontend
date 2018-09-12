@@ -5,6 +5,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
@@ -34,6 +35,10 @@ export class PostCardComponent implements OnInit {
     public feedsService: FeedsService,
     public router: Router) {
     this.postUrL = this.router.url;
+  }
+
+  gotToPost(post) {
+    this.router.navigate(['posts', post.slug]);
   }
 
   ngOnInit() {}

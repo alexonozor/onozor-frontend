@@ -15,7 +15,7 @@
 
 
   <mat-card-content>
-    <h2 [routerLink]="['../../posts', feed.slug ]" class="title">
+    <h2 (click)="gotToPost(feed)" class="title">
       <a class="post-link">{{feed?.name}}</a>
     </h2>
     <p class="body-2">{{feed?.body | truncate:200}}</p>

@@ -52,9 +52,7 @@ export class PostActionComponent implements OnInit {
   }
 
   toggleShare(post) {
-    console.log(!post.sharePost);
     post.sharePost = !post.sharePost;
-    // this._uiService.toggleShare(post);
   }
 
   vote(post, direction) {
