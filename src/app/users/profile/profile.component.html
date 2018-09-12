@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'"
   [ngStyle.xs]="{'margin-top': '40px'}">
-  <div fxFlex="52" fxLayout="column" fxLayoutGap="30px">
+  <div fxFlex="52" fxLayout="column">
     <mat-card>
       <img mat-card-image *ngIf="user.has_cover_photo" [src]="user.cover_photo.timeline.url" alt="Photo of a Shiba Inu">
       <mat-card-header fxLayout.xs="column" fxLayoutAlign.xs="center center">
@@ -57,10 +57,10 @@
         </div>
       </div>
     </mat-card>
-    <nav mat-tab-nav-bar class="tab-backgroundcolor mat-elevation-z3" style="margin-bottom: 0px;">
+    <nav mat-tab-nav-bar class="tab-backgroundcolor mat-elevation-z9" style="margin-bottom: 20px;">
       <a mat-tab-link *ngFor="let link of profileNavLink" [routerLink]="[link.link]" routerLinkActive #rla="routerLinkActive"
         [active]="rla.isActive">
-        {{link.name}} &nbsp; &nbsp; &nbsp;
+        {{link.name}} 
         <span color="primary" [matBadge]="link.count? link.count: ''"></span>
       </a>
     </nav>
@@ -68,3 +68,14 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<style>
+  .mat-tab-links {
+    overflow: scroll;
+  }
+
+  .mat-tab-nav-bar {
+  white-space: nowrap;
+  overflow: auto;
+}
+</style>

@@ -64,3 +64,10 @@ body {
 
 }
 
+@media (max-width: 599px) {
+    .mat-tab-link {
+      min-width: 108px !important;
+  }
+}
+
+
