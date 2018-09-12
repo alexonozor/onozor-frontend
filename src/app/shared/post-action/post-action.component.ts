@@ -9,6 +9,8 @@ import { NgProgress } from '@ngx-progressbar/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import {MatSnackBar} from '@angular/material';
+
 
 @Component({
   selector: 'app-post-action-bar',
@@ -37,7 +39,8 @@ export class PostActionComponent implements OnInit {
     public auth: AuthService,
     public _uiService: UiUpdateService,
     public router: Router,
-    public progress: NgProgress
+    public progress: NgProgress,
+    public snackBar: MatSnackBar
   ) {
     this.currentUser =  this.auth.getCurrentUser();
   }
@@ -49,7 +52,9 @@ export class PostActionComponent implements OnInit {
   }
 
   toggleShare(post) {
-    this._uiService.toggleShare(post);
+    console.log(!post.sharePost);
+    post.sharePost = !post.sharePost;
+    // this._uiService.toggleShare(post);
   }
 
   vote(post, direction) {
@@ -77,9 +82,32 @@ export class PostActionComponent implements OnInit {
 
   deletePost(post, componentType) {
     if (componentType === 'answer') {
-      this._uiService.deletePost(post, componentType);
+      this.deleteAnswer(post);
     } else {
-      const confirmDelete = confirm('Are you sure you want to delete this post?');
+      this.deletePosts(post);
+    }
+  }
+
+
+  deleteAnswer(answer): void {
+    const confirmDelete = confirm('Are you sure you want to this answer');
+    if (confirmDelete) {
+      const deletedElement = document.getElementById(`answer-${answer.id}`);
+      deletedElement.style.display = 'none';
+      this._postService.deleteAnswer(answer.question_id, answer.id).subscribe(res => {
+        this.snackBar.open('Your answer has been deleted.', 'close', {
+          duration: 2000
+        });
+       }, err => {
+        this.snackBar.open('Unable to delete this message, server or internet error', 'close', {
+          duration: 2000,
+        });
+      });
+    }
+  }
+
+  deletePosts(post) {
+    const confirmDelete = confirm('Are you sure you want to delete this post?');
       if (confirmDelete) {
         this.progress.start();
         this._postService.deleteQuestion(post.id).subscribe(res => {
@@ -91,7 +119,6 @@ export class PostActionComponent implements OnInit {
           console.log('err');
         });
       }
-    }
   }
 }
 
