@@ -1,0 +1,61 @@
+.login-form {
+    max-width: 300px;
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+  }
+
+  #authenticate {
+    margin-right: auto;
+    margin-left: auto;
+    width: 300px;
+    margin-top: 300px;
+  }
+
+  .login-slogan {
+    h1 {
+      line-height: 1.2em;
+      text-transform: capitalize;
+      font-weight: 200;
+    }
+    p {
+      max-width: 500px;
+      color: #5b5e6a;
+    }
+  }
+
+.feat-bk {
+  display: block;
+  width: 290px;
+  position: absolute;
+  top: -41.3px;
+  right: -60px;
+  z-index: 5;
+}
+
+.card-login {
+  overflow: hidden;
+}
+
+.feat-mobile {
+  display: block;
+  top: auto;
+  right: auto;
+  margin: 0 auto 32px;
+  width: 180px;
+}
+
+.close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.set-margin {
+  margin-bottom: 20px;
+}

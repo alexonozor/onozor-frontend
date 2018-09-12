@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import {
   AbstractControl,
   FormBuilder,
@@ -10,26 +11,46 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { AuthService } from '../auth.service';
 
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmited: Boolean = false;
   formErrors: Array<any>;
   isThereError: Boolean = false;
+  componentName: String = 'login';
 
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private fb: FormBuilder,
     public router: Router,
     private message: NzMessageService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private location: Location,
+    public snackBar: MatSnackBar
   ) {
   }
+
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
+  isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Web)
+  .pipe(
+    map(result => result.matches)
+  );
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -38,22 +59,27 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.isSubmited = true;
+    if (this.loginForm.valid) {
+      this.isSubmited = true;
     this._authService.login(this.loginForm.value)
       .subscribe(res => {
           if (res.success) {
-            this.message.success(res.message);
+            this.snackBar.open(res.message, 'close', { duration: 5000 } );
             this.isSubmited = false;
-            this.loginForm.reset({email: null});
+            this.loginForm.reset({email: ''});
           } else {
             this.router.navigate(['/']);
           }
         }, err => {
-          console.log(err);
           this.isSubmited = false;
           this.isThereError = true;
         }
       );
+    }
+  }
+
+  closeForm() {
+    this.location.back();
   }
 
 
