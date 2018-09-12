@@ -45,6 +45,8 @@ export class HomeComponent implements OnInit {
     public router: Router) {
     this.postUrL = this.router.url;
     this.isCurrentUser =  this.auth.isCurrentUser();
+    this.currentUser =  this.auth.getCurrentUser();
+    console.log(this.currentUser);
   }
 
   ngOnInit() {
