@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
   <div fxFlex="45" fxLayout="column" fxLayoutGap="15px">
-    <app-login></app-login>
+    <app-login *ngIf="!isCurrentUser"></app-login>
     <app-post-card *ngFor="let feed of feeds" style="margin-bottom: 20px" infiniteScroll [infiniteScrollDistance]="5"
       [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)" [hidden]="loading" [feed]="feed" [loading]="loading"
       [componentName]="componentName" [meta]="meta">
@@ -17,7 +17,7 @@
     </mat-card>
   </div>
   <div fxFlex="20" *ngIf="isDesktop$ | async">
-    <mat-card class="set-margin">
+    <mat-card class="set-margin" *ngIf="!isCurrentUser">
       <img matCardImage src="https://cdn.hashnode.com/res/hashnode/image/upload/v1535141934972/BywN_yAUQ.png">
       <mat-card-content>
         <h4>4 REASONS TO JOIN ONOZOR, RIGHT NOW!</h4>
