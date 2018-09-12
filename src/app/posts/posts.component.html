@@ -27,7 +27,7 @@
         <app-comment-form *ngIf="post?.id" [slug]="post?.id" commentableType="Question"></app-comment-form>
       </div>
 
-      <div *ngIf="sharePost">
+      <div *ngIf="post?.sharePost">
         <app-share-post *ngIf="post?.id" [title]="post?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
       </div>
     </mat-card>

@@ -1,5 +1,4 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'"
-  [ngStyle.xs]="{'margin-top': '40px'}">
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngStyle.xs]="{'margin-top': '40px'}">
   <div fxFlex="52" fxLayout="column">
     <mat-card>
       <img mat-card-image *ngIf="user.has_cover_photo" [src]="user.cover_photo.timeline.url" alt="Photo of a Shiba Inu">
