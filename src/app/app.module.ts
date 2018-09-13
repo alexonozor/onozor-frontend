@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ElementRef } from '@angular/core';
+import { NgModule, ElementRef, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,13 +14,13 @@ import { HomeComponent } from './home/home.component';
 import { PostModule } from './posts/post.module';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { TokenInterceptor } from './authentication/auth.interceptor';
 import { MyOwnCustomMaterialModule } from './material';
 import { BREAKPOINTS} from '@angular/flex-layout';
 import { MomentModule } from 'ngx-moment';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { ContentLoaderModule } from '@netbasal/content-loader';
 import { AuthModule } from './authentication/auth.module';
+import { ErrorsModule } from './errors/errors.module';
 
 registerLocaleData(en);
 
@@ -40,6 +40,7 @@ registerLocaleData(en);
     NgZorroAntdModule,
     MyOwnCustomMaterialModule,
     AppRoutingModule,
+    ErrorsModule,
     PostModule,
     SharedModule,
     NgProgressModule,
@@ -63,13 +64,9 @@ registerLocaleData(en);
   ],
   exports: [
     InfiniteScrollModule,
-    ContentLoaderModule
+    ContentLoaderModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true
-  } ],
+  providers: [{ provide: NZ_I18N, useValue: en_US } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

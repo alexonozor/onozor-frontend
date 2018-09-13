@@ -8,7 +8,7 @@ import { RouterResolver } from './router.resolver';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, resolve: { crisis: RouterResolver } },
+  { path: '', component: HomeComponent },
   {
     path: 'authenticate',
     loadChildren: './authentication/auth.module#AuthModule'

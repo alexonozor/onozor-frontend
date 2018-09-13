@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
     this.postUrL = this.router.url;
     this.isCurrentUser =  this.auth.isCurrentUser();
     this.currentUser =  this.auth.getCurrentUser();
-    console.log(this.currentUser);
   }
 
   ngOnInit() {
@@ -58,7 +57,7 @@ export class HomeComponent implements OnInit {
       this.toggleShare();
       this.listenAndChooseVote();
     }, err => {
-
+      throw err;
     });
   }
 
@@ -73,6 +72,7 @@ export class HomeComponent implements OnInit {
           this.feeds.push(item);
         });
       }, err => {
+        throw err;
       });
     }
   }
@@ -82,6 +82,8 @@ export class HomeComponent implements OnInit {
       if (res) {
         res.sharePost = !res.sharePost;
       }
+    }, err => {
+      throw err;
     });
   }
 

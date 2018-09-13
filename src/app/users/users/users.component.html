@@ -1,4 +1,4 @@
-<div fxLayout="row" *ngIf="!(isHandset$ | async)" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'" fxFlex="70">
+<div fxLayout="row" *ngIf="!(isHandset$ | async)"  fxFlex="70">
   <div  fxLayout="row wrap">
    
     <app-user-card 
@@ -21,7 +21,7 @@
 </div>
 
 
-<mat-card *ngIf="(isHandset$ | async)" class="margin-top2">
+<mat-card *ngIf="(isHandset$ | async)">
   <mat-list fxLayout="column" fxLayoutAlign="start">
     <mat-list-item *ngFor="let user of users" infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50"
       (scrolled)="onScroll(meta?.next_page)">

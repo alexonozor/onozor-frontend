@@ -69,7 +69,7 @@ export class CommunityComponent implements OnInit {
       this.community = resp.category;
       this.getCommunityQuestions();
     }, err => {
-      console.log(err);
+      throw err;
     });
   }
 
@@ -81,7 +81,7 @@ export class CommunityComponent implements OnInit {
       this.meta = res.meta;
       this.posts = res.questions;
     }, err => {
-      console.log(err);
+      throw err;
     });
   }
 
@@ -95,7 +95,7 @@ export class CommunityComponent implements OnInit {
         this.snackBar.open(res.errors, null, { duration: 2000 });
       }
     }, err => {
-      this.snackBar.open('server error', null, { duration: 2000 });
+      throw err;
     });
   }
 
@@ -108,7 +108,7 @@ export class CommunityComponent implements OnInit {
         this.snackBar.open(res.errors, null, { duration: 2000 });
       }
     }, err => {
-      this.snackBar.open('server error', null, { duration: 2000 });
+      throw err;
     });
   }
 
@@ -123,6 +123,7 @@ export class CommunityComponent implements OnInit {
           this.posts.push(item);
         });
       }, err => {
+        throw err;
       });
     }
   }
