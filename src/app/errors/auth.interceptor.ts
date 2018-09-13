@@ -7,18 +7,20 @@ import {
   HttpResponse,
   HttpErrorResponse
 } from '@angular/common/http';
-import { AuthService } from './auth.service';
+import { AuthService } from '../authentication/auth.service';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { LoginComponent } from '../authentication/login/login.component';
 
 
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(
+    public dialog: MatDialog,
     public notification: NzNotificationService,
     public auth: AuthService,
     public router: Router) {}
@@ -37,8 +39,9 @@ export class TokenInterceptor implements HttpInterceptor {
       if (err instanceof HttpErrorResponse) {
         if (err.status === 401) {
           // redirect to the login route
-          this.router.navigate(['authenticate']);
-          this.notification.create('error', 'Unauthorize', 'Your session has expired');
+          // this.router.navigate(['authenticate']);
+          this.notification.create('error', 'Unauthorize', 'Please login/signup');
+          this.dialog.open(LoginComponent);
         }
       }
     });

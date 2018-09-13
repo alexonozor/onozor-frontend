@@ -1,4 +1,4 @@
-<div fxLayout="column" fxFlex="50%" style="margin-top: 60px;" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'"
+<div fxLayout="column" fxFlex="50%" 
   infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)"
   *ngIf="!(isHandset$ | async)">
 

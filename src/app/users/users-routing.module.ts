@@ -17,12 +17,13 @@ import { FavoritesComponent } from './profile/favorites/favorites.component';
 import { FollowersComponent } from './profile/followers/followers.component';
 import { FollowingComponent } from './profile/following/following.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AuthGuard } from '../authentication/auth.guard';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'all', pathMatch: 'full' },
   { path: 'all', component: UsersComponent, resolve: { users: UsersRouterResolver  }  },
-  { path: 'settings', component: SettingsComponent  },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]  },
   { path: ':slug', component: ProfileComponent,
   children: [
     {path: '', redirectTo: 'questions', pathMatch: 'full' },

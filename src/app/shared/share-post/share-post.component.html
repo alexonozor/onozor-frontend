@@ -1,6 +1,6 @@
  <div id="share-question">
     <mat-divider></mat-divider>
-   <div fxLayout="column"  fxLayoutGap="5px"></div>
+   <div fxLayout="row" fxLayoutAlign="space-around center"></div>
     <a  *ngFor="let share of shares" target="_blank" [href]="share.link" mat-mini-fab [ngClass]="share.name" class="basic-button"> <i [ngClass]="share.icon"></i></a>
   </div>
   

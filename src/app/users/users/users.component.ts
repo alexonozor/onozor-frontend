@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
       this.meta = resp.meta;
       this.users = resp.users;
     }, err => {
-      console.log(err);
+      throw err;
     });
   }
 
