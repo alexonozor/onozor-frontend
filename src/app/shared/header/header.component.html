@@ -7,13 +7,14 @@
   <button mat-raised-button [routerLink]="['/post/create']">Add Question</button>
 
 
-  <button mat-icon-button>
+  <button mat-icon-button *ngIf="isLoging">
     <mat-icon matBadge="1" matBadgeColor="warn">notifications_none</mat-icon>
   </button>
 
-  <button mat-button *ngIf="!isLoging" [routerLink]="['/authenticate']">
-    Sign in
+  <button mat-stroked-button  *ngIf="!isLoging" [routerLink]="['authenticate']">   
+     Getting Started
   </button>
+  
 
   <div *ngIf="isLoging">
     <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -55,7 +56,7 @@
       <button mat-icon-button>
         <mat-icon>search</mat-icon>
       </button>
-      <button mat-icon-button *ngIf="currentUser" [routerLink]="['/authenticate']">
+      <button mat-icon-button *ngIf="isLoging">
         <mat-icon matBadge="1" matBadgeColor="warn">notifications_none</mat-icon>
       </button>
 
@@ -80,9 +81,9 @@
         </mat-menu>
       </div>
 
-      <button mat-icon-button *ngIf="!isLoging" [routerLink]="['/authenticate']">
-        <mat-icon>exit_to_app</mat-icon>
-      </button>
+      <button mat-stroked-button  *ngIf="!isLoging" [routerLink]="['authenticate']">   
+          Getting Started
+       </button>
     </div>
 
   </mat-toolbar-row>
