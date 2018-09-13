@@ -69,6 +69,10 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   }
 
+  goToCommunity(slug) {
+    this.router.navigate(['/communities', slug]);
+  }
+
 
   ngOnDestroy() {
     // this.sub.unsubscribe();

@@ -8,7 +8,7 @@
 
     <div fxFlex="50" fxLayout="column" fxLayoutAlign="start end" style="text-align: right">
       <mat-chip-list *ngIf="feed?.category">
-        <mat-chip>{{feed?.category?.name}}</mat-chip>
+        <mat-chip (click)="goToCommunity(feed.category.slug)">{{feed?.category?.name}}</mat-chip>
       </mat-chip-list>
     </div>
   </div>
