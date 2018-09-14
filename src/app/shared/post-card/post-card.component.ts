@@ -38,7 +38,11 @@ export class PostCardComponent implements OnInit {
   }
 
   gotToPost(post) {
-    this.router.navigate(['posts', post.slug]);
+    this.router.navigate(['posts', post.slug], {fragment: 'post'});
+  }
+
+  goToCommunity(slug) {
+    this.router.navigate(['communities', slug]);
   }
 
   ngOnInit() {}

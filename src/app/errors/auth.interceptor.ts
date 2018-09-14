@@ -1,3 +1,5 @@
+
+import { tap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -9,7 +11,7 @@ import {
 } from '@angular/common/http';
 import { AuthService } from '../authentication/auth.service';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/do';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -31,7 +33,7 @@ export class TokenInterceptor implements HttpInterceptor {
         Authorization: `Token ${this.auth.getToken()}`
       }
     });
-    return next.handle(request).do((event: HttpEvent<any>) => {
+    return next.handle(request).pipe(tap((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
         // do stuff with response if you want
       }
@@ -44,6 +46,6 @@ export class TokenInterceptor implements HttpInterceptor {
           this.dialog.open(LoginComponent);
         }
       }
-    });
+    }));
   }
 }

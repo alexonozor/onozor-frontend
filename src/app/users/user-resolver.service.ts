@@ -1,10 +1,12 @@
+
+import {of as observableOf,  Observable, timer } from 'rxjs';
+
+import {catchError,  map, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, timer } from 'rxjs';
-import { map, take } from 'rxjs/operators';
 import { UserService } from './user.service';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
+
+
 
 @Injectable()
  class UserProfileRouterResolver implements Resolve<any> {
@@ -15,9 +17,9 @@ import 'rxjs/add/observable/of';
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     const slug = route.params['slug'];
-    return this._userService.getUser(slug).catch(() => {
-      return Observable.of('data not available at this time');
-    });
+    return this._userService.getUser(slug).pipe(catchError(() => {
+      return observableOf('data not available at this time');
+    }));
   }
 }
 

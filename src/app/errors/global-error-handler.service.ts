@@ -28,6 +28,7 @@ if (error instanceof HttpErrorResponse) {
       return;
     } else {
       // Client Error Happend
+      console.log(error);
       snackBar.open('Onozor has expirence a run time error. :(', 'reload');
     }
   }
