@@ -17,7 +17,7 @@ export class PostCardComponent implements OnInit {
   @Input() loading: Boolean;
   @Input() meta: any;
   @Input() componentName: string;
-
+  @Input() title: string;
   loadingAnswer: Boolean = true;
   sharePost: Boolean = false;
   postUrL: String;

@@ -8,7 +8,7 @@ import { NgProgress } from '@ngx-progressbar/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -22,15 +22,17 @@ export class PostActionComponent implements OnInit {
   @Input() componentName: string;
   rootUrl: string = environment.rootUrl;
   currentUser: any;
+
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches)
-  );
+    .pipe(
+      map(result => result.matches)
+    );
 
   isDesktop$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Web)
-  .pipe(
-    map(result => result.matches)
-  );
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -41,7 +43,7 @@ export class PostActionComponent implements OnInit {
     public progress: NgProgress,
     public snackBar: MatSnackBar
   ) {
-    this.currentUser =  this.auth.getCurrentUser();
+    this.currentUser = this.auth.getCurrentUser();
   }
 
   ngOnInit() { }
@@ -54,8 +56,39 @@ export class PostActionComponent implements OnInit {
     post.sharePost = !post.sharePost;
   }
 
-  vote(post, direction) {
-    this._uiService.chooseVote(this.post, direction, this.postType);
+
+  /**
+ * The voting methods will be moved to a service in the furture.
+ */
+  vote(post) {
+    if (post.vote.currentUserHasUpvote) {
+      post.vote_count -= 1;
+      post.vote.currentUserHasUpvote = false;
+      post.vote.voteValue = -1;
+    } else if (post.vote_count === -1) {
+      post.vote_count += 2;
+      post.vote.voteValue = +1;
+      post.vote.currentUserHasUpvote = true;
+      post.vote.currentUserHasDownVote = false;
+    } else {
+      post.vote_count += 1;
+      post.vote.voteValue = +1;
+      post.vote.currentUserHasUpvote = true;
+      post.vote.currentUserHasDownVote = false;
+    }
+    this.updateVote({ value: post.vote.voteValue, id: post.id }, post.types);
+  }
+
+  updateVote(params, type) {
+    this._postService.vote(params, type).subscribe(res => {
+      if (res.success) {
+        this.snackBar.open('Thanks for voting', 'close', {
+          duration: 2000
+        });
+      }
+    }, err => {
+      throw err;
+    });
   }
 
   /**
@@ -66,6 +99,7 @@ export class PostActionComponent implements OnInit {
     this.post.favourited = !post.favourited;
     this._postService.savePost(post.id).subscribe(res => {
     }, err => {
+      throw err;
     });
   }
 
@@ -95,31 +129,29 @@ export class PostActionComponent implements OnInit {
         this.snackBar.open('Your answer has been deleted.', 'close', {
           duration: 2000
         });
-       }, err => {
-        this.snackBar.open('Unable to delete this message, server or internet error', 'close', {
-          duration: 2000,
-        });
+      }, err => {
+        throw err;
       });
     }
   }
 
   deletePosts(post) {
     const confirmDelete = confirm('Are you sure you want to delete this post?');
-      if (confirmDelete) {
-        this.progress.start();
-        this._postService.deleteQuestion(post.id).subscribe(res => {
-          this.progress.complete();
-          if (res.status === 200) {
-            window.location.href = '/';
-          }
-        }, err => {
-          throw err;
-        });
-      }
+    if (confirmDelete) {
+      this.progress.start();
+      this._postService.deleteQuestion(post.id).subscribe(res => {
+        this.progress.complete();
+        if (res.status === 200) {
+          window.location.href = '/';
+        }
+      }, err => {
+        throw err;
+      });
+    }
   }
 
   goToAnswers(post) {
-    this.router.navigate(['posts', post.slug], {fragment: 'answers'});
+    this.router.navigate(['posts', post.slug], { fragment: 'answers' });
   }
 }
 

@@ -31,6 +31,7 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   public favourite: Boolean = true;
   postUrL: String;
   componentName: String = 'post';
+  title: String = 'questions';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -56,7 +57,6 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getPost();
     this.toggleComment();
     this.toggleShare();
-    this.listenAndChooseVote();
   }
 
   getPost() {
@@ -65,14 +65,13 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.favourite = this.post.favourited;
       this.loading = false;
     }, err => {
-      console.log(err);
+      throw err;
     });
   }
 
   ngAfterViewInit() {
     this.activatedRoute.fragment.subscribe((fragment: string) => {
       if (fragment === 'answers') {
-        console.log('sliding to answer');
         setTimeout(() => {
           document.getElementById('answers').scrollIntoView({ behavior: 'smooth' });
         }, 1000);
@@ -112,69 +111,6 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         this.sharePost = !this.sharePost;
       }
-    });
-  }
-
-
-  /**
-   * The voting methods will be moved to a service in the furture.
-   */
-  upvote(post) {
-    if (post.vote.currentUserHasUpvote) {
-      post.vote_count -= 1;
-      post.vote.currentUserHasUpvote = false;
-      post.vote.voteValue = -1;
-    } else if (post.vote_count === -1) {
-      post.vote_count += 2;
-      post.vote.voteValue = +1;
-      post.vote.currentUserHasUpvote = true;
-      post.vote.currentUserHasDownVote = false;
-    } else {
-      post.vote_count += 1;
-      post.vote.voteValue = +1;
-      post.vote.currentUserHasUpvote = true;
-      post.vote.currentUserHasDownVote = false;
-    }
-
-    this.vote({ value: post.vote.voteValue, id: post.id }, 'questions');
-  }
-
-  downvote(post) {
-    if (post.vote.currentUserHasDownVote) {
-      post.vote_count += 1;
-      post.vote.voteValue = +1;
-      post.vote.currentUserHasDownVote = false;
-    } else if (post.vote_count === +1) {
-      post.vote_count -= 2;
-      post.vote.voteValue = -1;
-      post.vote.currentUserHasDownVote = true;
-      post.vote.currentUserHasUpvote = false;
-    } else {
-      post.vote_count -= 1;
-      post.vote.voteValue = -1;
-      post.vote.currentUserHasDownVote = true;
-    }
-    this.vote({ value: post.vote.voteValue, id: post.id }, 'questions');
-  }
-
-  listenAndChooseVote() {
-    this._uiUpdateService.listenToVotes.subscribe(res => {
-      if (res && res.postType === 'question') {
-        if (res.direction === 'up') {
-          this.upvote(res);
-        } else {
-          this.downvote(res);
-        }
-      }
-    });
-  }
-
-  vote(params, type) {
-    this._postService.vote(params, type).subscribe(res => {
-      if (res.success) {
-      }
-    }, err => {
-      console.log(err);
     });
   }
 }
