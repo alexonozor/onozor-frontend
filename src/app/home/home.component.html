@@ -1,5 +1,12 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
   <div fxFlex="45" fxLayout="column" fxLayoutGap="15px">
+
+    <mat-card class="question-form" fxLayoutGap="30px" fxLayout="row" fxLayoutAlign="start center" *ngIf="isCurrentUser" [routerLink]="['/posts/create']">
+        <div mat-card-avatar *ngIf="isCurrentUser" [ngStyle]="{'background-image': 'url(' + currentUser.avatar.thumb.url+ ')', 'background-size': 'cover'}"></div>
+        <p>Hello {{currentUser.username | titlecase }}! What is your question?</p>
+    </mat-card>
+
+
     <mat-card color="primary" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isCurrentUser && !currentUser.last_name && !currentUser.first_name"
       class="alert">
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between center">
@@ -8,7 +15,11 @@
       </div>
       <button mat-stroked-button color="primary" [routerLink]="['/users/settings']">Settings</button>
     </mat-card>
+
+
     <app-login *ngIf="!isCurrentUser"></app-login>
+
+
     <app-post-card *ngFor="let feed of feeds" style="margin-bottom: 20px"
         infiniteScroll [infiniteScrollDistance]="5"
         [infiniteScrollThrottle]="50" 

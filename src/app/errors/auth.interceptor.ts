@@ -11,11 +11,11 @@ import {
 } from '@angular/common/http';
 import { AuthService } from '../authentication/auth.service';
 import { Observable } from 'rxjs';
-
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { LoginComponent } from '../authentication/login/login.component';
+import { MatSnackBar } from '@angular/material';
 
 
 
@@ -25,7 +25,9 @@ export class TokenInterceptor implements HttpInterceptor {
     public dialog: MatDialog,
     public notification: NzNotificationService,
     public auth: AuthService,
-    public router: Router) {}
+    public router: Router,
+    public snackBar: MatSnackBar
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
@@ -44,6 +46,10 @@ export class TokenInterceptor implements HttpInterceptor {
           // this.router.navigate(['authenticate']);
           this.notification.create('error', 'Unauthorize', 'Please login');
           this.dialog.open(LoginComponent);
+        } else if (err.status === 404) {
+          this.snackBar.open('No record found for your request :(', 'reload');
+          this.router.navigate(['']);
+          return;
         }
       }
     }));
