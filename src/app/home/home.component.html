@@ -1,9 +1,28 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
   <div fxFlex="45" fxLayout="column" fxLayoutGap="15px">
 
-    <mat-card class="question-form" fxLayoutGap="30px" fxLayout="row" fxLayoutAlign="start center" *ngIf="isCurrentUser" [routerLink]="['/posts/create']">
-        <div mat-card-avatar *ngIf="isCurrentUser" [ngStyle]="{'background-image': 'url(' + currentUser.avatar.thumb.url+ ')', 'background-size': 'cover'}"></div>
-        <p>Hello {{currentUser.username | titlecase }}! What is your question?</p>
+    <mat-card class="question-form" fxLayoutGap="20px" fxLayout="row" fxLayoutAlign="start center" *ngIf="isCurrentUser"
+      [routerLink]="['/posts/create']">
+      <div mat-card-avatar *ngIf="isCurrentUser" [ngStyle]="{'background-image': 'url(' + currentUser.avatar.thumb.url+ ')', 'background-size': 'cover'}"></div>
+      <p>Hello {{currentUser.username | titlecase }}! What is your question?</p>
+    </mat-card>
+
+    <mat-card class="home-categories" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start center" *ngIf="isCurrentUser">
+      <div class="category-card" *ngFor="let community of communites" [ngStyle]="{'background-image': 'url(' + community.image + ')', 'background-size': 'cover', 'border-radius': '8px', 'width': '50%'}">
+        <div class="inner-div" fxLayout="column" fxLayoutAlign="space-around center">
+          <p (click)="goToCategories(community)">{{community?.name}}</p>
+          <button mat-mini-fab color="white" *ngIf="!community.subscribe" (click)="subscribe(community)">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-mini-fab color="white" *ngIf="community.subscribe" (click)="unsubscribe(community)">
+            <mat-icon>check_circle_outline</mat-icon>
+          </button>
+        </div>
+      </div>
+      <button mat-mini-fab color="primary" routerLink="/communities">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
     </mat-card>
 
 
@@ -20,14 +39,9 @@
     <app-login *ngIf="!isCurrentUser"></app-login>
 
 
-    <app-post-card *ngFor="let feed of feeds" style="margin-bottom: 20px"
-        infiniteScroll [infiniteScrollDistance]="5"
-        [infiniteScrollThrottle]="50" 
-        (scrolled)="onScroll(meta?.next_page)" 
-        [hidden]="loading" 
-        [feed]="feed"
-        [componentName]="componentName" 
-        [meta]="meta">
+    <app-post-card *ngFor="let feed of feeds" style="margin-bottom: 20px" infiniteScroll [infiniteScrollDistance]="5"
+      [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)" [hidden]="loading" [feed]="feed"
+      [componentName]="componentName" [meta]="meta">
     </app-post-card>
 
     <span *ngIf="meta?.next_page && loadingAnswer" style="text-align: center">
