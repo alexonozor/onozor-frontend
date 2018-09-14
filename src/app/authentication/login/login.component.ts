@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import {
   AbstractControl,
@@ -15,6 +15,8 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
+
 
 
 @Component({
@@ -37,7 +39,7 @@ export class LoginComponent implements OnInit {
     private message: NzMessageService,
     private _authService: AuthService,
     private location: Location,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
   }
 

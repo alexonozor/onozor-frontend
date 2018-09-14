@@ -3,11 +3,13 @@
      
       <img alt="Image representing developers talking in a dev community" *ngIf="isHandset$ | async" class="feat-mobile" src="https://cdn.hashnode.com/res/hashnode/image/upload/v1535212975101/rkP3peJw7.png">
 
-      <div class="login-slogan">
+      <div  [ngClass]="(isDesktop$ | async)? 'login-slogan' : 'login-slogan-mobile'">
+ 
         <h1>A community to share knowledge and better understand the world.</h1>
         <p>By having an Onozor account, you can subscribe, vote, follow other users, comment, answer, favorite all
           your favorite Onozor content. <br /></p>
       </div>
+      
 
 
       <div fxLayout="row">

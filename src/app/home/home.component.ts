@@ -55,7 +55,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCommunites();
+    if (this.isCurrentUser) {
+      this.getCommunites();
+    }
     this.feedsService.getFeeds().subscribe(res => {
       this.loading = false;
       this.loadingAnswer = false;

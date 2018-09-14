@@ -20,7 +20,6 @@
   .login-slogan {
     h1 {
       line-height: 1.2em;
-      text-transform: capitalize;
       font-weight: 200;
     }
     p {
@@ -47,7 +46,7 @@
   top: auto;
   right: auto;
   margin: 0 auto 32px;
-  width: 180px;
+  width: 131px;
 }
 
 .close-button {
@@ -58,4 +57,18 @@
 
 .set-margin {
   margin-bottom: 20px;
+}
+
+.login-slogan-mobile {
+   h1 {
+    line-height: 1.2em;
+    font-weight: 200;
+    text-align: center;
+    font-size: 1.5em;
+  }
+  p {
+    max-width: 500px;
+    color: #5b5e6a;
+    text-align: center;
+  }
 }

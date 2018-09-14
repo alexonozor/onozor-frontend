@@ -13,7 +13,7 @@ import { AuthService } from '../authentication/auth.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../authentication/login/login.component';
 import { MatSnackBar } from '@angular/material';
 
@@ -45,7 +45,7 @@ export class TokenInterceptor implements HttpInterceptor {
           // redirect to the login route
           // this.router.navigate(['authenticate']);
           this.notification.create('error', 'Unauthorize', 'Please login');
-          this.dialog.open(LoginComponent);
+          this.dialog.open(LoginComponent, { data: { auth: true }});
         } else if (err.status === 404) {
           this.snackBar.open('No record found for your request :(', 'reload');
           this.router.navigate(['']);
