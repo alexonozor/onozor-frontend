@@ -8,6 +8,9 @@ import { AuthService } from '../authentication/auth.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CommunityService } from '../community/community.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-home',
@@ -24,6 +27,7 @@ export class HomeComponent implements OnInit {
   componentName: String = 'home';
   currentUser: any;
   isCurrentUser: Boolean;
+  communites: Array<any> = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -42,6 +46,8 @@ export class HomeComponent implements OnInit {
     public _uiUpdateService: UiUpdateService,
     public feedsService: FeedsService,
     public auth: AuthService,
+    public _communityService: CommunityService,
+    private snackBar: MatSnackBar,
     public router: Router) {
     this.postUrL = this.router.url;
     this.isCurrentUser =  this.auth.isCurrentUser();
@@ -49,6 +55,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCommunites();
     this.feedsService.getFeeds().subscribe(res => {
       this.loading = false;
       this.loadingAnswer = false;
@@ -58,6 +65,44 @@ export class HomeComponent implements OnInit {
       this.listenAndChooseVote();
     }, err => {
       throw err;
+    });
+  }
+
+  getCommunites() {
+    this._communityService.getCommunities(1).subscribe(resp => {
+      this.communites = resp.categories;
+    }, err => {
+      throw err;
+    });
+  }
+
+  goToCategories(community) {
+   this.router.navigate(['communities', community.slug]);
+  }
+
+  unsubscribe(community) {
+    community.subscribe = false;
+    this._communityService.unsubscribe(community).subscribe(res => {
+      if (res.status === 200) {
+        this.snackBar.open(res.message, null, { duration: 2000 });
+      } else {
+        this.snackBar.open(res.errors, null, { duration: 2000 });
+      }
+    }, err => {
+      this.snackBar.open('server error', null, { duration: 2000 });
+    });
+  }
+
+  subscribe(community) {
+    community.subscribe = true;
+    this._communityService.subscribe(community).subscribe(res => {
+      if (res.status === 200) {
+        this.snackBar.open(res.message, null, { duration: 2000 });
+      } else {
+        this.snackBar.open(res.errors, null, { duration: 2000 });
+      }
+    }, err => {
+      this.snackBar.open('server error', null, { duration: 2000 });
     });
   }
 
