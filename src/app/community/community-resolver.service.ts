@@ -3,8 +3,8 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { Observable, timer } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { CommunityService } from './community.service';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
+
+
 
 @Injectable()
  class CommunitiesResolver implements Resolve<any> {

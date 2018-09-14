@@ -11,8 +11,7 @@ import {
 import { NzMessageService, NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { ISubscription } from 'rxjs/Subscription';
+import { Observable ,  SubscriptionLike as ISubscription } from 'rxjs';
 
 
 

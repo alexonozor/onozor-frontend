@@ -12,7 +12,7 @@
 
     <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK
       DETAILS ({{post.comments_count}})</button>
-    <button mat-button *ngIf="componentName==='home'" (click)="toggleComment()" class="mat-icon-default"> ANSWERS
+    <button mat-button *ngIf="componentName==='home'" (click)="goToAnswers(post)" class="mat-icon-default"> ANSWERS
       ({{post.answers_count}})</button>
     <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
   </div>
@@ -61,7 +61,7 @@
   </div>
 
   <div *ngIf="componentName==='home'" fxLayout="column" fxLayoutAlign="space-evenly center">
-    <button mat-icon-button (click)="toggleComment()" class="mat-icon-default">
+    <button mat-icon-button (click)="goToAnswers(post)" class="mat-icon-default">
       <mat-icon class="size-3">comment</mat-icon>
     </button>
     <small>{{post.answers_count}}</small>

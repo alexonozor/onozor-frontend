@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from './posts.service';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { Location } from '@angular/common';
 import { AuthService } from '../authentication/auth.service';
 import { UiUpdateService } from './ui-update.service';
-
+import smoothscroll from 'smoothscroll-polyfill';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -19,7 +19,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./posts.component.css']
 })
 
-export class PostsComponent implements OnInit, OnDestroy {
+export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   showComment: Boolean = false;
   sharePost: Boolean = false;
   private sub: any;
@@ -33,9 +33,9 @@ export class PostsComponent implements OnInit, OnDestroy {
   componentName: String = 'post';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches)
-  );
+    .pipe(
+      map(result => result.matches)
+    );
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -47,6 +47,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     public auth: AuthService,
     public _uiUpdateService: UiUpdateService
   ) {
+    smoothscroll.polyfill();
     this.postUrL = this.router.url;
     this.currentUser = this.auth.getCurrentUser();
   }
@@ -66,7 +67,17 @@ export class PostsComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     });
+  }
 
+  ngAfterViewInit() {
+    this.activatedRoute.fragment.subscribe((fragment: string) => {
+      if (fragment === 'answers') {
+        console.log('sliding to answer');
+        setTimeout(() => {
+          document.getElementById('answers').scrollIntoView({ behavior: 'smooth' });
+        }, 1000);
+      }
+    });
   }
 
   goToCommunity(slug) {
@@ -84,12 +95,12 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   toggleComment() {
     this._uiUpdateService.listenToToggleComment.subscribe(res => {
-     if (res) {
-      if (this.sharePost) {
-        this.sharePost = !this.sharePost;
+      if (res) {
+        if (this.sharePost) {
+          this.sharePost = !this.sharePost;
+        }
+        this.showComment = !this.showComment;
       }
-      this.showComment = !this.showComment;
-     }
     });
   }
 
@@ -105,9 +116,9 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
 
-/**
- * The voting methods will be moved to a service in the furture.
- */
+  /**
+   * The voting methods will be moved to a service in the furture.
+   */
   upvote(post) {
     if (post.vote.currentUserHasUpvote) {
       post.vote_count -= 1;
@@ -125,7 +136,7 @@ export class PostsComponent implements OnInit, OnDestroy {
       post.vote.currentUserHasDownVote = false;
     }
 
-    this.vote({value: post.vote.voteValue, id: post.id  }, 'questions');
+    this.vote({ value: post.vote.voteValue, id: post.id }, 'questions');
   }
 
   downvote(post) {
@@ -143,7 +154,7 @@ export class PostsComponent implements OnInit, OnDestroy {
       post.vote.voteValue = -1;
       post.vote.currentUserHasDownVote = true;
     }
-    this.vote({value: post.vote.voteValue, id: post.id  }, 'questions');
+    this.vote({ value: post.vote.voteValue, id: post.id }, 'questions');
   }
 
   listenAndChooseVote() {

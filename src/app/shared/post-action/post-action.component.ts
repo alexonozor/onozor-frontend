@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { } from '../posts.service';
 import { PostsService } from '../../posts/posts.service';
 import { UiUpdateService } from '../../posts/ui-update.service';
 import { AuthService } from '../../authentication/auth.service';
@@ -114,9 +113,13 @@ export class PostActionComponent implements OnInit {
             window.location.href = '/';
           }
         }, err => {
-          console.log('err');
+          throw err;
         });
       }
+  }
+
+  goToAnswers(post) {
+    this.router.navigate(['posts', post.slug], {fragment: 'answers'});
   }
 }
 
