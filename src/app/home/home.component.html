@@ -28,7 +28,7 @@
     <mat-card class="example-card" *ngFor="let feed of feeds" [hidden]="!loading">
       <facebook-content-loader></facebook-content-loader>
     </mat-card>
-    <button mat-fab color="warn" [routerLink]="['/post/create']" style="position: fixed; bottom: 10px; z-index: 2000; right: 10px;"
+    <button mat-fab color="warn" [routerLink]="['/posts/create']" style="position: fixed; bottom: 10px; z-index: 2000; right: 10px;"
       *ngIf="(isHandset$ | async )">
       <mat-icon class="mat-18">edit</mat-icon>
     </button>

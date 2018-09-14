@@ -107,7 +107,7 @@ export class PostActionComponent implements OnInit {
     if (componentType === 'answer') {
       this._uiService.editPost(post, componentType);
     } else {
-      this.router.navigate(['post/edit', post.slug]);
+      this.router.navigate(['posts/edit', post.slug]);
     }
   }
 
