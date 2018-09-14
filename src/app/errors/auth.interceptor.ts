@@ -42,7 +42,7 @@ export class TokenInterceptor implements HttpInterceptor {
         if (err.status === 401) {
           // redirect to the login route
           // this.router.navigate(['authenticate']);
-          this.notification.create('error', 'Unauthorize', 'Please login/signup');
+          this.notification.create('error', 'Unauthorize', 'Please login');
           this.dialog.open(LoginComponent);
         }
       }

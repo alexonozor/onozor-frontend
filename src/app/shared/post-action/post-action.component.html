@@ -1,20 +1,17 @@
 <div fxLayout="row" fxFlex="100%%" fxFlexFill fxLayoutAlign="space-between" *ngIf="isDesktop$ | async">
   <div>
-    <button mat-icon-button [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " (click)="vote(post, 'up')"
+    <button mat-button [ngClass]="post?.vote?.currentUserHasUpvote? 'mat-primary' : 'mat-icon-default' " (click)="vote(post, post.types)"
       matTooltip="Up vote">
-      <mat-icon aria-label="Example icon-button with a heart icon">thumb_up_alt</mat-icon>
+      <mat-icon aria-label="Example icon-button with a heart icon">thumb_up_alt</mat-icon> <button mat-icon-button disabled>{{post.vote_count}}</button>
     </button>
-    <button mat-icon-button disabled>{{post.vote_count}}</button>
-    <button mat-icon-button [ngClass]="post?.vote?.currentUserHasDownVote? 'mat-warn' : 'mat-icon-default'" (click)="vote(post, 'down')"
-      matTooltip="Down vote">
-      <mat-icon aria-label="Example icon-button with a heart icon">thumb_down_alt</mat-icon>
-    </button>
+    
+
 
     <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">ASK
       DETAILS ({{post.comments_count}})</button>
     <button mat-button *ngIf="componentName==='home'" (click)="goToAnswers(post)" class="mat-icon-default"> ANSWERS
       ({{post.answers_count}})</button>
-    <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS ({{post.comments_count}})</button>
+    <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"> COMMENTS {{post.comments_count}}</button>
   </div>
   <div fxLayout="row" fxLayoutGap="10px">
 

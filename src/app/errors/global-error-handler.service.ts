@@ -24,7 +24,9 @@ if (error instanceof HttpErrorResponse) {
         return;
       }
       // Http Error
-      snackBar.open('Sorry, Onozor just detect a Serve Error :(', 'reload');
+      if (error.status !== 401) { // don't raise alarm if error is 404 let interceptor do the work.
+        snackBar.open('Sorry, Onozor just detect a Serve Error :(', 'reload');
+      }
       return;
     } else {
       // Client Error Happend

@@ -21,7 +21,7 @@
           <div class="post-body" markdown [data]="answer?.body"></div>
         </mat-card-content>
 
-        <app-post-action-bar *ngIf="answer"  fxLayout="row" [post]="answer" postType="answer" [componentName]='componentName'></app-post-action-bar>
+        <app-post-action-bar *ngIf="answer"  fxLayout="row" [post]="answer"  postType="answer" [componentName]='componentName'></app-post-action-bar>
 
         <app-comments *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comments>
         <app-comment-form *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comment-form>

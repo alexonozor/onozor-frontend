@@ -68,9 +68,11 @@ export class CreatePostComponent implements OnInit {
 
    subscribeForQuestion() {
     this.activatedRoute.data.pipe(map(data => data)).subscribe(resp => {
-      this.post = resp.post.question;
+      if (resp.post) {
+        this.post = resp.post.question;
+      }
     }, err => {
-      console.log(err);
+      throw err;
     });
    }
 
@@ -86,7 +88,7 @@ export class CreatePostComponent implements OnInit {
     this.activatedRoute.data.pipe(map(data => data.categories)).subscribe(resp => {
       this.categories = resp.categories;
     }, err => {
-      console.log(err);
+      throw err;
     });
    }
 
