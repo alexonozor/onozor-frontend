@@ -26,11 +26,11 @@ if (error instanceof HttpErrorResponse) {
       // Http Error
       if (error.status !== 401) { // don't raise alarm if error is 404 let interceptor do the work.
         snackBar.open('Sorry, Onozor just detect a Serve Error :(', 'reload');
+        return;
       }
       return;
     } else {
       // Client Error Happend
-      console.log(error);
       snackBar.open('Onozor has expirence a run time error. :(', 'reload');
     }
   }
