@@ -16,19 +16,17 @@ import { map } from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 
 
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-modal-login',
+  templateUrl: './modal-login.component.html',
+  styleUrls: ['./modal-login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class ModalLoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmited: Boolean = false;
   formErrors: Array<any>;
   isThereError: Boolean = false;
   componentName: String = 'login';
-
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -39,7 +37,6 @@ export class LoginComponent implements OnInit {
     public snackBar: MatSnackBar,
   ) {
   }
-
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -53,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -65,13 +62,15 @@ export class LoginComponent implements OnInit {
           if (res.success) {
             this.snackBar.open(res.message, 'close', { duration: 5000 } );
             this.isSubmited = false;
-            this.loginForm.reset();
+            this.loginForm.reset('');
+            this.loginForm.markAsPristine();
           } else {
             this.router.navigate(['/']);
           }
         }, err => {
           this.isSubmited = false;
           this.isThereError = true;
+          throw err;
         }
       );
     }
@@ -80,6 +79,4 @@ export class LoginComponent implements OnInit {
   closeForm() {
     this.location.back();
   }
-
-
 }

@@ -20,18 +20,20 @@ if (error instanceof HttpErrorResponse) {
     // Server error happened
       if (!navigator.onLine) {
         // No Internet connection
-        snackBar.open('No Internet Connection', 'reload');
+        snackBar.open('No Internet Connection', 'Close');
         return;
       }
       // Http Error
       if (error.status !== 401) { // don't raise alarm if error is 404 let interceptor do the work.
-        snackBar.open('Sorry, Onozor just detect a Serve Error :(', 'reload');
+      console.log(error);
+        snackBar.open('Sorry, Onozor just expirenced a server error :(', 'reload');
         return;
       }
       return;
     } else {
+      console.log(error);
       // Client Error Happend
-      snackBar.open('Onozor has expirence a run time error. :(', 'reload');
+      snackBar.open('Onozor has expirenced a run time error. :(', 'Close');
     }
   }
 }
