@@ -27,13 +27,10 @@
                     <strong>This form support markdown</strong>
                   </mat-hint>
                 </mat-form-field>
-                <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center">
-                  <div>
-                    <mat-slide-toggle formControlName="send_mail">Send me post reply notifications</mat-slide-toggle>
-                  </div>
-                  <div fxLayoutGap="10px">
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-between center" fxLayoutAlign.xs="space-between center">
+                  <mat-slide-toggle formControlName="send_mail" color="primary">Send me reply notifications</mat-slide-toggle>
+                  <div fxLayoutGap="10px" fxLayout.xs="row" fxLayoutAlign.xs="space-evenly stretch" >
                     <a mat-stroked-button (click)="exitQuestionForm()"> CANCEL</a>
-              
                     <button mat-raised-button [disabled]="!updateForm.valid" color="primary">Save</button>  
                   </div>
                 </div>
