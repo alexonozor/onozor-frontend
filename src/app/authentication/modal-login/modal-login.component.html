@@ -1,0 +1,18 @@
+<mat-card class="card-login">
+  <div fxLayout="row">
+    <form [formGroup]="loginForm" fxFlex.xs="100" class="login-form" (ngSubmit)="login()" fxLayout="column">
+      <h3>Thanks for the feedback!</h3>
+      <p><small>Setting up an account is free and open to everyone. Set up your account today and earn extra privileges like posting & asking question, commenting and voting.</small></p>
+      <em>Get started (no password needed)</em>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="text" matInput formControlName="email" placeholder="Please enter your email address">
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-hint *ngIf="loginForm.get('email').errors">Please input a correct email!</mat-hint>
+      </mat-form-field>
+      <button mat-raised-button [disabled]="isSubmited" class="login-form-button" color="primary">{{
+        isSubmited? "submiting..." :
+        "Login / Signup"}}</button>
+    </form>
+  </div>
+</mat-card>

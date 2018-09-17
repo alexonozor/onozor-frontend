@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { LoginLinkComponent } from './login-link.component';
 import { MyOwnCustomMaterialModule } from '../material';
+import { ModalLoginComponent } from './modal-login/modal-login.component';
 
 @NgModule({
   imports: [
@@ -20,8 +21,10 @@ import { MyOwnCustomMaterialModule } from '../material';
   declarations: [
     SignupComponent,
     LoginComponent,
-    LoginLinkComponent
+    LoginLinkComponent,
+    ModalLoginComponent
   ],
-  exports: [LoginComponent]
+  entryComponents: [ModalLoginComponent],
+  exports: [LoginComponent, ModalLoginComponent]
 })
 export class AuthModule { }
