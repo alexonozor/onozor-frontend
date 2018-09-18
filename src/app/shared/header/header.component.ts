@@ -46,15 +46,5 @@ export class HeaderComponent implements OnInit {
     this.currentUser = this.auth.getCurrentUser();
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CreatePostComponent, {
-      width: '250px',
-    });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   this.animal = result;
-    // });
-  }
 
 }

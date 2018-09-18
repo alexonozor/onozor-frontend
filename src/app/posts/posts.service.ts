@@ -129,6 +129,12 @@ export class PostsService {
     );
   }
 
+  similarQuestions(id: string): Observable<any> {
+    return this.http.get(`${this.host}/questions/${id}/similar_questions`)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
 
   vote(voteParams: any, type: string): Observable<any> {
     return this.http.post(`${this.host}/${type}/${voteParams.id}/vote`, voteParams)

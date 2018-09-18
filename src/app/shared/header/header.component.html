@@ -81,10 +81,12 @@
         </mat-menu>
       </div>
 
-      <button mat-stroked-button  *ngIf="!isLoging | async" [routerLink]="['authenticate']" class="min-font">   
+      <button mat-stroked-button  *ngIf="!isLoging" [routerLink]="['authenticate']" class="min-font">   
           Get started
        </button>
     </div>
 
   </mat-toolbar-row>
 </mat-toolbar>
+
+ 

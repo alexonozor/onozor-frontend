@@ -3,7 +3,7 @@
 
   <form [formGroup]="commentForm" (ngSubmit)="submitForm()" fxLayout="column" fxLayoutAlign="start end">
     <mat-form-field  fxFlex="100%" fxFlexFill class="login-form">
-        <div mat-card-avatar matPrefix *ngIf="!isCurrentUser" style="background-size: cover; margin-right: 10px; background-image: url('https://qsf.ec.quoracdn.net/-3-images.new_grid.profile_pic_default_small.png-26-902da2b339fedf49.png')"></div>
+      <div mat-card-avatar matPrefix *ngIf="!isCurrentUser" style="background-size: cover; margin-right: 10px; background-image: url('https://res.cloudinary.com/sportbay-co/image/upload/v1537287942/user_svhfyt.png')"></div>
       <div mat-card-avatar matPrefix *ngIf="isCurrentUser" [ngStyle]="{'background-image': 'url(' + currentUser.avatar?.thumb?.url+ ')', 'background-size': 'cover', 'margin-right': '10px'}"></div>
       <textarea matInput #body maxlength="256" formControlName="body" placeholder="Write your comment"></textarea>
       <mat-hint align="start">

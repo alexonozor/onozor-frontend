@@ -9,10 +9,10 @@
         </mat-card-header>
 
         <div fxFlex="50" fxLayout="column" fxLayoutAlign="start end" style="text-align: right">
-            <mat-chip-list *ngIf="post?.category">
-              <mat-chip (click)="goToCommunity(post.category.slug)">{{post?.category?.name}}</mat-chip>
-            </mat-chip-list>
-          </div>
+          <mat-chip-list *ngIf="post?.category">
+            <mat-chip (click)="goToCommunity(post.category.slug)">{{post?.category?.name}}</mat-chip>
+          </mat-chip-list>
+        </div>
       </div>
 
       <mat-card-content>
@@ -36,27 +36,36 @@
     <mat-card *ngIf="loading">
       <facebook-content-loader></facebook-content-loader>
     </mat-card>
+
+    <div style="margin-bottom: 20px" id="answer-form">
+        <app-answer-form *ngIf="post?.id" [questionId]="post?.id"></app-answer-form>
+    </div>
+    
+    
+    <div id="answers">
+        <app-answers [slug]="post?.slug"></app-answers>
+    </div>
   </div>
-  <div fxFlex="25" *ngIf="!(isHandset$ | async )">
-    <mat-card class="example-card">
-      <mat-card-content>
-        <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile
-          dog that copes
-          very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
-        </p>
-      </mat-card-content>
+  <div fxFlex="20" fxLayout="column" fxLayoutGap="30px" *ngIf="!(isHandset$ | async )">
+      <mat-card>
+          <div class="treading">
+            <h4><i class="material-icons">show_chart</i> STATS</h4>
+            <p><b>Asked:</b> {{post?.created_at | amTimeAgo}}</p>
+            <p><b>Total views:</b> {{post?.views}}</p>
+            <p><b>Community: </b> <a [routerLink]="['/communities', post.category.slug]">{{post?.category.name}}</a></p>
+          </div>
+        </mat-card>
+    <mat-card>
+      <div class="treading">
+        <h4>RELATED</h4>
+        <div *ngFor="let post of similarsQuestions; let i=index" class="list">
+          <h4 class="disscussion" (click)="gotToPost(post.slug)">{{post?.name}}</h4>
+          <div fxLayout="row" fxLayoutGap="10px" class="mat-icon-default">
+            <mat-icon class="mat-18">question_answer</mat-icon>
+            <p>{{post?.answers_count}} answers</p>
+          </div>
+        </div>
+      </div>
     </mat-card>
   </div>
 </div>
-
-
-<div style="margin-bottom: 20px" id="answer-form">
-    <app-answer-form *ngIf="post?.id" [questionId]="post?.id"></app-answer-form>
-</div>
-
-
-<div id="answers">
-    <app-answers [slug]="post?.slug"></app-answers>
-</div>
-
