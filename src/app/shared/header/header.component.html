@@ -56,11 +56,11 @@
       <button mat-icon-button>
         <mat-icon>search</mat-icon>
       </button>
-      <button mat-icon-button *ngIf="isLoging">
+      <button mat-icon-button *ngIf="isLoging | async">
         <mat-icon matBadge="1" matBadgeColor="warn">notifications_none</mat-icon>
       </button>
 
-      <div *ngIf="isLoging">
+      <div *ngIf="isLoging | async">
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
@@ -81,7 +81,7 @@
         </mat-menu>
       </div>
 
-      <button mat-stroked-button  *ngIf="!isLoging" [routerLink]="['authenticate']" class="min-font">   
+      <button mat-stroked-button  *ngIf="!isLoging | async" [routerLink]="['authenticate']" class="min-font">   
           Get started
        </button>
     </div>

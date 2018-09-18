@@ -25,7 +25,7 @@
 
     </mat-card>
 
-
+  
     <mat-card color="primary" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isCurrentUser && !currentUser.last_name && !currentUser.first_name"
       class="alert">
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between center">
@@ -34,7 +34,6 @@
       </div>
       <button mat-stroked-button color="primary" [routerLink]="['/users/settings']">Settings</button>
     </mat-card>
-
 
     <app-login *ngIf="!isCurrentUser"></app-login>
 

@@ -8,11 +8,15 @@ import { Response } from '@angular/http';
 import { Location } from '@angular/common';
 import CryptoJS from 'crypto-js';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private host = environment.baseUrl;
+  private dataSource = new BehaviorSubject<Boolean>(null);
+  listenToCurrentUserChanges = this.dataSource.asObservable();
 
 
   constructor(
@@ -68,13 +72,19 @@ export class AuthService {
     }
   }
 
-  isCurrentUser(): Boolean {
+  // isCurrentUser(): Boolean {
+  //   const encrypt = localStorage.getItem('currentUser');
+  //   if (encrypt) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  isCurrentUser() {
     const encrypt = localStorage.getItem('currentUser');
-    if (encrypt) {
-      return true;
-    } else {
-      return false;
-    }
+    const isUserAvialble = (encrypt) ? true : false;
+    this.dataSource.next(isUserAvialble);
   }
 
   logout() {

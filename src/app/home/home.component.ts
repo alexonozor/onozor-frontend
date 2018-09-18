@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   postUrL: String;
   componentName: String = 'home';
   currentUser: any;
-  isCurrentUser: Boolean;
+  isCurrentUser: any;
   communites: Array<any> = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -50,11 +50,16 @@ export class HomeComponent implements OnInit {
     private snackBar: MatSnackBar,
     public router: Router) {
     this.postUrL = this.router.url;
-    this.isCurrentUser =  this.auth.isCurrentUser();
+    this.auth.isCurrentUser();
     this.currentUser =  this.auth.getCurrentUser();
   }
 
+
+
   ngOnInit() {
+    this.auth.listenToCurrentUserChanges.subscribe(res => {
+      this.isCurrentUser = res;
+    });
     if (this.isCurrentUser) {
       this.getCommunites();
     }
