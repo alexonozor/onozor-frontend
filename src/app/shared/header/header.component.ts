@@ -14,7 +14,7 @@ import { CreatePostComponent } from '../../posts/create-post/create-post.compone
 export class HeaderComponent implements OnInit {
   @Input() drawer: any;
   currentUser: any;
-  isLoging: Boolean;
+  isLoging: any;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -31,8 +31,7 @@ export class HeaderComponent implements OnInit {
     public auth: AuthService,
     public dialog: MatDialog
   ) {
-    this.currentUser = this.auth.getCurrentUser();
-    this.isLoging = this.auth.isCurrentUser();
+    this.auth.isCurrentUser();
   }
 
   logout() {
@@ -41,18 +40,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.auth.listenToCurrentUserChanges.subscribe(res => {
+      this.isLoging = res;
+    });
     this.currentUser = this.auth.getCurrentUser();
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CreatePostComponent, {
-      width: '250px',
-    });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   this.animal = result;
-    // });
-  }
 
 }

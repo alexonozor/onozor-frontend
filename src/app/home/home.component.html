@@ -35,7 +35,6 @@
       <button mat-stroked-button color="primary" [routerLink]="['/users/settings']">Settings</button>
     </mat-card>
 
-
     <app-login *ngIf="!isCurrentUser"></app-login>
 
 
@@ -59,36 +58,19 @@
     </button>
   </div>
   <div fxFlex="20" *ngIf="isDesktop$ | async">
-    <mat-card class="set-margin" *ngIf="!isCurrentUser">
-      <img matCardImage src="https://cdn.hashnode.com/res/hashnode/image/upload/v1535141934972/BywN_yAUQ.png">
-      <mat-card-content>
-        <h4>4 REASONS TO JOIN ONOZOR, RIGHT NOW!</h4>
-        <mat-list>
-          <mat-list-item>
-            <p mat-line>Friendly and inclusive</p>
-          </mat-list-item>
-        </mat-list>
-        <mat-list>
-          <mat-list-item>
-            <p mat-line>Ask questions</p>
-          </mat-list-item>
-        </mat-list>
-        <mat-list>
-          <mat-list-item>
-            <p mat-line>Follow smart people</p>
-          </mat-list-item>
-        </mat-list>
-
-        <mat-list>
-          <mat-list-item>
-            <p mat-line>Subscribe to intersting communities</p>
-          </mat-list-item>
-        </mat-list>
-
-      </mat-card-content>
+    <mat-card class="set-margin mat-elevation-z2">
+      <div class="treading">
+        <h4>TRENDING DISCUSSION</h4>
+        <div *ngFor="let post of threadingDisscution | async; let i=index" class="list">
+          <h4 class="disscussion" (click)="gotToPost(post.slug)">{{post?.name}}</h4>
+          <div fxLayout="row" fxLayoutGap="10px" class="mat-icon-default">
+            <mat-icon class="mat-18">question_answer</mat-icon>  <p>{{post?.answers_count}} answers</p>
+          </div>
+        </div>
+      </div>
     </mat-card>
 
-    <mat-card class="example-card">
+    <!-- <mat-card class="example-card">
       <mat-card-content>
         <p>
           The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile
@@ -96,6 +78,26 @@
           very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
         </p>
       </mat-card-content>
-    </mat-card>
+    </mat-card> -->
   </div>
 </div>
+
+
+<style>
+  .disscussion {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    cursor: pointer;
+  }
+
+  .list {
+    margin-bottom: 15px;
+  }
+
+  .treading > h4 {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+  }
+
+</style>

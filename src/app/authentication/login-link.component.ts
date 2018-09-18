@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Location } from '@angular/common';
@@ -12,6 +12,7 @@ import { environment } from '../../environments/environment';
 })
 export class LoginLinkComponent implements OnInit {
   public loginToken: string;
+  @Output() notifyLogin: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     public auth: AuthService,
@@ -33,13 +34,14 @@ export class LoginLinkComponent implements OnInit {
       if (res.success && res.status === 200) {
           localStorage.setItem('accessToken', res.access_token);
           this.auth.encrypt(res.user, environment.encriptionKey, 'currentUser');
+          this.auth.isCurrentUser();
           this.router.navigate(['/']);
       } else if (res.status === 203) { // expired token.
           this.router.navigate(['/']);
           this.notification.create('Error', 'Expired', res.message);
       }
     }, err => {
-      console.log(err);
+      throw err;
     });
   }
 }

@@ -12,6 +12,13 @@ import { CommunityService } from '../community/community.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
+interface Disccussion {
+  id: number;
+  name: string;
+  slug: string;
+  answer_count: number;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,6 +26,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class HomeComponent implements OnInit {
   feeds: Array<any> = ['loading', 'loading', 'loading', 'loading', 'loading'];
+  threadingDisscution: Observable<Array<Disccussion>>;
   loading: Boolean = true;
   meta:  any;
   loadingAnswer: Boolean = true;
@@ -26,7 +34,7 @@ export class HomeComponent implements OnInit {
   postUrL: String;
   componentName: String = 'home';
   currentUser: any;
-  isCurrentUser: Boolean;
+  isCurrentUser: any;
   communites: Array<any> = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -50,14 +58,23 @@ export class HomeComponent implements OnInit {
     private snackBar: MatSnackBar,
     public router: Router) {
     this.postUrL = this.router.url;
-    this.isCurrentUser =  this.auth.isCurrentUser();
+    this.auth.isCurrentUser();
     this.currentUser =  this.auth.getCurrentUser();
   }
 
+
+
   ngOnInit() {
+    this.auth.listenToCurrentUserChanges.subscribe(res => {
+      this.isCurrentUser = res;
+    });
+
+    this.treadingDiscussion();
+
     if (this.isCurrentUser) {
       this.getCommunites();
     }
+
     this.feedsService.getFeeds().subscribe(res => {
       this.loading = false;
       this.loadingAnswer = false;
@@ -68,6 +85,14 @@ export class HomeComponent implements OnInit {
     }, err => {
       throw err;
     });
+  }
+
+  treadingDiscussion() {
+    this.threadingDisscution =  this.feedsService.treadingDiscussion();
+  }
+
+  gotToPost(slug) {
+    this.router.navigate(['posts', slug], {fragment: 'post'});
   }
 
   getCommunites() {

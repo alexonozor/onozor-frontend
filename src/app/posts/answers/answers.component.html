@@ -3,7 +3,7 @@
 [infiniteScrollThrottle]="50" 
 (scrolled)="onScroll(pageMeta.next_page)" style="margin-bottom: 20px">
   <div fxLayout="row" *ngIf="!answer?.editing" fxLayoutGap="20px" fxLayout.xs="column" [attr.id]="'answer-' + answer?.id">
-    <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+    <div fxFlex="100" fxLayout="column" fxLayoutGap="30px">
       <mat-card>
         <div class="row" fxFlexAlign="start">
           <mat-card-header fxFlex="50" [routerLink]="['/users', answer?.author?.slug]">
@@ -16,16 +16,12 @@
             <small>{{answer?.created_at | amTimeAgo}}</small>
           </div>
         </div>
-
         <mat-card-content>
           <div class="post-body" markdown [data]="answer?.body"></div>
         </mat-card-content>
-
         <app-post-action-bar *ngIf="answer"  fxLayout="row" [post]="answer"  postType="answer" [componentName]='componentName'></app-post-action-bar>
-
         <app-comments *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comments>
         <app-comment-form *ngIf="answer?.id" [slug]="answer?.id" commentableType="Answer"></app-comment-form>
-
       </mat-card>
 
     </div>

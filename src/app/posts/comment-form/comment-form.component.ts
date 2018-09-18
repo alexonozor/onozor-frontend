@@ -37,10 +37,11 @@ export class CommentFormComponent implements OnInit {
     public _authService: AuthService
   ) {
     this.currentUser = this._authService.getCurrentUser();
-    this.isCurrentUser = this._authService.isCurrentUser();
+    this._authService.isCurrentUser();
   }
 
   ngOnInit() {
+    this._authService.listenToCurrentUserChanges.subscribe(res => this.isCurrentUser = res);
     this.prepareCommentForm();
   }
 

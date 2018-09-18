@@ -32,6 +32,8 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   postUrL: String;
   componentName: String = 'post';
   title: String = 'questions';
+  loadingSimilarQuestions: Boolean = false;
+  similarsQuestions: Array<any> = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -56,7 +58,6 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.getPost();
     this.toggleComment();
-    this.toggleShare();
   }
 
   getPost() {
@@ -64,6 +65,17 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.post = resp.question;
       this.favourite = this.post.favourited;
       this.loading = false;
+      this.similarQuestions(this.post.slug);
+    }, err => {
+      throw err;
+    });
+  }
+
+  similarQuestions(slug) {
+    this.loadingSimilarQuestions = true;
+    this._postService.similarQuestions(slug).subscribe(res => {
+      this.loadingSimilarQuestions = false;
+      this.similarsQuestions = res;
     }, err => {
       throw err;
     });
@@ -81,6 +93,10 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   goToCommunity(slug) {
     this.router.navigate(['/communities', slug]);
+  }
+
+  gotToPost(slug) {
+    this.router.navigate(['posts', slug], {fragment: 'post'});
   }
 
 
