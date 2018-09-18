@@ -42,10 +42,11 @@ export class AnswerFormComponent implements OnInit {
     public _postService: PostsService
   ) {
     this.currentUser = this.auth.getCurrentUser();
-    this.isCurrentUser = this.auth.isCurrentUser();
+    this.auth.isCurrentUser();
    }
 
   ngOnInit() {
+    this.auth.listenToCurrentUserChanges.subscribe(res => this.isCurrentUser = res);
     this.prepareForm();
   }
 
