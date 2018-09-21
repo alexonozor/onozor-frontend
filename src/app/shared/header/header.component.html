@@ -7,7 +7,7 @@
   <button mat-raised-button [routerLink]="['/posts/create']">Add Question</button>
 
 
-  <button mat-icon-button *ngIf="isLoging">
+  <button mat-icon-button *ngIf="isLoging" [routerLink]="['notifications/all']">
     <mat-icon matBadge="1" matBadgeColor="warn">notifications_none</mat-icon>
   </button>
 
@@ -56,11 +56,11 @@
       <button mat-icon-button>
         <mat-icon>search</mat-icon>
       </button>
-      <button mat-icon-button *ngIf="isLoging | async">
+      <button mat-icon-button *ngIf="isLoging">
         <mat-icon matBadge="1" matBadgeColor="warn">notifications_none</mat-icon>
       </button>
 
-      <div *ngIf="isLoging | async">
+      <div *ngIf="isLoging">
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>

@@ -1,0 +1,54 @@
+.follower-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.list-icon {
+  background: #00b0ff;
+  padding: 2px;
+  color: #fff;
+  font-size: 12px !important;
+  position: absolute;
+  right: -5px;
+  top: -8px;
+  text-align: center;
+  width: 14px !important;
+  height: 14px !important;
+  display: block !important;
+}
+
+.notification-time {
+  display: block;
+  color: #8e919d;
+  font-size: .8125rem;
+}
+
+.image-holder {
+  position: relative;
+}
+
+.mat-card {
+  padding: 0px !important;
+}
+
+.unseen-notification {
+  background-color: #d7fbff;
+}
+
+.notification-bar {
+  cursor: pointer;
+}
+
+.notification-header {
+  padding: 10px 10px 0px 20px;
+  h2 {
+    margin: 0px !important;
+    font-weight: 300;
+  }
+}
+.centend {
+  padding: 40px 0px;
+}

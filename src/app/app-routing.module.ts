@@ -5,10 +5,12 @@ import { PostsComponent } from './posts/posts.component';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { RouterResolver } from './router.resolver';
+import { NotificationComponent } from './notification/notification.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'notifications', component: NotificationComponent },
   {
     path: 'authenticate',
     loadChildren: './authentication/auth.module#AuthModule'
@@ -24,6 +26,10 @@ const routes: Routes = [
   {
     path: 'communities',
     loadChildren: './community/community.module#CommunityModule'
+  },
+  {
+    path: 'notifications',
+    loadChildren: './notification/notification.module#NotificationModule'
   }
 ];
 

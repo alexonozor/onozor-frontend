@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if (this.auth.isCurrentUser()) {
+      if (this.auth.isCurrentUserForGuard()) {
         return true;
       }
       this.router.navigate(['authenticate']);
@@ -41,7 +41,7 @@ export class LoginUserCantVistLoginPageGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.auth.isCurrentUser()) {
+    if (this.auth.isCurrentUserForGuard()) {
       this.snackBar.open('You are already logged in.', 'close', {
         duration: 3000
       });

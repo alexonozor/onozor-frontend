@@ -1,0 +1,96 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-bottom: 20px">
+  <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+    <mat-card>
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="notification-header">
+        <h2>Notifications</h2>
+        <a href="" mat-button>
+          <mat-icon class="mat-18">done_all</mat-icon> Make all as read
+        </a>
+      </div>
+      <mat-list>
+    <span *ngFor="let notification of notifications" [ngSwitch]="notification.trackable_type">
+      <mat-divider></mat-divider>
+      <span *ngSwitchCase="'Comment'" class="notification-bar">
+        <mat-list-item *ngIf="notification.trackable.commentable_type == 'Answer'" [ngClass]="notification.read? 'seen-notification': 'unseen-notification'"
+        (click)="goToQuestionComment(notification)">
+          <div matListAvatar class="image-holder">
+            <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
+            <mat-icon mat-list-icon class="list-icon" style="background-color: #1698A6">comment
+            </mat-icon>
+          </div>
+          <h3 matLine> <b>{{ notification.sender.full_name | titlecase }}</b> commented on
+            {{(currentUser.id === notification.reason.answer_owner.id)?
+            "your" : (notification.reason.answer_owner.first_name? notification.reason.answer_owner.first_name :
+            notification.reason.answer_owner.username )}} {{notification.trackable.commentable_type | lowercase }} {{(currentUser.id === notification.reason.answer_owner.id)?
+            "" : ' in ' + (notification.reason.question_owner.first_name? notification.reason.question_owner.first_name : notification.reason.question_owner.username) + ' post'}}
+          </h3>
+          <p matLine class="notification-time">{{notification.trackable.body }}</p>
+          <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
+        </mat-list-item>
+
+      <mat-list-item *ngIf="notification.trackable.commentable_type == 'Question'" [ngClass]="notification.read? 'seen-notification': 'unseen-notification'"
+      (click)="goToQuestionOrAnswerComment(notification)">
+        <div matListAvatar class="image-holder">
+          <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
+          <mat-icon mat-list-icon class="list-icon" style="background-color: #1698A6">comment
+          </mat-icon>
+        </div>
+        <h3 matLine> <b>{{ notification.sender.full_name | titlecase }}</b> commented on your  {{notification.trackable.commentable_type | lowercase }}</h3>
+        <p matLine class="notification-time">{{notification.trackable.body }}</p>
+        <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
+      </mat-list-item>
+    </span>
+  <mat-divider></mat-divider>
+
+
+  <mat-list-item *ngSwitchCase="'Answer'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+    <div matListAvatar class="image-holder">
+      <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
+      <mat-icon mat-list-icon class="list-icon" style="background-color: #1698A6">question_answer</mat-icon>
+    </div>
+    <h3 matLine> <b>{{ notification.sender.full_name | titlecase}}</b> has an answer to one of your questions</h3>
+    <p matLine class="notification-time">{{notification.trackable.body }}</p>
+    <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item *ngSwitchCase="'QuestionVote'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+    <div matListAvatar class="image-holder">
+      <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
+      <mat-icon mat-list-icon class="list-icon" style="background-color: #2D59C3">thumb_up</mat-icon>
+    </div>
+    <h3 matLine> <b>{{ notification.sender.full_name | titlecase}}</b> voted for your question</h3>
+    <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
+  </mat-list-item>
+  <mat-list-item *ngSwitchCase="'AnswerVote'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+    <div matListAvatar class="image-holder">
+      <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
+      <mat-icon mat-list-icon class="list-icon" style="background-color: #2D59C3">thumb_up</mat-icon>
+    </div>
+    <h3 matLine> <b>{{ notification.sender.full_name | titlecase}}</b> voted for your answer</h3>
+    <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item *ngSwitchCase="'Favourite'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+    <div matListAvatar class="image-holder">
+      <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
+      <mat-icon mat-list-icon class="list-icon" style="background-color:  #f80054">favorite</mat-icon>
+    </div>
+    <h3 matLine> <b>{{ notification.sender.full_name | titlecase}}</b> favorited your question</h3>
+    <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
+  </mat-list-item>
+
+  <mat-list-item *ngSwitchCase="'User'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+    <div matListAvatar class="image-holder">
+      <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
+      <mat-icon mat-list-icon class="list-icon">person_add</mat-icon>
+    </div>
+    <h3 matLine> <b>{{ notification.sender.full_name | titlecase }}</b> Started following you.</h3>
+    <p matLine>
+      <span class="notification-time">{{notification.created_at | amTimeAgo }} </span>
+    </p>
+  </mat-list-item>
+  </span>
+  </mat-list>
+  </mat-card>
+</div>
+</div>
