@@ -3,9 +3,7 @@
     <mat-card>
       <div fxLayout="row" fxLayoutAlign="space-between center" class="notification-header">
         <h2>Notifications</h2>
-        <a href="" mat-button>
-          <mat-icon class="mat-18">done_all</mat-icon> Make all as read
-        </a>
+        <button mat-button (click)="markAllAsRead()"><mat-icon class="mat-18">done_all</mat-icon> Make all as read</button>
       </div>
       <mat-list>
     <span *ngFor="let notification of notifications" [ngSwitch]="notification.trackable_type">
@@ -25,7 +23,7 @@
             "" : ' in ' + (notification.reason.question_owner.first_name? notification.reason.question_owner.first_name : notification.reason.question_owner.username) + ' post'}}
           </h3>
           <p matLine class="notification-time">{{notification.trackable.body }}</p>
-          <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
+          <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }}</span></p>
         </mat-list-item>
 
       <mat-list-item *ngIf="notification.trackable.commentable_type == 'Question'" [ngClass]="notification.read? 'seen-notification': 'unseen-notification'"
@@ -40,10 +38,10 @@
         <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
       </mat-list-item>
     </span>
-  <mat-divider></mat-divider>
+  
 
 
-  <mat-list-item *ngSwitchCase="'Answer'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+  <mat-list-item *ngSwitchCase="'Answer'" class="notification-bar" [ngClass]="notification.read? 'seen-notification': 'unseen-notification'" (click)="goToQuestionAnswer(notification)">
     <div matListAvatar class="image-holder">
       <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
       <mat-icon mat-list-icon class="list-icon" style="background-color: #1698A6">question_answer</mat-icon>
@@ -52,8 +50,10 @@
     <p matLine class="notification-time">{{notification.trackable.body }}</p>
     <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
   </mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item *ngSwitchCase="'QuestionVote'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+
+
+
+  <mat-list-item *ngSwitchCase="'QuestionVote'" class="notification-bar" [ngClass]="notification.read? 'seen-notification': 'unseen-notification'" (click)="goToQuestionVote(notification)">
     <div matListAvatar class="image-holder">
       <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
       <mat-icon mat-list-icon class="list-icon" style="background-color: #2D59C3">thumb_up</mat-icon>
@@ -61,7 +61,9 @@
     <h3 matLine> <b>{{ notification.sender.full_name | titlecase}}</b> voted for your question</h3>
     <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
   </mat-list-item>
-  <mat-list-item *ngSwitchCase="'AnswerVote'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+  
+
+  <mat-list-item *ngSwitchCase="'AnswerVote'" class="notification-bar" [ngClass]="notification.read? 'seen-notification': 'unseen-notification'" (click)="goToAnswerVote(notification)">
     <div matListAvatar class="image-holder">
       <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
       <mat-icon mat-list-icon class="list-icon" style="background-color: #2D59C3">thumb_up</mat-icon>
@@ -69,8 +71,9 @@
     <h3 matLine> <b>{{ notification.sender.full_name | titlecase}}</b> voted for your answer</h3>
     <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
   </mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item *ngSwitchCase="'Favourite'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+ 
+
+  <mat-list-item *ngSwitchCase="'Favourite'" class="notification-bar" [ngClass]="notification.read? 'seen-notification': 'unseen-notification'" (click)="goToFavouritedQuestion(notification)">
     <div matListAvatar class="image-holder">
       <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
       <mat-icon mat-list-icon class="list-icon" style="background-color:  #f80054">favorite</mat-icon>
@@ -79,12 +82,14 @@
     <p matLine><span class="notification-time">{{notification.created_at | amTimeAgo }} </span></p>
   </mat-list-item>
 
-  <mat-list-item *ngSwitchCase="'User'" class="notification-bar" [ngClass]="notification.read? 'unseen-notification': 'unseen-notification'">
+
+
+  <mat-list-item *ngSwitchCase="'User'" class="notification-bar" [ngClass]="notification.read? 'seen-notification': 'unseen-notification'" (click)="goToFollowerProfile(notification)">
     <div matListAvatar class="image-holder">
       <img matListAvatar [src]="notification.sender.avatar.thumb.url" [alt]="notification.sender.full_name">
       <mat-icon mat-list-icon class="list-icon">person_add</mat-icon>
     </div>
-    <h3 matLine> <b>{{ notification.sender.full_name | titlecase }}</b> Started following you.</h3>
+    <h3 matLine> <b>{{ notification.sender.full_name | titlecase }}</b> started following you.</h3>
     <p matLine>
       <span class="notification-time">{{notification.created_at | amTimeAgo }} </span>
     </p>

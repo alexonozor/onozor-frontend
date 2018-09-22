@@ -4,6 +4,7 @@ import { PostsService } from './posts.service';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { Location } from '@angular/common';
 import { AuthService } from '../authentication/auth.service';
+import { NotificationService } from '../notification/notification.service';
 import { UiUpdateService } from './ui-update.service';
 import smoothscroll from 'smoothscroll-polyfill';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -48,7 +49,8 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
     private _postService: PostsService,
     public notification: NzNotificationService,
     public auth: AuthService,
-    public _uiUpdateService: UiUpdateService
+    public _uiUpdateService: UiUpdateService,
+    public _notificationService: NotificationService
   ) {
     smoothscroll.polyfill();
     this.postUrL = this.router.url;
@@ -58,6 +60,7 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.getPost();
     this.toggleComment();
+    this.emmitNotificationCount();
   }
 
   getPost() {
@@ -66,6 +69,14 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.favourite = this.post.favourited;
       this.loading = false;
       this.similarQuestions(this.post.slug);
+    }, err => {
+      throw err;
+    });
+  }
+
+  emmitNotificationCount() {
+    this._notificationService.notification_count().subscribe(res => {
+      this._notificationService.emmitNotificationCount(res.notification_count);
     }, err => {
       throw err;
     });
@@ -89,6 +100,15 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
         }, 1000);
       }
     });
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const isParams = Object.keys(params).length > 0;
+      if (isParams && params.read === 'false') {
+        this._notificationService.markAsSeen(params.notification).subscribe(resp => {
+        }, err => {
+          throw err;
+        });
+      }
+    });
   }
 
   goToCommunity(slug) {
@@ -96,7 +116,7 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   gotToPost(slug) {
-    this.router.navigate(['posts', slug], {fragment: 'post'});
+    this.router.navigate(['posts', slug], { fragment: 'post' });
   }
 
 

@@ -9,6 +9,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommunityService } from '../community/community.service';
+import { NotificationService } from '../notification/notification.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -56,25 +57,28 @@ export class HomeComponent implements OnInit {
     public auth: AuthService,
     public _communityService: CommunityService,
     private snackBar: MatSnackBar,
-    public router: Router) {
+    public router: Router,
+    public _notification: NotificationService
+  ) {
     this.postUrL = this.router.url;
     this.auth.isCurrentUser();
     this.currentUser =  this.auth.getCurrentUser();
   }
 
 
-
   ngOnInit() {
     this.auth.listenToCurrentUserChanges.subscribe(res => {
       this.isCurrentUser = res;
     });
-
+    this.getFeeds();
     this.treadingDiscussion();
-
     if (this.isCurrentUser) {
       this.getCommunites();
     }
+    this.emmitNotificationCount();
+  }
 
+  getFeeds() {
     this.feedsService.getFeeds().subscribe(res => {
       this.loading = false;
       this.loadingAnswer = false;
@@ -82,6 +86,14 @@ export class HomeComponent implements OnInit {
       this.feeds = res.questions;
       this.toggleShare();
       this.listenAndChooseVote();
+    }, err => {
+      throw err;
+    });
+  }
+
+  emmitNotificationCount() {
+    this._notification.notification_count().subscribe(res => {
+      this._notification.emmitNotificationCount(res.notification_count);
     }, err => {
       throw err;
     });

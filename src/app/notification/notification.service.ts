@@ -11,6 +11,9 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class NotificationService {
   private host = environment.baseUrl;
+  private dataSource = new BehaviorSubject<any>(null);
+  listiningToUpdateCount = this.dataSource.asObservable();
+
 
 
   constructor(
@@ -22,5 +25,27 @@ export class NotificationService {
     return this.http.get(`${this.host}/notifications`)
       .pipe(map((res: Response) => res)
     );
+  }
+
+  markAsSeen(id): Observable<any> {
+    return this.http.put(`${this.host}/notifications/${id}`, { seen: true, read: true, read_at: Date.now()})
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  markAllAsRead(params): Observable<any> {
+    return this.http.put(`${this.host}/notifications/mark_all`, params)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  notification_count(): Observable<any> {
+    return this.http.get(`${this.host}/notifications/notification_count`)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
+  emmitNotificationCount(count) {
+    this.dataSource.next(count);
   }
 }

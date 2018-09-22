@@ -8,7 +8,8 @@
 
 
   <button mat-icon-button *ngIf="isLoging" [routerLink]="['notifications/all']">
-    <mat-icon matBadge="1" matBadgeColor="warn">notifications_none</mat-icon>
+    <mat-icon *ngIf="notification_counter === 0">notifications_none</mat-icon>
+    <mat-icon *ngIf="notification_counter > 0" [matBadge]="notification_counter" matBadgeColor="warn" class="mat-18">notifications_none</mat-icon>
   </button>
 
   <button mat-stroked-button  *ngIf="!isLoging" [routerLink]="['authenticate']" class="min-font">   
