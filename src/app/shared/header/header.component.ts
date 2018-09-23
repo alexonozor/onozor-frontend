@@ -45,7 +45,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.listenToCurrentUser();
-    this.listenToNotificationUpdate();
   }
 
   listenToNotificationUpdate() {
@@ -59,6 +58,9 @@ export class HeaderComponent implements OnInit {
   listenToCurrentUser() {
     this.auth.listenToCurrentUserChanges.subscribe(res => {
       this.isLoging = res;
+      if (this.isLoging) {
+        this.listenToNotificationUpdate();
+      }
     });
     this.currentUser = this.auth.getCurrentUser();
   }

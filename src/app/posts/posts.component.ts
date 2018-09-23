@@ -60,7 +60,6 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.getPost();
     this.toggleComment();
-    this.emmitNotificationCount();
   }
 
   showAnswerForm(post) {
@@ -76,6 +75,10 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.favourite = this.post.favourited;
       this.loading = false;
       this.similarQuestions(this.post.slug);
+      console.log(this.auth.isCurrentUser());
+      if (this.auth.isCurrentUser()) {
+        this.emmitNotificationCount();
+      }
     }, err => {
       throw err;
     });

@@ -66,9 +66,9 @@ export class SettingsComponent implements OnInit {
       last_name: [this.currentUser.last_name, [Validators.required]],
       location: [this.currentUser.location, [Validators.required]],
       bio: [this.currentUser.bio, [Validators.required]],
-      facebook_url: [this.currentUser.facebook_url],
-      twitter_url: [this.currentUser.twitter_url],
-      personal_website: [this.currentUser.personal_website],
+      facebook_url: [this.currentUser.facebook_url, [Validators.required]],
+      twitter_url: [this.currentUser.twitter_url, [Validators.required]],
+      personal_website: [this.currentUser.personal_website, [Validators.required]],
     });
   }
 
