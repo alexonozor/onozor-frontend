@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
-  <div fxFlex="45" fxLayout="column" fxLayoutGap="15px">
+<div fxLayout="row" fxLayoutGap="40px" fxLayout.xs="column">
+  <div fxFlex="45" fxLayout="column" fxLayoutGap="20px">
 
     <mat-card class="question-form" fxLayoutGap="20px" fxLayout="row" fxLayoutAlign="start center" *ngIf="isCurrentUser"
       [routerLink]="['/posts/create']">
@@ -57,19 +57,41 @@
       <mat-icon class="mat-18">edit</mat-icon>
     </button>
   </div>
-  <div fxFlex="20" *ngIf="isDesktop$ | async">
+  <div fxLayout="column" fxLayoutGap="10px" fxFlex="23" *ngIf="isDesktop$ | async">
     <mat-card class="set-margin mat-elevation-z2">
-      <div class="treading">
-        <h4>TRENDING DISCUSSION</h4>
-        <div *ngFor="let post of threadingDisscution | async; let i=index" class="list">
+      <div class="treading" [hidden]="loadingThreadingDisscution">
+        <h4>POPULAR ON ONOZOR</h4>
+        <div *ngFor="let post of threadingDisscution; let i=index" class="list">
           <h4 class="disscussion" (click)="gotToPost(post.slug)">{{post?.name}}</h4>
           <div fxLayout="row" fxLayoutGap="10px" class="mat-icon-default">
-            <mat-icon class="mat-18">question_answer</mat-icon>  <p>{{post?.answers_count}} answers</p>
+            <mat-icon class="mat-18">question_answer</mat-icon>
+            <p>{{post?.answers_count}} answers</p>
           </div>
         </div>
       </div>
+      <facebook-content-loader height="30" *ngFor="let post of threadingDisscution;" [hidden]="!loadingThreadingDisscution"></facebook-content-loader>
     </mat-card>
-
+    <nz-affix>
+    <mat-card class="set-margin mat-elevation-z2">
+      <div class="treading" [hidden]="loadingCommunites">
+        <h4>TRENDING COMMUNITIES</h4>
+        <mat-list dense>
+          <mat-list-item *ngFor="let community of communites">
+            <img matListAvatar [src]="community?.image" [routerLink]="['/communities', community.slug]">
+            <h3 matLine [routerLink]="['/communities', community.slug]">{{community?.name}}</h3>
+            <p matLine [routerLink]="['/communities', community.slug]">
+              <span> {{community?.subscribers_count}} subscribers</span>
+            </p>
+            <button mat-stroked-button color="primary" style="font-size: xx-small;" (click)="subscribe(community)"
+              color="primary" *ngIf="!community.subscribe">SUBSCRIBE</button>
+            <button mat-stroked-button color="primary" style="font-size: xx-small;" (click)="unsubscribe(community)"
+              color="warn" *ngIf="community.subscribe">UNSUBSCRIBE</button>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <facebook-content-loader height="30" *ngFor="let community of communites" [hidden]="!loadingCommunites"></facebook-content-loader>
+    </mat-card>
+  </nz-affix>
   </div>
 </div>
 
@@ -86,7 +108,7 @@
     margin-bottom: 15px;
   }
 
-  .treading > h4 {
+  .treading>h4 {
     margin-bottom: 20px;
     font-size: 1.2em;
   }
