@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: ':slug', component: ProfileComponent,
   children: [
     {path: '', redirectTo: 'questions', pathMatch: 'full' },
-    { path: 'questions', component: QuestionsComponent, resolve: { questions: UserProfileQuestionsRouterResolver} },
+    { path: 'questions', component: QuestionsComponent, resolve: { questions: UserProfileQuestionsRouterResolver } },
     { path: 'answers', component: AnswersComponent, resolve: { questions: UserProfileAnswersRouterResolver} },
     { path: 'favourites', component: FavoritesComponent, resolve: { questions: UserProfileFavouriteRouterResolver } },
     { path: 'followers', component: FollowersComponent, resolve: { users: UserProfileFollowersRouterResolver } },

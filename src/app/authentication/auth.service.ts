@@ -72,14 +72,14 @@ export class AuthService {
     }
   }
 
-  // isCurrentUser(): Boolean {
-  //   const encrypt = localStorage.getItem('currentUser');
-  //   if (encrypt) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  isCurrentUserForGuard(): Boolean {
+    const encrypt = localStorage.getItem('currentUser');
+    if (encrypt) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   isCurrentUser() {
     const encrypt = localStorage.getItem('currentUser');

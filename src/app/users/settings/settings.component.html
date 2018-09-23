@@ -1,5 +1,4 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'"
-  [ngStyle.xs]="{'margin-top': '40px'}">
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" [ngStyle.xs]="{'margin-top': '40px'}">
   <mat-card fxFlex="40">
     <div fxLayout="row" fxLayoutAlign="space-between end" style="margin-bottom: 30px">
       <h3>EDIT PROFILE</h3>
@@ -48,16 +47,12 @@
           <textarea matInput placeholder="Tell us more about yourself" formControlName="bio"></textarea>
           <mat-icon matSuffix>playlist_add</mat-icon>
         </mat-form-field>
-
-        <button mat-raised-button [disabled]="updating"  color="primary">UPDATE</button>
       </div>
-    </form>
-
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    
     <mat-divider></mat-divider>
     <br /> <br />
     <h3>Your social profiles</h3>
-    <form [formGroup]="userSocialInfo" (ngSubmit)="submitForm('social')">
+    
       <div class="example-container" fxLayout="column" fxLayoutGap="30px">
         <mat-form-field>
           <input matInput type="url" formControlName="facebook_url" placeholder="https://facebook.com/...">
@@ -74,7 +69,7 @@
           <mat-icon matSuffix>public</mat-icon>
         </mat-form-field>
 
-        <button mat-raised-button [disabled]="updating"  color="primary">UPDATE</button>
+        <button mat-raised-button [disabled]="updating"  color="primary">{{!updating? 'Save' : 'updating...' }}</button>
       </div>
     </form>
   </mat-card>

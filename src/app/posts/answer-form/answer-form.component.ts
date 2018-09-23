@@ -75,4 +75,8 @@ export class AnswerFormComponent implements OnInit {
     });
   }
 
+  showbutton() {
+    return true;
+  }
+
 }

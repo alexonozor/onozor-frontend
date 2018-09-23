@@ -7,7 +7,7 @@
       <p>Hello {{currentUser.username | titlecase }}! What is your question?</p>
     </mat-card>
 
-    <mat-card class="home-categories" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start center" *ngIf="isCurrentUser">
+    <mat-card class="home-categories" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start center" *ngIf="isCurrentUser && (isHandset$ | async)">
       <div class="category-card" *ngFor="let community of communites" [ngStyle]="{'background-image': 'url(' + community.image + ')', 'background-size': 'cover', 'border-radius': '8px', 'width': '50%'}">
         <div class="inner-div" fxLayout="column" fxLayoutAlign="space-around center">
           <p (click)="goToCategories(community)">{{community?.name}}</p>
@@ -70,15 +70,6 @@
       </div>
     </mat-card>
 
-    <!-- <mat-card class="example-card">
-      <mat-card-content>
-        <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile
-          dog that copes
-          very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
-        </p>
-      </mat-card-content>
-    </mat-card> -->
   </div>
 </div>
 

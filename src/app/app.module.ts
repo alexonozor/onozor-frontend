@@ -21,6 +21,7 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { ContentLoaderModule } from '@netbasal/content-loader';
 import { AuthModule } from './authentication/auth.module';
 import { ErrorsModule } from './errors/errors.module';
+import { NotificationModule } from './notification/notification.module';
 
 registerLocaleData(en);
 
@@ -46,6 +47,7 @@ registerLocaleData(en);
     NgProgressModule,
     InfiniteScrollModule,
     ContentLoaderModule,
+    NotificationModule,
     AuthModule,
     MarkdownModule.forRoot({
       markedOptions: {

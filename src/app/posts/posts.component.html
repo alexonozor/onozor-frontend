@@ -33,12 +33,21 @@
         <app-share-post *ngIf="post?.id" [title]="post?.name" [postUrL]="postUrL" postType="Question"></app-share-post>
       </div>
     </mat-card>
+    <button mat-fab color="warn" (click)="showAnswerForm(post)" style="position: fixed; bottom: -21px; z-index: 2000; right: 10px;"
+      *ngIf="(isHandset$ | async )">
+      <mat-icon class="mat-18">add_comment</mat-icon>
+    </button>
     <mat-card *ngIf="loading">
       <facebook-content-loader></facebook-content-loader>
     </mat-card>
 
-    <div style="margin-bottom: 20px" id="answer-form">
-        <app-answer-form *ngIf="post?.id" [questionId]="post?.id"></app-answer-form>
+    <div style="margin-bottom: 20px" id="answer-form" [hidden]="post?.show_answer_form">
+        <div fxLayout="column" fxLayoutAlign="center center" class="add_answer" *ngIf="post.answers_count == 0">
+            <img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1535142383407/SkDg9JCLX.png" alt="">
+            <h3>Be the first person to answer</h3>
+            <p>People are searching for a better answer to this question.</p>
+        </div>
+        <app-answer-form *ngIf="post?.id"  [questionId]="post?.id"></app-answer-form>
     </div>
     
     
@@ -52,6 +61,7 @@
             <h4><i class="material-icons">show_chart</i> STATS</h4>
             <p><b>Asked:</b> {{post?.created_at | amTimeAgo}}</p>
             <p><b>Total views:</b> {{post?.views}}</p>
+            <p><b>Total Answers:</b> {{post?.answers_count}}</p>
             <p><b>Community: </b> <a [routerLink]="['/communities', post.category.slug]">{{post?.category.name}}</a></p>
           </div>
         </mat-card>

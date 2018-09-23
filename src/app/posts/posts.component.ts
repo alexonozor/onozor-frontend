@@ -4,6 +4,7 @@ import { PostsService } from './posts.service';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { Location } from '@angular/common';
 import { AuthService } from '../authentication/auth.service';
+import { NotificationService } from '../notification/notification.service';
 import { UiUpdateService } from './ui-update.service';
 import smoothscroll from 'smoothscroll-polyfill';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -16,7 +17,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css']
+  styleUrls: ['./posts.component.scss']
 })
 
 export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -48,7 +49,8 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
     private _postService: PostsService,
     public notification: NzNotificationService,
     public auth: AuthService,
-    public _uiUpdateService: UiUpdateService
+    public _uiUpdateService: UiUpdateService,
+    public _notificationService: NotificationService
   ) {
     smoothscroll.polyfill();
     this.postUrL = this.router.url;
@@ -58,6 +60,14 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.getPost();
     this.toggleComment();
+    this.emmitNotificationCount();
+  }
+
+  showAnswerForm(post) {
+    post.show_answer_form = false;
+    setTimeout(() => {
+      document.getElementById('answer-form-text').focus();
+    }, 1000);
   }
 
   getPost() {
@@ -66,6 +76,14 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.favourite = this.post.favourited;
       this.loading = false;
       this.similarQuestions(this.post.slug);
+    }, err => {
+      throw err;
+    });
+  }
+
+  emmitNotificationCount() {
+    this._notificationService.notification_count().subscribe(res => {
+      this._notificationService.emmitNotificationCount(res.notification_count);
     }, err => {
       throw err;
     });
@@ -82,11 +100,29 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // check for fragment
     this.activatedRoute.fragment.subscribe((fragment: string) => {
-      if (fragment === 'answers') {
+      if (fragment && fragment === 'answers') {
         setTimeout(() => {
           document.getElementById('answers').scrollIntoView({ behavior: 'smooth' });
         }, 1000);
+      }
+    });
+
+    // check for query params
+    this.activatedRoute.queryParams.subscribe((params) => {
+      setTimeout(() => {
+        const scrollViewElement = document.getElementById(`answer-${params.answer_id}`);
+        if (scrollViewElement) {
+          scrollViewElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 2000);
+      const isParams = Object.keys(params).length > 0;
+      if (isParams && params.read === 'false') {
+        this._notificationService.markAsSeen(params.notification).subscribe(resp => {
+        }, err => {
+          throw err;
+        });
       }
     });
   }
@@ -96,7 +132,7 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   gotToPost(slug) {
-    this.router.navigate(['posts', slug], {fragment: 'post'});
+    this.router.navigate(['posts', slug], { fragment: 'post' });
   }
 
 

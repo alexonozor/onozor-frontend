@@ -56,6 +56,13 @@ export class PostActionComponent implements OnInit {
     post.sharePost = !post.sharePost;
   }
 
+  showAnswerForm(post) {
+    post.show_answer_form = false;
+    setTimeout(() => {
+      document.getElementById('answer-form-text').focus();
+    }, 1000);
+  }
+
 
   /**
  * The voting methods will be moved to a service in the furture.

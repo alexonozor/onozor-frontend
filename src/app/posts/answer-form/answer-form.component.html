@@ -1,14 +1,6 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
   <div fxFlex="100" fxLayout="column" fxLayoutGap="30px">
     <mat-card class="example-card">
-      <div class="row" fxFlexAlign="start">
-        <mat-card-header fxFlex="50">
-          <div mat-card-avatar *ngIf="isCurrentUser" [ngStyle]="{'background-image': 'url(' + currentUser.avatar.thumb.url+ ')', 'background-size': 'cover'}"></div>
-          <div mat-card-avatar *ngIf="!isCurrentUser" style="background-size: cover; background-image: url('https://res.cloudinary.com/sportbay-co/image/upload/v1537287942/user_svhfyt.png')"></div>
-          <mat-card-title *ngIf="isCurrentUser">{{currentUser?.first_name}} {{currentUser?.last_name}}</mat-card-title>
-          <mat-card-subtitle *ngIf="isCurrentUser">@{{currentUser?.username}}</mat-card-subtitle>
-        </mat-card-header>
-      </div>
       <mat-progress-bar mode="indeterminate" [hidden]="!isSubmited"></mat-progress-bar>
       <mat-card-content>
         <mat-tab-group>
@@ -18,12 +10,12 @@
             </ng-template>
             <form [formGroup]="answerForm" class="login-form" (ngSubmit)="submitForm()" fxLayout="column" fxLayoutAlign="start end">
               <mat-form-field fxFlex="100%" fxFlexFill>
-                <textarea matInput [rows]="isCurrentUser? 10 : 5" formControlName="body" placeholder="Write your answer"></textarea>
+                <textarea matInput [rows]="isCurrentUser? 4 : 5" (focus)="showbutton()" id="answer-form-text" formControlName="body" placeholder="Write your answer"></textarea>
                 <mat-hint align="start">
                   <strong>This form support markdown</strong>
                 </mat-hint>
               </mat-form-field>
-              <button mat-raised-button [disabled]="!answerForm.valid" color="primary"> Submit</button>
+              <button mat-raised-button *ngIf="showbutton()" [disabled]="!answerForm.valid" color="primary"> Submit</button>
             </form>
           </mat-tab>
           <mat-tab>
