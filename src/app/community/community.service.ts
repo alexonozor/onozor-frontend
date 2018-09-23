@@ -28,6 +28,12 @@ export class CommunityService {
     );
   }
 
+  getTrendingCommunities(): Observable<any> {
+    return this.http.get(`${this.host}/categories/trending`)
+      .pipe(map((res: Response) => res)
+    );
+  }
+
   getCommunity(slug): Observable<any> {
     return this.http.get(`${this.host}/categories/${slug}`)
       .pipe(map((res: Response) => res)

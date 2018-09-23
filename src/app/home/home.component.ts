@@ -27,8 +27,10 @@ interface Disccussion {
 })
 export class HomeComponent implements OnInit {
   feeds: Array<any> = ['loading', 'loading', 'loading', 'loading', 'loading'];
-  threadingDisscution: Observable<Array<Disccussion>>;
+  threadingDisscution: Array<any> = ['loading', 'loading', 'loading', 'loading', 'loading'];
   loading: Boolean = true;
+  loadingThreadingDisscution: Boolean = true;
+  loadingCommunites:  Boolean = true;
   meta:  any;
   loadingAnswer: Boolean = true;
   sharePost: Boolean = false;
@@ -36,7 +38,7 @@ export class HomeComponent implements OnInit {
   componentName: String = 'home';
   currentUser: any;
   isCurrentUser: any;
-  communites: Array<any> = [];
+  communites: Array<any> = ['loading', 'loading', 'loading', 'loading', 'loading'];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -72,8 +74,8 @@ export class HomeComponent implements OnInit {
     });
     this.getFeeds();
     this.treadingDiscussion();
+    this.getCommunites();
     if (this.isCurrentUser) {
-      this.getCommunites();
       this.emmitNotificationCount();
     }
   }
@@ -100,7 +102,10 @@ export class HomeComponent implements OnInit {
   }
 
   treadingDiscussion() {
-    this.threadingDisscution =  this.feedsService.treadingDiscussion();
+    this.feedsService.treadingDiscussion().subscribe(res => {
+      this.loadingThreadingDisscution = false;
+      this.threadingDisscution = res;
+    });
   }
 
   gotToPost(slug) {
@@ -108,7 +113,8 @@ export class HomeComponent implements OnInit {
   }
 
   getCommunites() {
-    this._communityService.getCommunities(1).subscribe(resp => {
+    this._communityService.getTrendingCommunities().subscribe(resp => {
+      this.loadingCommunites = false;
       this.communites = resp.categories;
     }, err => {
       throw err;

@@ -4,13 +4,14 @@
 }
 
 .form {
-  border: 1px solid #ccc;
-  background: #e1e4f2;
+  border: 1px solid #4D72D0;
+  background: #4D72D0;
   border-radius: 4px;
   padding: 8px;
-  border: 1px solid #e1e4f2;
+  border: 1px solid #4D72D0;
   outline: none;
   width: 39%;
+
   input {
     border: none;
     background: none;
@@ -19,6 +20,7 @@
   .mat-icon {
     margin-top: 4px;
     text-align: center;
+    color: #fff;
   }
 }
 
