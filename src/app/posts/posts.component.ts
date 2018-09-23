@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css']
+  styleUrls: ['./posts.component.scss']
 })
 
 export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -63,6 +63,13 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.emmitNotificationCount();
   }
 
+  showAnswerForm(post) {
+    post.show_answer_form = false;
+    setTimeout(() => {
+      document.getElementById('answer-form-text').focus();
+    }, 1000);
+  }
+
   getPost() {
     this.activatedRoute.data.pipe(map(data => data.post)).subscribe(resp => {
       this.post = resp.question;
@@ -93,14 +100,23 @@ export class PostsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // check for fragment
     this.activatedRoute.fragment.subscribe((fragment: string) => {
-      if (fragment === 'answers') {
+      if (fragment && fragment === 'answers') {
         setTimeout(() => {
           document.getElementById('answers').scrollIntoView({ behavior: 'smooth' });
         }, 1000);
       }
     });
+
+    // check for query params
     this.activatedRoute.queryParams.subscribe((params) => {
+      setTimeout(() => {
+        const scrollViewElement = document.getElementById(`answer-${params.answer_id}`);
+        if (scrollViewElement) {
+          scrollViewElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 2000);
       const isParams = Object.keys(params).length > 0;
       if (isParams && params.read === 'false') {
         this._notificationService.markAsSeen(params.notification).subscribe(resp => {

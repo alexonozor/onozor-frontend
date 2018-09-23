@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         { name: 'FOLLOWING', link: 'following', count: this.user.followings },
       ];
     }, err => {
-      console.log(err);
+      throw err;
     });
   }
 

@@ -51,7 +51,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.prepareForm();
-    this.socialForm();
   }
 
   navigateToSettings() {
@@ -67,16 +66,13 @@ export class SettingsComponent implements OnInit {
       last_name: [this.currentUser.last_name, [Validators.required]],
       location: [this.currentUser.location, [Validators.required]],
       bio: [this.currentUser.bio, [Validators.required]],
+      facebook_url: [this.currentUser.facebook_url],
+      twitter_url: [this.currentUser.twitter_url],
+      personal_website: [this.currentUser.personal_website],
     });
   }
 
-  socialForm() {
-    this.userSocialInfo = this.fb.group({
-      facebook_url: [this.currentUser.facebook_url, [Validators.required]],
-      twitter_url: [this.currentUser.twitter_url, [Validators.required]],
-      personal_website: [this.currentUser.personal_website, [Validators.required]],
-    });
-  }
+
 
   onFileChange(event) {
     const reader = new FileReader();

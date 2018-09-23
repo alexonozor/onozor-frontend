@@ -7,6 +7,8 @@
   
     <button mat-button *ngIf="componentName==='post'" (click)="toggleComment()" class="mat-icon-default" matTooltip="I don't understand? ask for details">
         <i class="material-icons">reply</i>Ask for details ({{post.comments_count}})</button>
+        <button mat-button *ngIf="componentName==='post'" (click)="showAnswerForm(post)" class="mat-icon-default">
+            <i class="material-icons">add_comment</i> Add Answer ({{post.answers_count}})</button>    
     <button mat-button *ngIf="componentName==='home'" (click)="goToAnswers(post)" class="mat-icon-default">
       <mat-icon class="mat-18">question_answer</mat-icon> Answer ({{post.answers_count}})</button>
       <button mat-button *ngIf="componentName==='answer'" class="mat-icon-default"><i class="material-icons">insert_comment</i> Comment {{post.comments_count}}</button>
