@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" style="margin-bottom: 20px">
   <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
-    <mat-card>
+    <mat-card *ngIf="notifications.length  > 0">
       <div fxLayout="row" fxLayoutAlign="space-between center" class="notification-header">
         <h2>Notifications</h2>
         <button mat-button (click)="markAllAsRead()"><mat-icon class="mat-18">done_all</mat-icon> Make all as read</button>
@@ -97,5 +97,9 @@
   </span>
   </mat-list>
   </mat-card>
+  <div fxLayout="column" fxLayoutAlign="center center" *ngIf="notifications.length  == 0">
+    <img src="//ssl.gstatic.com/s2/oz/images/notifications/jingles_eb4e5306b38f83915d82034fa93390d9/desktop_anim_2x.gif">
+    <h2>No Notifications</h2>
+  </div>
 </div>
 </div>

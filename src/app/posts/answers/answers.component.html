@@ -30,7 +30,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" *ngIf="pageMeta?.next_page && loadingAnswer"  [ngClass]="!(isHandset$ | async )? 'margin-top2' : 'ball'">
-    <div fxFlex="50" fxLayout="column" fxLayoutGap="30px">
+    <div fxFlex="100" fxLayout="column" fxLayoutGap="30px">
     <mat-card class="example-card">
       <facebook-content-loader></facebook-content-loader>
     </mat-card>

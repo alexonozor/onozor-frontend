@@ -74,8 +74,8 @@ export class HomeComponent implements OnInit {
     this.treadingDiscussion();
     if (this.isCurrentUser) {
       this.getCommunites();
+      this.emmitNotificationCount();
     }
-    this.emmitNotificationCount();
   }
 
   getFeeds() {
