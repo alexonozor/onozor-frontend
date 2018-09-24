@@ -108,4 +108,12 @@ export class HeaderComponent implements OnInit {
   }
 
 
+  hideSearchForm(showSearch) {
+    this.showSearch = showSearch;
+    this.usersForm.reset();
+  }
+
+  displayFn(post) { }
+
+
 }
