@@ -1,6 +1,5 @@
-<div fxLayout="column" fxFlex="50%" 
-  infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)"
-  *ngIf="!(isHandset$ | async)">
+<div fxLayout="column" fxFlex="50%" infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll(meta?.next_page)" *ngIf="!(isHandset$ | async)">
 
   <mat-card style="margin-bottom: 30px;">
     <h1>Explore Communities</h1>
@@ -37,7 +36,7 @@
   </div>
 </div>
 
-<mat-card *ngIf="(isHandset$ | async)" style="margin-top: 85px;">
+<mat-card *ngIf="(isHandset$ | async)">
   <mat-list fxLayout="column" fxLayoutAlign="start">
     <mat-list-item *ngFor="let community of communities" infiniteScroll [infiniteScrollDistance]="5"
       [infiniteScrollThrottle]="50" (scrolled)="onScroll(meta?.next_page)">
@@ -45,13 +44,10 @@
       <h4 matLine [routerLink]="['/communities', community.slug]" class="profile-card-title">{{community.name}}</h4>
       <mat-divider></mat-divider>
 
-      <button mat-icon-button color="primary" (click)="subscribe(community)" *ngIf="!community.subscribe">
-        <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-      </button>
-
-      <button mat-icon-button color="warn" (click)="unsubscribe(community)" *ngIf="community.subscribe">
-        <mat-icon aria-label="Example icon-button with a heart icon">remove</mat-icon>
-      </button>
+      <button mat-stroked-button color="primary" style="font-size: xx-small;" (click)="subscribe(community)" color="primary"
+        *ngIf="!community.subscribe">SUBSCRIBE</button>
+      <button mat-stroked-button color="primary" style="font-size: xx-small;" (click)="unsubscribe(community)" color="warn"
+        *ngIf="community.subscribe">UNSUBSCRIBE</button>
     </mat-list-item>
     <span fxLayout="column" fxFill *ngIf="meta?.next_page && loadingUsers">
       <bullet-list-content-loader height="10"></bullet-list-content-loader>
