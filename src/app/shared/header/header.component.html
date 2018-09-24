@@ -105,7 +105,8 @@
       </button>
     </div>
   </mat-toolbar-row>
-  <form fxLayout="row" fxFlex="100%" fxFlexFill [formGroup]='usersForm' *ngIf="showSearch">
+  <mat-toolbar-row fxLayoutAlign="space-between center" *ngIf="showSearch">
+  <form fxLayout="row" fxFlex="100%" fxFlexFill [formGroup]='usersForm'>
       <mat-form-field class="example-full-width">
           <mat-icon>search</mat-icon>
         <input type="search" matInput placeholder="Search Onozor" id="searchForm" fxFlexFill [matAutocomplete]="auto" formControlName='userInput'>
@@ -122,4 +123,5 @@
         </ng-container>
       </mat-autocomplete>
     </form>
+  </mat-toolbar-row>
 </mat-toolbar>
