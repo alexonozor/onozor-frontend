@@ -3,7 +3,7 @@
     <mat-icon matSuffix class="mat-icon-default">search</mat-icon>
     <form class="example-form" fxLayout="row" fxFlex="100%" fxFlexFill fxLayoutAlign="start start" [formGroup]='usersForm'>
       <input type="search" placeholder="Search" fxFlexFill [matAutocomplete]="auto" formControlName='userInput'>
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngIf="isLoading" class="is-loading">
           <mat-spinner diameter="50"></mat-spinner>
         </mat-option>
@@ -108,12 +108,10 @@
   <mat-toolbar-row fxLayoutAlign="space-between center" *ngIf="showSearch">
     <form fxLayout="row" fxFlex="100%" fxFlexFill [formGroup]='usersForm'>
       <mat-form-field class="example-full-width">
-        <mat-icon>search</mat-icon>
-        <input type="search" matInput placeholder="Search Onozor" id="searchForm" fxFlexFill [matAutocomplete]="auto"
-          formControlName='userInput'>
+        <input type="search" matInput placeholder="Search" id="searchForm" fxFlexFill [matAutocomplete]="auto" formControlName='userInput'>
         <mat-icon matSuffix (click)="hideSearchForm(!showSearch)">close</mat-icon>
       </mat-form-field>
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngIf="isLoading" class="is-loading">
           <mat-spinner diameter="50"></mat-spinner>
         </mat-option>

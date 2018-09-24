@@ -113,7 +113,5 @@ export class HeaderComponent implements OnInit {
     this.usersForm.reset();
   }
 
-  displayFn(post) { }
-
 
 }
