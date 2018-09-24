@@ -15,6 +15,7 @@ import { MomentModule } from 'ngx-moment';
 import { ContentLoaderModule } from '@netbasal/content-loader';
 import { UserCardComponent } from './user-card/user-card.component';
 import { RelationishipButtonComponent } from './relationiship-button/relationiship-button.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { RelationishipButtonComponent } from './relationiship-button/relationish
     MyOwnCustomMaterialModule,
     InfiniteScrollModule,
     MomentModule,
-    ContentLoaderModule
+    ContentLoaderModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     HeaderComponent,

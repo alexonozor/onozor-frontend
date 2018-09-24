@@ -1,7 +1,24 @@
 <mat-toolbar class="mat-elevation-z2 toolbar-settings" fxLayout="row" fxLayoutGap="20px" color="primary">
-  <div class="form" fxLayout="row" fxLayoutGap="20px">
+  <div class="form" fxLayout="row" fxFlex="39.4%" fxLayoutGap="20px">
     <mat-icon matSuffix class="mat-icon-default">search</mat-icon>
-    <input type="search" fxFlex="85" matInput placeholder="Search" class="">
+    <form class="example-form" fxLayout="row" fxFlex="100%" fxFlexFill fxLayoutAlign="start start" [formGroup]='usersForm'>
+      <input type="search" placeholder="Search" fxFlexFill [matAutocomplete]="auto" formControlName='userInput'>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngIf="isLoading" class="is-loading">
+          <mat-spinner diameter="50"></mat-spinner>
+        </mat-option>
+        <ng-container *ngIf="!isLoading">
+          <mat-option *ngFor="let post of filteredUsers" [value]="post.name" (click)="goToPost(post)">
+            <span>{{ post.name }}</span>
+          </mat-option>
+        </ng-container>
+        <mat-list>
+          <mat-list-item>
+            {{usersForm.value.userInput}} ?
+          </mat-list-item>
+        </mat-list>
+      </mat-autocomplete>
+    </form>
   </div>
 
   <button mat-raised-button [routerLink]="['/posts/create']">Add Question</button>
@@ -12,10 +29,10 @@
     <mat-icon *ngIf="notification_counter > 0" [matBadge]="notification_counter" matBadgeColor="warn" class="mat-18">notifications_none</mat-icon>
   </button>
 
-  <button mat-stroked-button  *ngIf="!isLoging" [routerLink]="['authenticate']" class="min-font">   
-     Get started
+  <button mat-stroked-button *ngIf="!isLoging" [routerLink]="['authenticate']" class="min-font">
+    Get started
   </button>
-  
+
 
   <div *ngIf="isLoging">
     <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -44,7 +61,7 @@
 
 <mat-toolbar class="mat-elevation-z6 toolbar-settings" *ngIf="isHandset$ | async" color="primary">
 
-  <mat-toolbar-row fxLayoutAlign="space-between center">
+  <mat-toolbar-row fxLayoutAlign="space-between center" *ngIf="!showSearch">
     <span fxLayoutAlign="space-between center">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -54,12 +71,12 @@
 
 
     <div fxLayout="row">
-      <button mat-icon-button>
+      <button mat-icon-button (click)="showSearchForm(!showSearch)">
         <mat-icon>search</mat-icon>
       </button>
       <button mat-icon-button *ngIf="isLoging" [routerLink]="['notifications/all']">
-          <mat-icon *ngIf="notification_counter === 0">notifications_none</mat-icon>
-          <mat-icon *ngIf="notification_counter > 0" [matBadge]="notification_counter" matBadgeColor="warn" class="mat-18">notifications_none</mat-icon>
+        <mat-icon *ngIf="notification_counter === 0">notifications_none</mat-icon>
+        <mat-icon *ngIf="notification_counter > 0" [matBadge]="notification_counter" matBadgeColor="warn" class="mat-18">notifications_none</mat-icon>
       </button>
 
       <div *ngIf="isLoging">
@@ -83,12 +100,28 @@
         </mat-menu>
       </div>
 
-      <button mat-stroked-button  *ngIf="!isLoging" [routerLink]="['authenticate']" class="min-font">   
-          Get started
-       </button>
+      <button mat-stroked-button *ngIf="!isLoging" [routerLink]="['authenticate']" class="min-font">
+        Get started
+      </button>
     </div>
-
+  </mat-toolbar-row>
+  <mat-toolbar-row fxLayoutAlign="space-between center" *ngIf="showSearch">
+  <form fxLayout="row" fxFlex="100%" fxFlexFill [formGroup]='usersForm'>
+      <mat-form-field class="example-full-width">
+          <mat-icon>search</mat-icon>
+        <input type="search" matInput placeholder="Search Onozor" id="searchForm" fxFlexFill [matAutocomplete]="auto" formControlName='userInput'>
+        <mat-icon matSuffix (click)="showSearch = !showSearch">close</mat-icon>
+      </mat-form-field>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngIf="isLoading" class="is-loading">
+          <mat-spinner diameter="50"></mat-spinner>
+        </mat-option>
+        <ng-container *ngIf="!isLoading">
+          <mat-option *ngFor="let post of filteredUsers" [value]="post.name" (click)="goToPost(post)">
+            <span>{{ post.name }}</span>
+          </mat-option>
+        </ng-container>
+      </mat-autocomplete>
+    </form>
   </mat-toolbar-row>
 </mat-toolbar>
-
- 

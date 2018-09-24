@@ -4,7 +4,7 @@ import { Http, Response } from '@angular/http';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap} from 'rxjs/operators';
 
 interface Comment {
   commentable_id: number;
@@ -34,6 +34,18 @@ export class PostsService {
   constructor(
     public http: HttpClient
   ) { }
+
+  search(filter: {name: string} = {name: ''}, page = 1): Observable<any> {
+    console.log(filter);
+    return this.http.get(`${this.host}/questions/search?name=${filter.name}`)
+    .pipe(
+      tap((response: any) => {
+        response.questions = response.questions
+          .map((res: Response) => res);
+        return response;
+      })
+      );
+  }
 
 
   getPost(slug: String): Observable<any> {
